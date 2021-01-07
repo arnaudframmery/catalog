@@ -3,23 +3,23 @@ from sqlalchemy.orm import relationship
 from engine import Base
 
 
-class DataComponent(Base):
+class Data(Base):
     """
     Store values of the different components of an article
     """
 
-    __tablename__ = 'data_component'
+    __tablename__ = 'data'
 
     id = Column(Integer, primary_key=True)
     value = Column(String, nullable=False)
     component_id = Column(Integer, ForeignKey('component.id'), nullable=False)
     article_id = Column(Integer, ForeignKey('article.id'), nullable=False)
 
-    component = relationship("Component", back_populates="data_component")
-    article = relationship("Article", back_populates="data_component")
+    component = relationship("Component", back_populates="data")
+    article = relationship("Article", back_populates="data")
 
     def __repr__(self):
-        return "<Data_component(value='%s')>" % self.value
+        return "<Data(value='%s')>" % self.value
 
 
 class Article(Base):
@@ -35,8 +35,8 @@ class Article(Base):
 
     catalog = relationship("Catalog", back_populates="article")
 
-    data_component = relationship(
-        "Data_component", order_by=DataComponent.id, back_populates="article", cascade="all, delete, delete-orphan"
+    data = relationship(
+        "Data", order_by=Data.id, back_populates="article", cascade="all, delete, delete-orphan"
     )
 
     def __repr__(self):
@@ -59,8 +59,8 @@ class Component(Base):
     catalog = relationship("Catalog", back_populates="component")
     type = relationship("Type", back_populates="component")
 
-    data_component = relationship(
-        "Data_component", order_by=DataComponent.id, back_populates="component", cascade="all, delete, delete-orphan"
+    data = relationship(
+        "Data", order_by=Data.id, back_populates="component", cascade="all, delete, delete-orphan"
     )
 
     def __repr__(self):
