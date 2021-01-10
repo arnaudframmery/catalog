@@ -7,6 +7,7 @@ def populate_light(session):
 
     article_1 = Article(title='001')
     article_2 = Article(title='002')
+    article_cities = Article(title='Paris')
 
     component_1 = Component(label='Nom', default='Smith')
     component_2 = Component(label='Prénom', default='John')
@@ -25,6 +26,7 @@ def populate_light(session):
     data_2 = [data_2_nom, data_2_prenom, data_2_gender]
 
     people.article = [article_1, article_2]
+    cities.article = [article_cities]
     type_1.component = [component_1, component_2, component_3]
     people.component = [component_1, component_2, component_3]
 
