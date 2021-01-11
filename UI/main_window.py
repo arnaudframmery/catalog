@@ -2,6 +2,7 @@ import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout
 
+from UI.article_frame_widget import ArticleFrameWidget
 from UI.catalog_frame_widget import CatalogFrameWidget
 from UI.qt_ui.main_window_UI import Ui_CatalogUI
 
@@ -46,9 +47,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_CatalogUI):
         articles = self.controler.get_articles(catalog_id)
         articles_layout = QVBoxLayout()
         for an_article in articles:
-            label = QtWidgets.QLabel(an_article['title'])
-            self.articles.append({'widget': label, 'id': an_article['id']})
-            articles_layout.addWidget(label)
+            article_widget = ArticleFrameWidget(an_article['title'])
+            self.articles.append({'widget': article_widget, 'id': an_article['id']})
+            articles_layout.addWidget(article_widget)
         articles_layout.addStretch()
         self.catalog_tabs[tab_index]['widget'].scrollArea.setLayout(articles_layout)
 
