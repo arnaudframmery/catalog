@@ -9,21 +9,21 @@ def populate_light(session):
     article_2 = Article(title='002')
     article_cities = Article(title='Paris')
 
-    component_1 = Component(label='Nom', default='Smith')
-    component_2 = Component(label='Prénom', default='John')
+    component_1 = Component(label='Last name', default='Smith')
+    component_2 = Component(label='First name', default='John')
     component_3 = Component(label='Gender', default='Male')
     components = [component_1, component_2, component_3]
 
     type_1 = Type(code='simple')
 
-    data_1_nom = Data(value='Potter')
-    data_1_prenom = Data(value='Harry')
+    data_1_lname = Data(value='Potter')
+    data_1_fname = Data(value='Harry')
     data_1_gender = Data(value='Male')
-    data_2_nom = Data(value='Weasley')
-    data_2_prenom = Data(value='Ron')
+    data_2_lname = Data(value='Weasley')
+    data_2_fname = Data(value='Ron')
     data_2_gender = Data(value='Male')
-    data_1 = [data_1_nom, data_1_prenom, data_1_gender]
-    data_2 = [data_2_nom, data_2_prenom, data_2_gender]
+    data_1 = [data_1_lname, data_1_fname, data_1_gender]
+    data_2 = [data_2_lname, data_2_fname, data_2_gender]
 
     people.article = [article_1, article_2]
     cities.article = [article_cities]

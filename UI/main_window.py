@@ -53,18 +53,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_CatalogUI):
         articles = self.controler.get_articles(catalog_id)
         articles_layout = QVBoxLayout()
         for an_article in articles:
-            article_widget = ArticleFrameWidget(an_article['title'])
+            article_widget = ArticleFrameWidget(an_article['title'], an_article['id'])
             article_widget.articleClickedOn.connect(self.display_article_details)
             self.articles.append({'widget': article_widget, 'id': an_article['id']})
             articles_layout.addWidget(article_widget)
         articles_layout.addStretch()
         self.catalog_tabs[tab_index]['explore_stack'].scrollArea.setLayout(articles_layout)
 
-    def display_article_details(self, message):
-        print(message)
+    def display_article_details(self, id, text):
+        detail = self.controler.get_article_detail(id)
         tab_index = self.catalog_tab_widget.currentIndex()
         stack_widget = self.catalog_tabs[tab_index]['stack']
-        detail_stack = DetailFrameWidget()
+        detail_stack = DetailFrameWidget(text, detail)
         self.catalog_tabs[tab_index]['detail_stack'] = detail_stack
         detail_stack.return_button.released.connect(self.return_to_explore_view)
         stack_widget.addWidget(detail_stack)
