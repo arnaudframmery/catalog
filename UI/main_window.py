@@ -18,10 +18,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_CatalogUI):
         self.catalog_tab_widget = QtWidgets.QTabWidget()
         self.catalog_tabs = []
         self.articles = []
+        self.filters = []
+        self.apply_button = None
 
         self.init_UI()
         if self.catalog_tabs:
             self.catalog_tab_widget.setCurrentIndex(0)
+            self.display_filters(self.catalog_tabs[0]['id'], self.catalog_tab_widget.currentIndex())
             self.display_articles(self.catalog_tabs[0]['id'], self.catalog_tab_widget.currentIndex())
 
         self.set_connections()
@@ -44,13 +47,35 @@ class MainWindow(QtWidgets.QMainWindow, Ui_CatalogUI):
 
     def set_connections(self):
         self.catalog_tab_widget.currentChanged.connect(
-            lambda index: self.display_articles(self.catalog_tabs[index]['id'], index)
+            self.on_tab_change
         )
+
+    def on_tab_change(self, index):
+        self.display_filters(self.catalog_tabs[index]['id'], index)
+        self.display_articles(self.catalog_tabs[index]['id'], index)
+
+    def on_apply_release(self):
+        index = self.catalog_tab_widget.currentIndex()
+        self.display_articles(self.catalog_tabs[index]['id'], index)
+
+    def display_filters(self, catalog_id, tab_index):
+        self.filters = self.controler.get_filters(catalog_id)
+        filters_layout = QVBoxLayout()
+        for a_filter in self.filters:
+            a_filter.create_widget()
+            filters_layout.addWidget(a_filter.get_parent_widget())
+        if self.filters:
+            self.apply_button = QtWidgets.QPushButton('Apply')
+            self.apply_button.released.connect(self.on_apply_release)
+            filters_layout.addWidget(self.apply_button)
+        filters_layout.addStretch()
+        filters_layout_widget = QtWidgets.QWidget()
+        filters_layout_widget.setLayout(filters_layout)
+        self.catalog_tabs[tab_index]['explore_stack'].scrollArea_2.setWidget(filters_layout_widget)
 
     def display_articles(self, catalog_id, tab_index):
         self.articles = []
-
-        articles = self.controler.get_articles(catalog_id)
+        articles = self.controler.get_articles(catalog_id, self.filters)
         articles_layout = QVBoxLayout()
         for an_article in articles:
             article_widget = ArticleFrameWidget(an_article['title'], an_article['id'])
@@ -58,7 +83,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_CatalogUI):
             self.articles.append({'widget': article_widget, 'id': an_article['id']})
             articles_layout.addWidget(article_widget)
         articles_layout.addStretch()
-        self.catalog_tabs[tab_index]['explore_stack'].scrollArea.setLayout(articles_layout)
+        articles_layout_widget = QtWidgets.QWidget()
+        articles_layout_widget.setLayout(articles_layout)
+        self.catalog_tabs[tab_index]['explore_stack'].scrollArea.setWidget(articles_layout_widget)
 
     def display_article_details(self, id, text):
         detail = self.controler.get_article_detail(id)
