@@ -13,13 +13,36 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetDefaultConstraint</enum>
+     </property>
+     <item>
+      <widget class="QLabel" name="sort_label">
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="text">
+        <string>Sorting:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="sort_combo_box"/>
+     </item>
+    </layout>
+   </item>
    <item>
     <widget class="QSplitter" name="splitter">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <widget class="QScrollArea" name="scrollArea_2">
+     <widget class="QScrollArea" name="filter_area">
       <property name="widgetResizable">
        <bool>true</bool>
       </property>
@@ -28,13 +51,13 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>355</width>
-         <height>410</height>
+         <width>358</width>
+         <height>203</height>
         </rect>
        </property>
       </widget>
      </widget>
-     <widget class="QScrollArea" name="scrollArea">
+     <widget class="QScrollArea" name="article_area">
       <property name="widgetResizable">
        <bool>true</bool>
       </property>
@@ -43,8 +66,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>355</width>
-         <height>410</height>
+         <width>357</width>
+         <height>203</height>
         </rect>
        </property>
       </widget>

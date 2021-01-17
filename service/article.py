@@ -2,7 +2,7 @@ from DB.tables import Catalog, Article, Data, Component
 from service.helper import object_as_dict
 
 
-def get_articles_service(session, catalog_id, filters):
+def get_articles_service(session, catalog_id, filters, sorting_component):
     result = session\
         .query(Article.id, Article.title)\
         .join(Catalog)\
@@ -11,6 +11,12 @@ def get_articles_service(session, catalog_id, filters):
     for a_filter in filters:
         stmt = a_filter.apply_filter(catalog_id)
         result = result.join(stmt, Article.id == stmt.c.id)
+
+    if sorting_component:
+        result = result\
+            .join(Data, Article.id == Data.article_id)\
+            .filter(Data.component_id == sorting_component)\
+            .order_by(Data.value)
 
     return object_as_dict(result.all())
 

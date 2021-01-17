@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 from engine import Base
 
@@ -53,6 +53,7 @@ class Component(Base):
     id = Column(Integer, primary_key=True)
     label = Column(String, nullable=False)
     default = Column(String)
+    is_sortable = Column(Boolean, default=False)
     catalog_id = Column(Integer, ForeignKey('catalog.id'), nullable=False)
     type_id = Column(Integer, ForeignKey('type.id'), nullable=False)
 

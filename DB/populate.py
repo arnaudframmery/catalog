@@ -10,8 +10,8 @@ def populate_light(session):
     article_3 = Article(title='003')
     article_cities = Article(title='Paris')
 
-    component_1 = Component(label='Last name', default='Smith')
-    component_2 = Component(label='First name', default='John')
+    component_1 = Component(label='Last name', default='Smith', is_sortable=True)
+    component_2 = Component(label='First name', default='John', is_sortable=True)
     component_3 = Component(label='Gender', default='Male')
     components = [component_1, component_2, component_3]
 
