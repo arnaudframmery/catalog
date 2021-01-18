@@ -1,21 +1,91 @@
 from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QVBoxLayout
+
+from UI.article_frame_widget import ArticleFrameWidget
+from UI.detail_frame_widget import DetailFrameWidget
 from UI.qt_ui.catalog_frame_UI import Ui_Form
 
 
 class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
 
-    def __init__(self, sortable_components, *args, obj=None, **kwargs):
+    def __init__(self, controler, catalog_id, *args, **kwargs):
         super(CatalogFrameWidget, self).__init__(*args, **kwargs)
         self.setupUi(self)
-        self.sortable_components = sortable_components
+
+        self.stack_widget.setCurrentIndex(0)
+        self.detail_layout = QVBoxLayout()
+        self.detail_stack.setLayout(self.detail_layout)
+
+        self.controler = controler
+        self.catalog_id = catalog_id
+        self.filters = []
+        self.articles = []
+        self.apply_button = None
+
+        self.sorting_component = None
+        self.sortable_components = []
+        self.init_sort_frame()
+
+    def init_sort_frame(self):
+        self.sortable_components = self.controler.get_sortable_components(self.catalog_id)
         self.sort_combo_box.insertItems(
             0,
             ['No sorting'] + [a_component['label'] for a_component in self.sortable_components]
         )
         self.horizontalLayout.insertStretch(0)
+        self.sort_combo_box.currentIndexChanged.connect(self.on_sorting_change)
 
-    def get_sorting_component_id(self, component_index):
+    def on_focus(self):
+        if not self.filters:
+            self.display_filters()
+        if not self.articles:
+            self.display_articles()
+
+    def on_apply_release(self):
+        self.display_articles()
+
+    def display_filters(self):
+        self.filters = self.controler.get_filters(self.catalog_id)
+        filters_layout = QVBoxLayout()
+        for a_filter in self.filters:
+            a_filter.create_widget()
+            filters_layout.addWidget(a_filter.get_parent_widget())
+        if self.filters:
+            self.apply_button = QtWidgets.QPushButton('Apply')
+            self.apply_button.released.connect(self.on_apply_release)
+            filters_layout.addWidget(self.apply_button)
+        filters_layout.addStretch()
+        filters_layout_widget = QtWidgets.QWidget()
+        filters_layout_widget.setLayout(filters_layout)
+        self.filter_area.setWidget(filters_layout_widget)
+
+    def display_articles(self):
+        self.articles = []
+        articles = self.controler.get_articles(self.catalog_id, self.filters, self.sorting_component)
+        articles_layout = QVBoxLayout()
+        for an_article in articles:
+            article_widget = ArticleFrameWidget(an_article['title'], an_article['id'])
+            article_widget.articleClickedOn.connect(self.display_article_details)
+            self.articles.append({'widget': article_widget, 'id': an_article['id']})
+            articles_layout.addWidget(article_widget)
+        articles_layout.addStretch()
+        articles_layout_widget = QtWidgets.QWidget()
+        articles_layout_widget.setLayout(articles_layout)
+        self.article_area.setWidget(articles_layout_widget)
+
+    def display_article_details(self, id, text):
+        detail = self.controler.get_article_detail(id)
+        detail_widget = DetailFrameWidget(text, detail)
+        detail_widget.return_button.released.connect(self.return_to_explore_view)
+        self.detail_area.setWidget(detail_widget)
+        self.stack_widget.setCurrentIndex(1)
+
+    def return_to_explore_view(self):
+        self.stack_widget.setCurrentIndex(0)
+
+    def on_sorting_change(self, component_index):
         if component_index == 0:
-            return None
+            self.sorting_component = None
         else:
-            return self.sortable_components[component_index - 1]['id']
+            self.sorting_component = self.sortable_components[component_index - 1]['id']
+        self.display_articles()
