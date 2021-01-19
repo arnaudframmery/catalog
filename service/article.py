@@ -1,8 +1,10 @@
+from sqlalchemy import desc
+
 from DB.tables import Catalog, Article, Data, Component
 from service.helper import object_as_dict
 
 
-def get_articles_service(session, catalog_id, filters, sorting_component):
+def get_articles_service(session, catalog_id, filters, sorting_component, sorting_direction):
     result = session\
         .query(Article.id, Article.title)\
         .join(Catalog)\
@@ -13,10 +15,16 @@ def get_articles_service(session, catalog_id, filters, sorting_component):
         result = result.join(stmt, Article.id == stmt.c.id)
 
     if sorting_component:
-        result = result\
-            .join(Data, Article.id == Data.article_id)\
-            .filter(Data.component_id == sorting_component)\
-            .order_by(Data.value)
+        if sorting_direction == 'ASC':
+            result = result\
+                .join(Data, Article.id == Data.article_id)\
+                .filter(Data.component_id == sorting_component)\
+                .order_by(Data.value)
+        else:
+            result = result\
+                .join(Data, Article.id == Data.article_id)\
+                .filter(Data.component_id == sorting_component)\
+                .order_by(desc(Data.value))
 
     return object_as_dict(result.all())
 

@@ -1,5 +1,5 @@
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QVBoxLayout
+from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout
 
 from UI.article_frame_widget import ArticleFrameWidget
 from UI.detail_frame_widget import DetailFrameWidget
@@ -15,15 +15,18 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.stack_widget.setCurrentIndex(0)
         self.detail_layout = QVBoxLayout()
         self.detail_stack.setLayout(self.detail_layout)
+        self.sort_direction.released.connect(self.on_sorting_direction_release)
 
         self.controler = controler
         self.catalog_id = catalog_id
         self.filters = []
         self.articles = []
         self.apply_button = None
+        self.reset_button = None
 
         self.sorting_component = None
         self.sortable_components = []
+        self.sorting_direction = 'ASC'
         self.init_sort_frame()
 
     def init_sort_frame(self):
@@ -44,6 +47,11 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
     def on_apply_release(self):
         self.display_articles()
 
+    def on_reset_release(self):
+        for a_filter in self.filters:
+            a_filter.reset_filter()
+        self.display_articles()
+
     def display_filters(self):
         self.filters = self.controler.get_filters(self.catalog_id)
         filters_layout = QVBoxLayout()
@@ -51,9 +59,16 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
             a_filter.create_widget()
             filters_layout.addWidget(a_filter.get_parent_widget())
         if self.filters:
+            filters_button_layout = QHBoxLayout()
+            filters_button_layout_widget = QtWidgets.QWidget()
             self.apply_button = QtWidgets.QPushButton('Apply')
             self.apply_button.released.connect(self.on_apply_release)
-            filters_layout.addWidget(self.apply_button)
+            filters_button_layout.addWidget(self.apply_button)
+            self.reset_button = QtWidgets.QPushButton('Reset')
+            self.reset_button.released.connect(self.on_reset_release)
+            filters_button_layout.addWidget(self.reset_button)
+            filters_button_layout_widget.setLayout(filters_button_layout)
+            filters_layout.addWidget(filters_button_layout_widget)
         filters_layout.addStretch()
         filters_layout_widget = QtWidgets.QWidget()
         filters_layout_widget.setLayout(filters_layout)
@@ -61,7 +76,12 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
 
     def display_articles(self):
         self.articles = []
-        articles = self.controler.get_articles(self.catalog_id, self.filters, self.sorting_component)
+        articles = self.controler.get_articles(
+            self.catalog_id,
+            self.filters,
+            self.sorting_component,
+            self.sorting_direction
+        )
         articles_layout = QVBoxLayout()
         for an_article in articles:
             article_widget = ArticleFrameWidget(an_article['title'], an_article['id'])
@@ -86,6 +106,17 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
     def on_sorting_change(self, component_index):
         if component_index == 0:
             self.sorting_component = None
+            self.sort_direction.setEnabled(False)
         else:
             self.sorting_component = self.sortable_components[component_index - 1]['id']
+            self.sort_direction.setEnabled(True)
+        self.display_articles()
+
+    def on_sorting_direction_release(self):
+        if self.sorting_direction == 'ASC':
+            self.sorting_direction = 'DESC'
+            self.sort_direction.setText('DESC')
+        elif self.sorting_direction == 'DESC':
+            self.sorting_direction = 'ASC'
+            self.sort_direction.setText('ASC')
         self.display_articles()

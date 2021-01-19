@@ -18,3 +18,6 @@ class Filter:
 
     def apply_filter(self, query):
         pass
+
+    def reset_filter(self):
+        pass

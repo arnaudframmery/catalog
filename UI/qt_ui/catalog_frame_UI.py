@@ -34,6 +34,12 @@ class Ui_Form(object):
         self.sort_combo_box = QtWidgets.QComboBox(self.explore_stack)
         self.sort_combo_box.setObjectName("sort_combo_box")
         self.horizontalLayout.addWidget(self.sort_combo_box)
+        self.sort_direction = QtWidgets.QPushButton(self.explore_stack)
+        self.sort_direction.setEnabled(False)
+        self.sort_direction.setCheckable(False)
+        self.sort_direction.setChecked(False)
+        self.sort_direction.setObjectName("sort_direction")
+        self.horizontalLayout.addWidget(self.sort_direction)
         self.verticalLayout_2.addLayout(self.horizontalLayout)
         self.splitter = QtWidgets.QSplitter(self.explore_stack)
         self.splitter.setOrientation(QtCore.Qt.Horizontal)
@@ -70,10 +76,11 @@ class Ui_Form(object):
         self.verticalLayout.addWidget(self.stack_widget)
 
         self.retranslateUi(Form)
-        self.stack_widget.setCurrentIndex(1)
+        self.stack_widget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
         self.sort_label.setText(_translate("Form", "Sorting:"))
+        self.sort_direction.setText(_translate("Form", "ASC"))

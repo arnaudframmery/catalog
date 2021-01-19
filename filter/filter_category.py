@@ -27,3 +27,7 @@ class FilterCategory(Filter):
             if self.widgets[i].isChecked():
                 query_categories.append(self.categories[i])
         return self.controler.apply_categories(catalog_id, self.component_id, query_categories)
+
+    def reset_filter(self):
+        for a_widget in self.widgets:
+            a_widget.setCheckState(Qt.Checked)

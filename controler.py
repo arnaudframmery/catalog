@@ -12,8 +12,8 @@ class Controler:
     def get_catalogs(self):
         return get_catalogs_service(self.session)
 
-    def get_articles(self, catalog_id, filters, sorting_component):
-        return get_articles_service(self.session, catalog_id, filters, sorting_component)
+    def get_articles(self, catalog_id, filters, sorting_component, sorting_direction):
+        return get_articles_service(self.session, catalog_id, filters, sorting_component, sorting_direction)
 
     def get_article_detail(self, article_id):
         return get_article_detail_service(self.session, article_id)

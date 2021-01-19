@@ -17,7 +17,7 @@
    <item>
     <widget class="QStackedWidget" name="stack_widget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="explore_stack">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -41,6 +41,22 @@
          </item>
          <item>
           <widget class="QComboBox" name="sort_combo_box"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="sort_direction">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>ASC</string>
+           </property>
+           <property name="checkable">
+            <bool>false</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
