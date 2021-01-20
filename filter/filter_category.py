@@ -6,6 +6,11 @@ from filter.filter import Filter
 
 
 class FilterCategory(Filter):
+    """
+    A filter where the user can select the articles by a specific component values.
+    The categories are all the distinct values of this specific component
+    """
+
     def __init__(self, controler, component_id, component_label):
         super().__init__(controler, component_id, component_label)
         self.categories = self.controler.get_categories(self.component_id)

@@ -2,6 +2,8 @@ from DB.tables import Catalog, Article, Component, Type, Data
 
 
 def populate_light(session):
+    """inject some data into the database"""
+
     people = Catalog(name='people', theme='base')
     cities = Catalog(name='cities', theme='base')
 

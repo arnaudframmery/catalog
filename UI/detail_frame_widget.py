@@ -4,6 +4,9 @@ from UI.qt_ui.detail_frame_UI import Ui_Form
 
 
 class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
+    """
+    Manage the display of article details (when an article is clicked)
+    """
 
     def __init__(self, title, detail,  *args, obj=None, **kwargs):
         super(DetailFrameWidget, self).__init__(*args, **kwargs)

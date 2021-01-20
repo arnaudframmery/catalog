@@ -7,6 +7,9 @@ from UI.qt_ui.main_window_UI import Ui_CatalogUI
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_CatalogUI):
+    """
+    Manage the main window
+    """
 
     def __init__(self, controler, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
@@ -31,6 +34,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_CatalogUI):
         self.setCentralWidget(self.central_widget)
 
     def init_UI(self):
+        """create the different tabs with each catalog"""
         catalogs = self.controler.get_catalogs()
         for tab in catalogs:
             catalog_frame = CatalogFrameWidget(self.controler, tab['id'])
@@ -38,15 +42,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_CatalogUI):
             self.catalog_tab_widget.addTab(catalog_frame, tab['name'])
 
     def set_connections(self):
+        """set the different widget connections"""
         self.catalog_tab_widget.currentChanged.connect(
             self.on_tab_change
         )
 
     def on_tab_change(self, index):
+        """actions to do when a tab is selected"""
         self.catalog_tabs[index].on_focus()
 
 
 def launch_UI(controler):
+    """start the main window"""
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow(controler)
     window.show()

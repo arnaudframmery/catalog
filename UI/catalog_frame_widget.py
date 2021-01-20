@@ -7,6 +7,9 @@ from UI.qt_ui.catalog_frame_UI import Ui_Form
 
 
 class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
+    """
+    Manage the display of catalog articles and filters (in a tab)
+    """
 
     def __init__(self, controler, catalog_id, *args, **kwargs):
         super(CatalogFrameWidget, self).__init__(*args, **kwargs)
@@ -30,6 +33,7 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.init_sort_frame()
 
     def init_sort_frame(self):
+        """create the sorting display"""
         self.sortable_components = self.controler.get_sortable_components(self.catalog_id)
         self.sort_combo_box.insertItems(
             0,
@@ -39,20 +43,24 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.sort_combo_box.currentIndexChanged.connect(self.on_sorting_change)
 
     def on_focus(self):
+        """actions to do when the catalog is selected in the main window"""
         if not self.filters:
             self.display_filters()
         if not self.articles:
             self.display_articles()
 
     def on_apply_release(self):
+        """actions to do when button 'apply' is released"""
         self.display_articles()
 
     def on_reset_release(self):
+        """actions to do when button 'reset' is released"""
         for a_filter in self.filters:
             a_filter.reset_filter()
         self.display_articles()
 
     def display_filters(self):
+        """manage the filter area"""
         self.filters = self.controler.get_filters(self.catalog_id)
         filters_layout = QVBoxLayout()
         for a_filter in self.filters:
@@ -75,6 +83,7 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.filter_area.setWidget(filters_layout_widget)
 
     def display_articles(self):
+        """manage the article area"""
         self.articles = []
         articles = self.controler.get_articles(
             self.catalog_id,
@@ -94,6 +103,7 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.article_area.setWidget(articles_layout_widget)
 
     def display_article_details(self, id, text):
+        """actions to do when an article is selected"""
         detail = self.controler.get_article_detail(id)
         detail_widget = DetailFrameWidget(text, detail)
         detail_widget.return_button.released.connect(self.return_to_explore_view)
@@ -101,9 +111,11 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.stack_widget.setCurrentIndex(1)
 
     def return_to_explore_view(self):
+        """actions to do when button 'return' is selected"""
         self.stack_widget.setCurrentIndex(0)
 
     def on_sorting_change(self, component_index):
+        """actions to do when sorting component is changed"""
         if component_index == 0:
             self.sorting_component = None
             self.sort_direction.setEnabled(False)
@@ -113,6 +125,7 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.display_articles()
 
     def on_sorting_direction_release(self):
+        """actions to do when sorting direction is changed"""
         if self.sorting_direction == 'ASC':
             self.sorting_direction = 'DESC'
             self.sort_direction.setText('DESC')

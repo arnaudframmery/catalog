@@ -5,6 +5,7 @@ from service.helper import object_as_dict
 
 
 def get_articles_service(session, catalog_id, filters, sorting_component, sorting_direction):
+    """recover articles about a specific catalog, with filtering and sorting options"""
     result = session\
         .query(Article.id, Article.title)\
         .join(Catalog)\
@@ -30,6 +31,7 @@ def get_articles_service(session, catalog_id, filters, sorting_component, sortin
 
 
 def get_article_detail_service(session, article_id):
+    """recover all the data about a specific article"""
     result = session\
         .query(Data.value, Component.label)\
         .filter(Data.component_id == Component.id)\
