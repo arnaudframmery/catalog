@@ -1,5 +1,5 @@
 from service.article import get_articles_service, get_article_detail_service
-from service.catalog import get_catalogs_service
+from service.catalog import get_catalogs_service, create_catalog_service
 from service.filter import get_filters_service, get_categories_service, apply_categories_service
 from service.sorting import get_sortable_components_service
 
@@ -32,3 +32,6 @@ class Controler:
 
     def get_sortable_components(self, catalog_id):
         return get_sortable_components_service(self.session, catalog_id)
+
+    def create_catalog(self, catalog_name):
+        return create_catalog_service(self.session, catalog_name)

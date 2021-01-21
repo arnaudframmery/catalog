@@ -5,7 +5,8 @@ qt_ui_mapping = {
     'main_window.ui': 'main_window_UI.py',
     'catalog_frame.ui': 'catalog_frame_UI.py',
     'article_frame.ui': 'article_frame_UI.py',
-    'detail_frame.ui': 'detail_frame_UI.py'
+    'detail_frame.ui': 'detail_frame_UI.py',
+    'catalog_creation_dialog.ui': 'catalog_creation_UI.py',
 }
 
 

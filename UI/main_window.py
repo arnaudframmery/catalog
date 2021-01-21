@@ -2,6 +2,7 @@ import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QWidget, QHBoxLayout
 
+from UI.catalog_creation_dialog import CatalogCreationDialog
 from UI.catalog_frame_widget import CatalogFrameWidget
 from UI.qt_ui.main_window_UI import Ui_CatalogUI
 
@@ -43,13 +44,22 @@ class MainWindow(QtWidgets.QMainWindow, Ui_CatalogUI):
 
     def set_connections(self):
         """set the different widget connections"""
-        self.catalog_tab_widget.currentChanged.connect(
-            self.on_tab_change
-        )
+        self.catalog_tab_widget.currentChanged.connect(self.on_tab_change)
+        self.action_add_catalog.triggered.connect(self.on_add_catalog_trigger)
 
     def on_tab_change(self, index):
         """actions to do when a tab is selected"""
         self.catalog_tabs[index].on_focus()
+
+    def on_add_catalog_trigger(self):
+        """actions to do when add catalog action is triggered"""
+        dialog = CatalogCreationDialog(self)
+        if dialog.exec_():
+            catalog_name = dialog.get_catalog_name()
+            catalog_id = self.controler.create_catalog(catalog_name)
+            catalog_frame = CatalogFrameWidget(self.controler, catalog_id)
+            self.catalog_tabs.append(catalog_frame)
+            self.catalog_tab_widget.addTab(catalog_frame, catalog_name)
 
 
 def launch_UI(controler):
