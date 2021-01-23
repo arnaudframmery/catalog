@@ -1,4 +1,5 @@
-from sqlalchemy import desc
+from sqlalchemy import desc, and_
+from sqlalchemy.sql.functions import coalesce
 
 from DB.tables import Catalog, Article, Data, Component
 from service.helper import object_as_dict
@@ -13,29 +14,36 @@ def get_articles_service(session, catalog_id, filters, sorting_component, sortin
 
     for a_filter in filters:
         stmt = a_filter.apply_filter(catalog_id)
-        result = result.join(stmt, Article.id == stmt.c.id)
+        result = result.join(stmt, Article.id == stmt.c.article_id)
 
     if sorting_component:
+        stmt = session\
+            .query(Component.id,
+                   coalesce(Data.value, Component.default).label('data_value'),
+                   Article.id.label('article_id'))\
+            .join(Catalog, Catalog.id == Component.catalog_id)\
+            .join(Article, Article.catalog_id == Catalog.id)\
+            .join(Data, and_(Data.component_id == Component.id, Data.article_id == Article.id), isouter=True)\
+            .filter(Component.id == sorting_component)\
+            .subquery()
         if sorting_direction == 'ASC':
             result = result\
-                .join(Data, Article.id == Data.article_id)\
-                .filter(Data.component_id == sorting_component)\
-                .order_by(Data.value)
+                .join(stmt, stmt.c.article_id == Article.id)\
+                .order_by(stmt.c.data_value)
         else:
             result = result\
-                .join(Data, Article.id == Data.article_id)\
-                .filter(Data.component_id == sorting_component)\
-                .order_by(desc(Data.value))
+                .join(stmt, stmt.c.article_id == Article.id)\
+                .order_by(desc(stmt.c.data_value))
 
     return object_as_dict(result.all())
 
 
-def get_article_detail_service(session, article_id):
+def get_article_detail_service(session, article_id, catalog_id):
     """recover all the data about a specific article"""
     result = session\
-        .query(Data.value, Component.label)\
-        .filter(Data.component_id == Component.id)\
-        .filter(Data.article_id == article_id)\
+        .query(Component.label, coalesce(Data.value, Component.default).label('value'))\
+        .join(Data, and_(Data.component_id == Component.id, Data.article_id == article_id), isouter=True)\
+        .filter(Component.catalog_id == catalog_id)\
         .order_by(Component.id)\
         .all()
     return object_as_dict(result)

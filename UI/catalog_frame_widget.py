@@ -2,6 +2,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout
 
 from UI.article_frame_widget import ArticleFrameWidget
+from UI.component_setting_dialog import ComponentSettingDialog
 from UI.detail_frame_widget import DetailFrameWidget
 from UI.qt_ui.catalog_frame_UI import Ui_Form
 
@@ -32,15 +33,18 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.sorting_direction = 'ASC'
         self.init_sort_frame()
 
+        self.setting_button.released.connect(self.on_component_setting_release)
+        self.sort_combo_box.currentIndexChanged.connect(self.on_sorting_change)
+
     def init_sort_frame(self):
         """create the sorting display"""
         self.sortable_components = self.controler.get_sortable_components(self.catalog_id)
+        for i in range(self.sort_combo_box.count()):
+            self.sort_combo_box.removeItem(0)
         self.sort_combo_box.insertItems(
             0,
             ['No sorting'] + [a_component['label'] for a_component in self.sortable_components]
         )
-        self.horizontalLayout.insertStretch(0)
-        self.sort_combo_box.currentIndexChanged.connect(self.on_sorting_change)
 
     def on_focus(self):
         """actions to do when the catalog is selected in the main window"""
@@ -104,7 +108,7 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
 
     def display_article_details(self, id, text):
         """actions to do when an article is selected"""
-        detail = self.controler.get_article_detail(id)
+        detail = self.controler.get_article_detail(id, self.catalog_id)
         detail_widget = DetailFrameWidget(text, detail)
         detail_widget.return_button.released.connect(self.return_to_explore_view)
         self.detail_area.setWidget(detail_widget)
@@ -116,7 +120,7 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
 
     def on_sorting_change(self, component_index):
         """actions to do when sorting component is changed"""
-        if component_index == 0:
+        if component_index == 0 or component_index == -1:
             self.sorting_component = None
             self.sort_direction.setEnabled(False)
         else:
@@ -133,3 +137,11 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
             self.sorting_direction = 'ASC'
             self.sort_direction.setText('ASC')
         self.display_articles()
+
+    def on_component_setting_release(self):
+        """actions to do when setting button is released"""
+        dialog = ComponentSettingDialog(self, self.controler, self.catalog_id)
+        if dialog.exec_():
+            self.display_filters()
+            self.display_articles()
+            self.init_sort_frame()

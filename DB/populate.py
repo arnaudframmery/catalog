@@ -20,7 +20,7 @@ def populate_light(session):
     component_5 = Component(label='House', default='Gryffindor')
     components = [component_1, component_2, component_3, component_4, component_5]
 
-    type_1 = Type(code='simple')
+    type_1 = Type(code='no filter')
     type_cat = Type(code='category')
 
     data_1_lname = Data(value='Potter')
