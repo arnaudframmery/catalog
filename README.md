@@ -30,10 +30,10 @@ python launch.py
 - [ ] Catalog suppression
 - Filter:
 - [x] Filter display & interaction
-- [ ] Filter component creation & edition
+- [x] Filter component creation & edition
 - Sorting:
 - [x] Sorting display & interaction
-- [ ] Sorting component creation & edition
+- [x] Sorting component creation & edition
 - Article:
 - [x] Article display & interaction & detail view
 - [ ] Article creation & edition
