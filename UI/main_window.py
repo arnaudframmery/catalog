@@ -3,6 +3,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QWidget, QHBoxLayout
 
 from UI.catalog_creation_dialog import CatalogCreationDialog
+from UI.catalog_deletion_dialog import CatalogDeletionDialog
 from UI.catalog_frame_widget import CatalogFrameWidget
 from UI.qt_ui.main_window_UI import Ui_CatalogUI
 
@@ -38,7 +39,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_CatalogUI):
         """create the different tabs with each catalog"""
         catalogs = self.controler.get_catalogs()
         for tab in catalogs:
-            catalog_frame = CatalogFrameWidget(self.controler, tab['id'])
+            catalog_frame = CatalogFrameWidget(self.controler, tab['id'], tab['name'])
             self.catalog_tabs.append(catalog_frame)
             self.catalog_tab_widget.addTab(catalog_frame, tab['name'])
 
@@ -46,10 +47,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_CatalogUI):
         """set the different widget connections"""
         self.catalog_tab_widget.currentChanged.connect(self.on_tab_change)
         self.action_add_catalog.triggered.connect(self.on_add_catalog_trigger)
+        self.action_remove_catalog.triggered.connect(self.on_remove_catalog_trigger)
 
     def on_tab_change(self, index):
         """actions to do when a tab is selected"""
-        self.catalog_tabs[index].on_focus()
+        if index != -1:
+            self.catalog_tabs[index].on_focus()
 
     def on_add_catalog_trigger(self):
         """actions to do when add catalog action is triggered"""
@@ -57,9 +60,21 @@ class MainWindow(QtWidgets.QMainWindow, Ui_CatalogUI):
         if dialog.exec_():
             catalog_name = dialog.get_catalog_name()
             catalog_id = self.controler.create_catalog(catalog_name)
-            catalog_frame = CatalogFrameWidget(self.controler, catalog_id)
+            catalog_frame = CatalogFrameWidget(self.controler, catalog_id, catalog_name)
             self.catalog_tabs.append(catalog_frame)
             self.catalog_tab_widget.addTab(catalog_frame, catalog_name)
+
+    def on_remove_catalog_trigger(self):
+        """actions to do when remove catalog action is triggered"""
+        index = self.catalog_tab_widget.currentIndex()
+        name = self.catalog_tabs[index].get_name()
+        catalog_id = self.catalog_tabs[index].get_id()
+        dialog = CatalogDeletionDialog(self, name)
+        if dialog.exec_():
+            self.controler.delete_catalog(catalog_id)
+            widget = self.catalog_tabs.pop(index)
+            self.catalog_tab_widget.removeTab(index)
+            widget.destroy()
 
 
 def launch_UI(controler):

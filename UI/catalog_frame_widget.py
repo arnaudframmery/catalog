@@ -12,7 +12,7 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
     Manage the display of catalog articles and filters (in a tab)
     """
 
-    def __init__(self, controler, catalog_id, *args, **kwargs):
+    def __init__(self, controler, catalog_id, catalog_name, *args, **kwargs):
         super(CatalogFrameWidget, self).__init__(*args, **kwargs)
         self.setupUi(self)
 
@@ -23,6 +23,7 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
 
         self.controler = controler
         self.catalog_id = catalog_id
+        self.catalog_name = catalog_name
         self.filters = []
         self.articles = []
         self.apply_button = None
@@ -145,3 +146,9 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
             self.display_filters()
             self.display_articles()
             self.init_sort_frame()
+
+    def get_id(self):
+        return self.catalog_id
+
+    def get_name(self):
+        return self.catalog_name

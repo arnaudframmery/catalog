@@ -1,5 +1,3 @@
-from sqlalchemy import desc
-
 from DB.tables import Catalog
 from service.helper import object_as_dict
 
@@ -18,3 +16,13 @@ def create_catalog_service(session, catalog_name):
     session.add(new_catalog)
     session.commit()
     return new_catalog.id
+
+
+def delete_catalog_service(session, catalog_id):
+    """delete a specific catalog"""
+    catalog = session\
+        .query(Catalog)\
+        .filter(Catalog.id == catalog_id)\
+        .one()
+    session.delete(catalog)
+    session.commit()

@@ -27,7 +27,7 @@ python launch.py
 - [x] Populate DB
 - Catalog:
 - [x] Catalog display & interaction & creation
-- [ ] Catalog suppression
+- [x] Catalog suppression
 - Filter:
 - [x] Filter display & interaction
 - [x] Filter component creation & edition
@@ -46,7 +46,7 @@ python launch.py
 - [ ] Article select view
 - Data types:
 - [x] text
-- [x] Number
+- [ ] Number
 - [ ] Dates
 - [ ] Pictures
 - [ ] Files

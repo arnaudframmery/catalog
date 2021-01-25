@@ -9,6 +9,7 @@ qt_ui_mapping = {
     'catalog_creation_dialog.ui': 'catalog_creation_UI.py',
     'component_setting_dialog.ui': 'component_setting_UI.py',
     'component_frame.ui': 'component_frame_UI.py',
+    'catalog_deletion_dialog.ui': 'catalog_deletion_UI.py'
 }
 
 
