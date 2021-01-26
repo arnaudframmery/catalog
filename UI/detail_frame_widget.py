@@ -8,8 +8,12 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
     Manage the display of article details (when an article is clicked)
     """
 
-    def __init__(self, title, detail,  *args, obj=None, **kwargs):
+    deleteArticle = QtCore.pyqtSignal()
+
+    def __init__(self, controler, article_id, title, detail,  *args, obj=None, **kwargs):
         super(DetailFrameWidget, self).__init__(*args, **kwargs)
+        self.controler = controler
+        self.article_id = article_id
         self.title = title
         self.detail = detail
         self.setupUi(self)
@@ -23,3 +27,13 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.layout_widget.setLayout(self.layout)
         self.verticalLayout.addWidget(self.layout_widget)
         self.verticalLayout.addStretch()
+
+        self.modify_button.released.connect(self.on_modify_release)
+        self.delete_button.released.connect(self.on_delete_release)
+
+    def on_modify_release(self):
+        print('MODIFY')
+
+    def on_delete_release(self):
+        self.controler.delete_article(self.article_id)
+        self.deleteArticle.emit()

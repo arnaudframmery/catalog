@@ -1,4 +1,4 @@
-from service.article import get_articles_service, get_article_detail_service
+from service.article import get_articles_service, get_article_detail_service, delete_article_service
 from service.catalog import get_catalogs_service, create_catalog_service, delete_catalog_service
 from service.component import get_components_service, create_components_service, update_components_service, \
     delete_components_service
@@ -56,3 +56,6 @@ class Controler:
 
     def delete_catalog(self, catalog_id):
         return delete_catalog_service(self.session, catalog_id)
+
+    def delete_article(self, article_id):
+        return delete_article_service(self.session, article_id)

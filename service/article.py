@@ -47,3 +47,13 @@ def get_article_detail_service(session, article_id, catalog_id):
         .order_by(Component.id)\
         .all()
     return object_as_dict(result)
+
+
+def delete_article_service(session, article_id):
+    """delete a specific article"""
+    article = session\
+        .query(Article)\
+        .filter(Article.id == article_id)\
+        .one()
+    session.delete(article)
+    session.commit()

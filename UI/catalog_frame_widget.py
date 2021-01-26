@@ -110,8 +110,9 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
     def display_article_details(self, id, text):
         """actions to do when an article is selected"""
         detail = self.controler.get_article_detail(id, self.catalog_id)
-        detail_widget = DetailFrameWidget(text, detail)
+        detail_widget = DetailFrameWidget(self.controler, id, text, detail)
         detail_widget.return_button.released.connect(self.return_to_explore_view)
+        detail_widget.deleteArticle.connect(self.on_delete_article_trigger)
         self.detail_area.setWidget(detail_widget)
         self.stack_widget.setCurrentIndex(1)
 
@@ -146,6 +147,11 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
             self.display_filters()
             self.display_articles()
             self.init_sort_frame()
+
+    def on_delete_article_trigger(self):
+        """actions to do when delete article signal is triggered"""
+        self.stack_widget.setCurrentIndex(0)
+        self.display_articles()
 
     def get_id(self):
         return self.catalog_id
