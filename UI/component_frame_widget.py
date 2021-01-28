@@ -59,6 +59,6 @@ class ComponentFrameWidget(QtWidgets.QWidget, Ui_Form):
         return self.id
 
     def is_filled(self):
-        """know if all necessary fields are filled"""
+        """check if all necessary fields are filled"""
         return (self.name_line_edit.text().replace(' ', '') != '' and
                 self.default_line_edit.text().replace(' ', '') != '')

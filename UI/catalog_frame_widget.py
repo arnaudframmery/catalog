@@ -109,16 +109,10 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
 
     def display_article_details(self, id, text):
         """actions to do when an article is selected"""
-        detail = self.controler.get_article_detail(id, self.catalog_id)
-        detail_widget = DetailFrameWidget(self.controler, id, text, detail)
-        detail_widget.return_button.released.connect(self.return_to_explore_view)
-        detail_widget.deleteArticle.connect(self.on_delete_article_trigger)
+        detail_widget = DetailFrameWidget(self.controler, self.catalog_id, id, text)
+        detail_widget.quitDetailViewSignal.connect(self.on_quit_detail_view_trigger)
         self.detail_area.setWidget(detail_widget)
         self.stack_widget.setCurrentIndex(1)
-
-    def return_to_explore_view(self):
-        """actions to do when button 'return' is selected"""
-        self.stack_widget.setCurrentIndex(0)
 
     def on_sorting_change(self, component_index):
         """actions to do when sorting component is changed"""
@@ -148,13 +142,16 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
             self.display_articles()
             self.init_sort_frame()
 
-    def on_delete_article_trigger(self):
+    def on_quit_detail_view_trigger(self, update):
         """actions to do when delete article signal is triggered"""
         self.stack_widget.setCurrentIndex(0)
-        self.display_articles()
+        if update:
+            self.display_articles()
 
     def get_id(self):
+        """return catalog id"""
         return self.catalog_id
 
     def get_name(self):
+        """return catalog name"""
         return self.catalog_name

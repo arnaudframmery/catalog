@@ -41,7 +41,10 @@ def get_articles_service(session, catalog_id, filters, sorting_component, sortin
 def get_article_detail_service(session, article_id, catalog_id):
     """recover all the data about a specific article"""
     result = session\
-        .query(Component.label, coalesce(Data.value, Component.default).label('value'))\
+        .query(Component.label,
+               coalesce(Data.value, Component.default).label('value'),
+               Component.id.label('component_id'),
+               Data.id.label('data_id'))\
         .join(Data, and_(Data.component_id == Component.id, Data.article_id == article_id), isouter=True)\
         .filter(Component.catalog_id == catalog_id)\
         .order_by(Component.id)\

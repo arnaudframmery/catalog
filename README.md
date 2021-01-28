@@ -36,8 +36,8 @@ python launch.py
 - [x] Sorting component creation & edition
 - Article:
 - [x] Article display & interaction & detail view
-- [x] Article suppression
-- [ ] Article creation & edition
+- [x] Article edition & suppression
+- [ ] Article creation
 - Filter types:
 - [x] Category filter
 - [ ] Range filter
