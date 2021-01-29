@@ -60,3 +60,13 @@ def delete_article_service(session, article_id):
         .one()
     session.delete(article)
     session.commit()
+
+
+def update_article_service(session, article_id, title):
+    """update a specific article"""
+    article = session\
+        .query(Article)\
+        .filter(Article.id == article_id)\
+        .one()
+    article.title = title
+    session.commit()

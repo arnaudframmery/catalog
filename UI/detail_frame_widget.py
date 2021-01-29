@@ -22,8 +22,11 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.detail = self.controler.get_article_detail(self.article_id, self.catalog_id)
         self.setupUi(self)
 
+        self.cancel_button.setEnabled(False)
         self.cancel_button.setVisible(False)
-        self.label.setText(title)
+        self.line_edit_label.setEnabled(False)
+        self.line_edit_label.setVisible(False)
+        self.label.setText(self.title)
 
         self.layout = QFormLayout()
         self.layout_widget = QWidget()
@@ -42,18 +45,8 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
         if self.state == 'READ':
             self.change_state()
         elif self.is_filled():
-            to_create = []
-            to_update = []
-            for component, widget in zip(self.detail, self.line_edit_widgets):
-                if component['value'] != widget.text() and component['data_id'] is None:
-                    to_create.append({**component, 'value': widget.text(), 'article_id': self.article_id})
-                elif component['value'] != widget.text() and component['data_id'] is not None:
-                    to_update.append({**component, 'value': widget.text()})
-            self.controler.create_data(to_create)
-            self.controler.update_data(to_update)
-            if to_create or to_update:
-                self.is_updated = True
-            self.detail = self.controler.get_article_detail(self.article_id, self.catalog_id)
+            self.create_update_data()
+            self.create_update_article()
             self.change_state()
 
     def on_delete_release(self):
@@ -78,6 +71,7 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
     def display_edit_view(self):
         """display the article view where edition is possible"""
         self.clean_frame()
+        self.line_edit_label.setText(self.title)
         for component in self.detail:
             widget = QLineEdit()
             widget.setText(component['value'])
@@ -95,19 +89,48 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
         condition = True
         for a_widget in self.line_edit_widgets:
             condition = condition and a_widget.text().replace(' ', '') != ''
-        return condition
+        return condition and self.line_edit_label.text().replace(' ', '') != ''
+
+    def create_update_data(self):
+        """create or update the data of the different components of this article"""
+        to_create = []
+        to_update = []
+        for component, widget in zip(self.detail, self.line_edit_widgets):
+            if component['value'] != widget.text() and component['data_id'] is None:
+                to_create.append({**component, 'value': widget.text(), 'article_id': self.article_id})
+            elif component['value'] != widget.text() and component['data_id'] is not None:
+                to_update.append({**component, 'value': widget.text()})
+        self.controler.create_data(to_create)
+        self.controler.update_data(to_update)
+        if to_create or to_update:
+            self.is_updated = True
+            self.detail = self.controler.get_article_detail(self.article_id, self.catalog_id)
+
+    def create_update_article(self):
+        """create or update the article"""
+        if self.title != self.line_edit_label.text():
+            self.controler.update_article(self.article_id, self.line_edit_label.text())
+            self.title = self.line_edit_label.text()
+            self.label.setText(self.title)
+            self.is_updated = True
 
     def change_state(self):
         """switch from the read mode to the edit one, and inversely"""
         if self.state == 'READ':
             self.state = 'EDIT'
             self.modify_button.setText('Apply')
+            self.label.setVisible(False)
             self.cancel_button.setVisible(True)
             self.cancel_button.setEnabled(True)
+            self.line_edit_label.setVisible(True)
+            self.line_edit_label.setEnabled(True)
             self.display_edit_view()
         else:
             self.state = 'READ'
             self.modify_button.setText('Modify')
             self.cancel_button.setEnabled(False)
             self.cancel_button.setVisible(False)
+            self.line_edit_label.setEnabled(False)
+            self.line_edit_label.setVisible(False)
+            self.label.setVisible(True)
             self.display_read_view()
