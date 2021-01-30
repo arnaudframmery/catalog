@@ -17,20 +17,26 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.catalog_id = catalog_id
         self.title = title
         self.line_edit_widgets = []
-        self.state = 'READ'
         self.is_updated = False
-        self.detail = self.controler.get_article_detail(self.article_id, self.catalog_id)
         self.setupUi(self)
+        self.state = 'READ'
 
+        self.label.setText(self.title)
         self.cancel_button.setEnabled(False)
         self.cancel_button.setVisible(False)
         self.line_edit_label.setEnabled(False)
         self.line_edit_label.setVisible(False)
-        self.label.setText(self.title)
+        if not self.article_id:
+            self.delete_button.setEnabled(False)
+            self.delete_button.setVisible(False)
 
         self.layout = QFormLayout()
         self.layout_widget = QWidget()
-        self.display_read_view()
+        self.detail = self.controler.get_article_detail(self.article_id, self.catalog_id)
+        if self.article_id:
+            self.display_read_view()
+        else:
+            self.change_state()
         self.layout_widget.setLayout(self.layout)
         self.verticalLayout.addWidget(self.layout_widget)
         self.verticalLayout.addStretch()
@@ -45,8 +51,8 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
         if self.state == 'READ':
             self.change_state()
         elif self.is_filled():
-            self.create_update_data()
             self.create_update_article()
+            self.create_update_data()
             self.change_state()
 
     def on_delete_release(self):
@@ -56,7 +62,10 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
 
     def on_cancel_release(self):
         """actions to do when cancel button is released"""
-        self.change_state()
+        if self.article_id:
+            self.change_state()
+        else:
+            self.quitDetailViewSignal.emit(False)
 
     def on_return_release(self):
         """actions to do when return button is released"""
@@ -109,7 +118,12 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
     def create_update_article(self):
         """create or update the article"""
         if self.title != self.line_edit_label.text():
-            self.controler.update_article(self.article_id, self.line_edit_label.text())
+            if self.article_id:
+                self.controler.update_article(self.article_id, self.line_edit_label.text())
+            else:
+                self.article_id = self.controler.create_article(self.catalog_id, self.line_edit_label.text())
+                self.delete_button.setVisible(True)
+                self.delete_button.setEnabled(True)
             self.title = self.line_edit_label.text()
             self.label.setText(self.title)
             self.is_updated = True

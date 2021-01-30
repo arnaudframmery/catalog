@@ -26,18 +26,21 @@ python launch.py
 - [x] DB structure
 - [x] Populate DB
 - Catalog:
-- [x] Catalog display & interaction & creation
+- [x] Catalog display & interaction
+- [x] Catalog creation
 - [x] Catalog suppression
 - Filter:
 - [x] Filter display & interaction
 - [x] Filter component creation & edition
+- [x] Filter component suppression
 - Sorting:
 - [x] Sorting display & interaction
 - [x] Sorting component creation & edition
+- [x] Sorting component suppression
 - Article:
 - [x] Article display & interaction & detail view
-- [x] Article edition & suppression
-- [ ] Article creation
+- [x] Article creation & edition
+- [x] Article suppression
 - Filter types:
 - [x] Category filter
 - [ ] Range filter

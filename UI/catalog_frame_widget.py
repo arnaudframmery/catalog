@@ -19,7 +19,7 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.stack_widget.setCurrentIndex(0)
         self.detail_layout = QVBoxLayout()
         self.detail_stack.setLayout(self.detail_layout)
-        self.sort_direction.released.connect(self.on_sorting_direction_release)
+
 
         self.controler = controler
         self.catalog_id = catalog_id
@@ -35,6 +35,8 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.init_sort_frame()
 
         self.setting_button.released.connect(self.on_component_setting_release)
+        self.add_button.released.connect(self.on_article_add_release)
+        self.sort_direction.released.connect(self.on_sorting_direction_release)
         self.sort_combo_box.currentIndexChanged.connect(self.on_sorting_change)
 
     def init_sort_frame(self):
@@ -146,6 +148,13 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.stack_widget.setCurrentIndex(0)
         if update:
             self.display_articles()
+
+    def on_article_add_release(self):
+        """actions to do when add button is released"""
+        detail_widget = DetailFrameWidget(self.controler, self.catalog_id, None, '')
+        detail_widget.quitDetailViewSignal.connect(self.on_quit_detail_view_trigger)
+        self.detail_area.setWidget(detail_widget)
+        self.stack_widget.setCurrentIndex(1)
 
     def get_id(self):
         """return catalog id"""

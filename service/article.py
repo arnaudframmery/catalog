@@ -70,3 +70,10 @@ def update_article_service(session, article_id, title):
         .one()
     article.title = title
     session.commit()
+
+
+def create_article_service(session, catalog_id, title):
+    new_article = Article(title=title, catalog_id=catalog_id)
+    session.add(new_article)
+    session.commit()
+    return new_article.id
