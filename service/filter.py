@@ -9,9 +9,12 @@ from service.helper import object_as_dict, object_as_list
 def get_categories_service(session, component_id):
     """recover all the possible values about a specific component"""
     stmt = session\
-        .query(Component.label, coalesce(Data.value, Component.default).label('value'))\
-        .join(Data, Data.component_id == Component.id, isouter=True)\
-        .filter(Component.id == component_id).subquery()
+        .query(Component.id, coalesce(Data.value, Component.default).label('value'))\
+        .join(Catalog, Catalog.id == Component.catalog_id)\
+        .join(Article, Article.catalog_id == Catalog.id)\
+        .join(Data, and_(Data.component_id == Component.id, Data.article_id == Article.id), isouter=True)\
+        .filter(Component.id == component_id)\
+        .subquery()
     result = session.query(distinct(stmt.c.value)).all()
     return object_as_list(result)
 

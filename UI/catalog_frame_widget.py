@@ -60,8 +60,7 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
 
     def on_reset_release(self):
         """actions to do when button 'reset' is released"""
-        for a_filter in self.filters:
-            a_filter.reset_filter()
+        self.display_filters()
         self.display_articles()
 
     def display_filters(self):
