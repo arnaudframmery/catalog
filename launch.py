@@ -7,6 +7,8 @@ import DB.tables
 Base.metadata.create_all(engine)
 session = Session()
 
-populate_light(session)
+if session.query(DB.tables.Catalog.id).count() == 0:
+    populate_light(session)
+
 controler = Controler(session)
 launch_UI(controler)
