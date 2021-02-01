@@ -29,6 +29,8 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
         if not self.article_id:
             self.delete_button.setEnabled(False)
             self.delete_button.setVisible(False)
+            self.return_button.setEnabled(False)
+            self.return_button.setVisible(False)
 
         self.layout = QFormLayout()
         self.layout_widget = QWidget()
@@ -146,5 +148,7 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
             self.cancel_button.setVisible(False)
             self.line_edit_label.setEnabled(False)
             self.line_edit_label.setVisible(False)
+            self.return_button.setVisible(True)
+            self.return_button.setEnabled(True)
             self.label.setVisible(True)
             self.display_read_view()
