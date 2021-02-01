@@ -1,6 +1,9 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from engine import Base
+
+
+Base = declarative_base()
 
 
 class Data(Base):

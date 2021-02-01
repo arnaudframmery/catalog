@@ -25,7 +25,7 @@ class Controler:
         return get_catalogs_service(self.session)
 
     def delete_catalog(self, catalog_id):
-        return delete_catalog_service(self.session, catalog_id)
+        delete_catalog_service(self.session, catalog_id)
 
     # Components
     def create_components(self, catalog_id, components_data):
