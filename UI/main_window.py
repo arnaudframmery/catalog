@@ -13,10 +13,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_CatalogUI):
     Manage the main window
     """
 
-    def __init__(self, controler, *args, **kwargs):
+    def __init__(self, controller, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.setupUi(self)
-        self.controler = controler
+        self.controller = controller
 
         self.catalog_tab_widget = QtWidgets.QTabWidget()
         self.catalog_tabs = []
@@ -37,9 +37,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_CatalogUI):
 
     def init_UI(self):
         """create the different tabs with each catalog"""
-        catalogs = self.controler.get_catalogs()
+        catalogs = self.controller.get_catalogs()
         for tab in catalogs:
-            catalog_frame = CatalogFrameWidget(self.controler, tab['id'], tab['name'])
+            catalog_frame = CatalogFrameWidget(self.controller, tab['id'], tab['name'])
             self.catalog_tabs.append(catalog_frame)
             self.catalog_tab_widget.addTab(catalog_frame, tab['name'])
 
@@ -59,8 +59,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_CatalogUI):
         dialog = CatalogCreationDialog(self)
         if dialog.exec_():
             catalog_name = dialog.get_catalog_name()
-            catalog_id = self.controler.create_catalog(catalog_name)
-            catalog_frame = CatalogFrameWidget(self.controler, catalog_id, catalog_name)
+            catalog_id = self.controller.create_catalog(catalog_name)
+            catalog_frame = CatalogFrameWidget(self.controller, catalog_id, catalog_name)
             self.catalog_tabs.append(catalog_frame)
             self.catalog_tab_widget.addTab(catalog_frame, catalog_name)
 
@@ -71,15 +71,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_CatalogUI):
         catalog_id = self.catalog_tabs[index].get_id()
         dialog = CatalogDeletionDialog(self, name)
         if dialog.exec_():
-            self.controler.delete_catalog(catalog_id)
+            self.controller.delete_catalog(catalog_id)
             widget = self.catalog_tabs.pop(index)
             self.catalog_tab_widget.removeTab(index)
             widget.destroy()
 
 
-def launch_UI(controler):
+def launch_UI(controller):
     """start the main window"""
     app = QtWidgets.QApplication(sys.argv)
-    window = MainWindow(controler)
+    window = MainWindow(controller)
     window.show()
     app.exec()

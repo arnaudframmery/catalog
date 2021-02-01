@@ -1,7 +1,7 @@
 from sqlalchemy import desc, and_
 from sqlalchemy.sql.functions import coalesce
 
-from DB.tables import Catalog, Article, Data, Component
+from DB.tables import Catalog, Article, Value, Component
 from service.helper import object_as_dict
 
 
@@ -19,33 +19,33 @@ def get_articles_service(session, catalog_id, filters, sorting_component, sortin
     if sorting_component:
         stmt = session\
             .query(Component.id,
-                   coalesce(Data.value, Component.default).label('data_value'),
+                   coalesce(Value.value, Component.default).label('value_value'),
                    Article.id.label('article_id'))\
             .join(Catalog, Catalog.id == Component.catalog_id)\
             .join(Article, Article.catalog_id == Catalog.id)\
-            .join(Data, and_(Data.component_id == Component.id, Data.article_id == Article.id), isouter=True)\
+            .join(Value, and_(Value.component_id == Component.id, Value.article_id == Article.id), isouter=True)\
             .filter(Component.id == sorting_component)\
             .subquery()
         if sorting_direction == 'ASC':
             result = result\
                 .join(stmt, stmt.c.article_id == Article.id)\
-                .order_by(stmt.c.data_value)
+                .order_by(stmt.c.value_value)
         else:
             result = result\
                 .join(stmt, stmt.c.article_id == Article.id)\
-                .order_by(desc(stmt.c.data_value))
+                .order_by(desc(stmt.c.value_value))
 
     return object_as_dict(result.all())
 
 
 def get_article_detail_service(session, article_id, catalog_id):
-    """recover all the data about a specific article"""
+    """recover all the values about a specific article"""
     result = session\
         .query(Component.label,
-               coalesce(Data.value, Component.default).label('value'),
+               coalesce(Value.value, Component.default).label('value'),
                Component.id.label('component_id'),
-               Data.id.label('data_id'))\
-        .join(Data, and_(Data.component_id == Component.id, Data.article_id == article_id), isouter=True)\
+               Value.id.label('value_id'))\
+        .join(Value, and_(Value.component_id == Component.id, Value.article_id == article_id), isouter=True)\
         .filter(Component.catalog_id == catalog_id)\
         .order_by(Component.id)\
         .all()

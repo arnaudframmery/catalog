@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 import DB.tables
 import pytest
 
-from controler import Controler
+from controller import controller
 
 
 @pytest.fixture(scope="session")
@@ -38,6 +38,6 @@ def dbsession(engine, tables):
 
 
 @pytest.fixture
-def controler(dbsession):
-    """Returns a controler"""
-    return Controler(dbsession)
+def controller(dbsession):
+    """Returns a controller"""
+    return controller(dbsession)

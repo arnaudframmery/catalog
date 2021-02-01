@@ -5,8 +5,8 @@ class Filter:
     Manage which article can be seen in the article area
     """
 
-    def __init__(self, controler, component_id, component_label):
-        self.controler = controler
+    def __init__(self, controller, component_id, component_label):
+        self.controller = controller
         self.component_id = component_id
         self.component_label = component_label
         self.parent_widget = None

@@ -11,7 +11,7 @@ class ComponentFrameWidget(QtWidgets.QWidget, Ui_Form):
 
     deleteReleased = QtCore.pyqtSignal(object)
 
-    def __init__(self, id, label, is_sortable, default_value, filter_code, type_list, *args, obj=None, **kwargs):
+    def __init__(self, id, label, is_sortable, default_value, filter_code, filter_list, *args, obj=None, **kwargs):
         super(ComponentFrameWidget, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.id = id
@@ -19,7 +19,7 @@ class ComponentFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.is_sortable = is_sortable
         self.default_value = default_value
         self.filter_code = filter_code
-        self.type_list = [a_type['code'] for a_type in type_list]
+        self.filter_list = [a_filter['code'] for a_filter in filter_list]
         self.delete_button.released.connect(lambda: self.deleteReleased.emit(self))
 
         self.init_UI()
@@ -28,8 +28,8 @@ class ComponentFrameWidget(QtWidgets.QWidget, Ui_Form):
         """create the component settings display"""
         self.name_line_edit.setText(self.label)
         self.default_line_edit.setText(self.default_value)
-        self.filter_combo_box.insertItems(0, self.type_list)
-        self.filter_combo_box.setCurrentIndex(self.type_list.index(self.filter_code))
+        self.filter_combo_box.insertItems(0, self.filter_list)
+        self.filter_combo_box.setCurrentIndex(self.filter_list.index(self.filter_code))
         if self.is_sortable:
             self.sorting_check_box.setCheckState(Qt.Checked)
 

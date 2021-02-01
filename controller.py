@@ -3,13 +3,13 @@ from service.article import get_articles_service, get_article_detail_service, de
 from service.catalog import get_catalogs_service, create_catalog_service, delete_catalog_service
 from service.component import get_components_service, create_components_service, update_components_service, \
     delete_components_service
-from service.data import create_data_service, update_data_service
+from service.value import create_value_service, update_value_service
 from service.filter import get_filters_service, get_categories_service, apply_categories_service, \
     get_all_filters_service
 from service.sorting import get_sortable_components_service
 
 
-class Controler:
+class controller:
     """
     give access to the different services
     """
@@ -59,12 +59,12 @@ class Controler:
     def delete_article(self, article_id):
         return delete_article_service(self.session, article_id)
 
-    # Data
-    def create_data(self, data_list):
-        return create_data_service(self.session, data_list)
+    # Value
+    def create_value(self, value_list):
+        return create_value_service(self.session, value_list)
 
-    def update_data(self, data_list):
-        return update_data_service(self.session, data_list)
+    def update_value(self, value_list):
+        return update_value_service(self.session, value_list)
 
     # Filters
     def get_all_filters(self):

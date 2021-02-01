@@ -12,7 +12,7 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
     Manage the display of catalog articles and filters (in a tab)
     """
 
-    def __init__(self, controler, catalog_id, catalog_name, *args, **kwargs):
+    def __init__(self, controller, catalog_id, catalog_name, *args, **kwargs):
         super(CatalogFrameWidget, self).__init__(*args, **kwargs)
         self.setupUi(self)
 
@@ -20,8 +20,7 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.detail_layout = QVBoxLayout()
         self.detail_stack.setLayout(self.detail_layout)
 
-
-        self.controler = controler
+        self.controller = controller
         self.catalog_id = catalog_id
         self.catalog_name = catalog_name
         self.filters = []
@@ -41,7 +40,7 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
 
     def init_sort_frame(self):
         """create the sorting display"""
-        self.sortable_components = self.controler.get_sortable_components(self.catalog_id)
+        self.sortable_components = self.controller.get_sortable_components(self.catalog_id)
         for i in range(self.sort_combo_box.count()):
             self.sort_combo_box.removeItem(0)
         self.sort_combo_box.insertItems(
@@ -67,7 +66,7 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
 
     def display_filters(self):
         """manage the filter area"""
-        self.filters = self.controler.get_filters(self.catalog_id)
+        self.filters = self.controller.get_filters(self.catalog_id)
         filters_layout = QVBoxLayout()
         for a_filter in self.filters:
             a_filter.create_widget()
@@ -91,7 +90,7 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
     def display_articles(self):
         """manage the article area"""
         self.articles = []
-        articles = self.controler.get_articles(
+        articles = self.controller.get_articles(
             self.catalog_id,
             self.filters,
             self.sorting_component,
@@ -110,7 +109,7 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
 
     def display_article_details(self, id, text):
         """actions to do when an article is selected"""
-        detail_widget = DetailFrameWidget(self.controler, self.catalog_id, id, text)
+        detail_widget = DetailFrameWidget(self.controller, self.catalog_id, id, text)
         detail_widget.quitDetailViewSignal.connect(self.on_quit_detail_view_trigger)
         self.detail_area.setWidget(detail_widget)
         self.stack_widget.setCurrentIndex(1)
@@ -137,7 +136,7 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
 
     def on_component_setting_release(self):
         """actions to do when setting button is released"""
-        dialog = ComponentSettingDialog(self, self.controler, self.catalog_id)
+        dialog = ComponentSettingDialog(self, self.controller, self.catalog_id)
         if dialog.exec_():
             self.display_filters()
             self.display_articles()
@@ -151,7 +150,7 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
 
     def on_article_add_release(self):
         """actions to do when add button is released"""
-        detail_widget = DetailFrameWidget(self.controler, self.catalog_id, None, '')
+        detail_widget = DetailFrameWidget(self.controller, self.catalog_id, None, '')
         detail_widget.quitDetailViewSignal.connect(self.on_quit_detail_view_trigger)
         self.detail_area.setWidget(detail_widget)
         self.stack_widget.setCurrentIndex(1)

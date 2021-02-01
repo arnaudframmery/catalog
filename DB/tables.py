@@ -6,23 +6,23 @@ from sqlalchemy.orm import relationship
 Base = declarative_base()
 
 
-class Data(Base):
+class Value(Base):
     """
     Store values of the different components of an article
     """
 
-    __tablename__ = 'data'
+    __tablename__ = 'value'
 
     id = Column(Integer, primary_key=True)
     value = Column(String, nullable=False)
     component_id = Column(Integer, ForeignKey('component.id'), nullable=False)
     article_id = Column(Integer, ForeignKey('article.id'), nullable=False)
 
-    component = relationship("Component", back_populates="data")
-    article = relationship("Article", back_populates="data")
+    component = relationship("Component", back_populates="value")
+    article = relationship("Article", back_populates="value")
 
     def __repr__(self):
-        return "<Data(value='%s')>" % self.value
+        return "<Value(value='%s')>" % self.value
 
 
 class Article(Base):
@@ -38,8 +38,8 @@ class Article(Base):
 
     catalog = relationship("Catalog", back_populates="article")
 
-    data = relationship(
-        "Data", order_by=Data.id, back_populates="article", cascade="all, delete, delete-orphan"
+    value = relationship(
+        "Value", order_by=Value.id, back_populates="article", cascade="all, delete, delete-orphan"
     )
 
     def __repr__(self):
@@ -58,35 +58,35 @@ class Component(Base):
     default = Column(String)
     is_sortable = Column(Boolean, default=False)
     catalog_id = Column(Integer, ForeignKey('catalog.id'), nullable=False)
-    type_id = Column(Integer, ForeignKey('type.id'), nullable=False)
+    filter_id = Column(Integer, ForeignKey('filter.id'), nullable=False)
 
     catalog = relationship("Catalog", back_populates="component")
-    type = relationship("Type", back_populates="component")
+    filter = relationship("Filter", back_populates="component")
 
-    data = relationship(
-        "Data", order_by=Data.id, back_populates="component", cascade="all, delete, delete-orphan"
+    value = relationship(
+        "Value", order_by=Value.id, back_populates="component", cascade="all, delete, delete-orphan"
     )
 
     def __repr__(self):
         return "<Component(label='%s')>" % self.label
 
 
-class Type(Base):
+class Filter(Base):
     """
-    Store the possible types of the components
+    Store the possible filters of the components
     """
 
-    __tablename__ = 'type'
+    __tablename__ = 'filter'
 
     id = Column(Integer, primary_key=True)
     code = Column(String, nullable=False)
 
     component = relationship(
-        "Component", order_by=Component.id, back_populates="type", cascade="all, delete, delete-orphan"
+        "Component", order_by=Component.id, back_populates="filter", cascade="all, delete, delete-orphan"
     )
 
     def __repr__(self):
-        return "<Type(code='%s')>" % self.code
+        return "<Filter(code='%s')>" % self.code
 
 
 class Catalog(Base):

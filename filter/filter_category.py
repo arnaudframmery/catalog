@@ -11,9 +11,9 @@ class FilterCategory(Filter):
     The categories are all the distinct values of this specific component
     """
 
-    def __init__(self, controler, component_id, component_label):
-        super().__init__(controler, component_id, component_label)
-        self.categories = self.controler.get_categories(self.component_id)
+    def __init__(self, controller, component_id, component_label):
+        super().__init__(controller, component_id, component_label)
+        self.categories = self.controller.get_categories(self.component_id)
         self.widgets = []
 
     def create_widget(self):
@@ -31,7 +31,7 @@ class FilterCategory(Filter):
         for i in range(len(self.widgets)):
             if self.widgets[i].isChecked():
                 query_categories.append(self.categories[i])
-        return self.controler.apply_categories(catalog_id, self.component_id, query_categories)
+        return self.controller.apply_categories(catalog_id, self.component_id, query_categories)
 
     def reset_filter(self):
         for a_widget in self.widgets:

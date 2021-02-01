@@ -10,12 +10,12 @@ class ComponentSettingDialog(QtWidgets.QDialog, Ui_Dialog):
     Manage the components settings : creation, modification, deletion
     """
 
-    def __init__(self, parent, controler, catalog_id, *args, obj=None, **kwargs):
+    def __init__(self, parent, controller, catalog_id, *args, obj=None, **kwargs):
         super(ComponentSettingDialog, self).__init__(parent, **kwargs)
         self.setupUi(self)
-        self.controler = controler
+        self.controller = controller
         self.catalog_id = catalog_id
-        self.types = self.controler.get_all_filters()
+        self.filters = self.controller.get_all_filters()
         self.component_layout = None
         self.components_list = []
         self.to_delete = []
@@ -29,7 +29,7 @@ class ComponentSettingDialog(QtWidgets.QDialog, Ui_Dialog):
     def init_UI(self):
         """create the components display"""
         self.components_list = []
-        components = self.controler.get_components(self.catalog_id)
+        components = self.controller.get_components(self.catalog_id)
         self.component_layout = QVBoxLayout()
         component_layout_widget = QtWidgets.QWidget()
         for a_component in components:
@@ -39,7 +39,7 @@ class ComponentSettingDialog(QtWidgets.QDialog, Ui_Dialog):
                 a_component['is_sortable'],
                 a_component['default'],
                 a_component['code'],
-                self.types,
+                self.filters,
             )
             widget.deleteReleased.connect(self.on_delete_button_release)
             self.component_layout.addWidget(widget)
@@ -54,7 +54,7 @@ class ComponentSettingDialog(QtWidgets.QDialog, Ui_Dialog):
 
     def on_add_button_release(self):
         """actions to do when add button is released"""
-        widget = ComponentFrameWidget(None, '', False, '', 'no filter', self.types)
+        widget = ComponentFrameWidget(None, '', False, '', 'no filter', self.filters)
         widget.deleteReleased.connect(self.on_delete_button_release)
         self.component_layout.insertWidget(len(self.components_list), widget)
         self.components_list.append(widget)
@@ -80,7 +80,7 @@ class ComponentSettingDialog(QtWidgets.QDialog, Ui_Dialog):
                 to_create.append(a_component.get_data())
             elif a_component.has_changed():
                 to_update.append(a_component.get_data())
-        self.controler.create_components(self.catalog_id, to_create)
-        self.controler.update_components(to_update)
-        self.controler.delete_components(self.to_delete)
+        self.controller.create_components(self.catalog_id, to_create)
+        self.controller.update_components(to_update)
+        self.controller.delete_components(self.to_delete)
         self.accept()

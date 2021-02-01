@@ -1,8 +1,8 @@
-from DB.tables import Catalog, Article, Component, Type, Data
+from DB.tables import Catalog, Article, Component, Filter, Value
 
 
 def populate_light(session):
-    """inject some data into the database"""
+    """inject some value into the valuebase"""
 
     people = Catalog(name='people', theme='base')
     cities = Catalog(name='cities', theme='base')
@@ -20,57 +20,57 @@ def populate_light(session):
     component_5 = Component(label='House', default='Gryffindor')
     components = [component_1, component_2, component_3, component_4, component_5]
 
-    type_1 = Type(code='no filter')
-    type_cat = Type(code='category')
+    filter_1 = Filter(code='no filter')
+    filter_cat = Filter(code='category')
 
-    data_1_lname = Data(value='Potter')
-    data_1_fname = Data(value='Harry')
-    data_1_gender = Data(value='Male')
-    data_1_age = Data(value='17')
-    data_1_house = Data(value='Gryffindor')
+    value_1_lname = Value(value='Potter')
+    value_1_fname = Value(value='Harry')
+    value_1_gender = Value(value='Male')
+    value_1_age = Value(value='17')
+    value_1_house = Value(value='Gryffindor')
 
-    data_2_lname = Data(value='Weasley')
-    data_2_fname = Data(value='Ron')
-    data_2_gender = Data(value='Male')
-    data_2_age = Data(value='18')
-    data_2_house = Data(value='Gryffindor')
+    value_2_lname = Value(value='Weasley')
+    value_2_fname = Value(value='Ron')
+    value_2_gender = Value(value='Male')
+    value_2_age = Value(value='18')
+    value_2_house = Value(value='Gryffindor')
 
-    data_3_lname = Data(value='Granger')
-    data_3_fname = Data(value='Hermione')
-    data_3_gender = Data(value='Female')
-    data_3_age = Data(value='16')
-    data_3_house = Data(value='Gryffindor')
+    value_3_lname = Value(value='Granger')
+    value_3_fname = Value(value='Hermione')
+    value_3_gender = Value(value='Female')
+    value_3_age = Value(value='16')
+    value_3_house = Value(value='Gryffindor')
 
-    data_4_lname = Data(value='Malefoy')
-    data_4_fname = Data(value='Drago')
-    data_4_gender = Data(value='Male')
-    data_4_age = Data(value='17')
-    data_4_house = Data(value='Slytherin')
+    value_4_lname = Value(value='Malefoy')
+    value_4_fname = Value(value='Drago')
+    value_4_gender = Value(value='Male')
+    value_4_age = Value(value='17')
+    value_4_house = Value(value='Slytherin')
 
-    data_1 = [data_1_lname, data_1_fname, data_1_gender, data_1_age, data_1_house]
-    data_2 = [data_2_lname, data_2_fname, data_2_gender, data_2_age, data_2_house]
-    data_3 = [data_3_lname, data_3_fname, data_3_gender, data_3_age, data_3_house]
-    data_4 = [data_4_lname, data_4_fname, data_4_gender, data_4_age, data_4_house]
+    value_1 = [value_1_lname, value_1_fname, value_1_gender, value_1_age, value_1_house]
+    value_2 = [value_2_lname, value_2_fname, value_2_gender, value_2_age, value_2_house]
+    value_3 = [value_3_lname, value_3_fname, value_3_gender, value_3_age, value_3_house]
+    value_4 = [value_4_lname, value_4_fname, value_4_gender, value_4_age, value_4_house]
 
     people.article = [article_1, article_2, article_3, article_4]
     cities.article = [article_cities]
-    type_1.component = [component_1, component_2, component_4]
-    type_cat.component = [component_3, component_5]
+    filter_1.component = [component_1, component_2, component_4]
+    filter_cat.component = [component_3, component_5]
     people.component = components
 
-    for a_component, a_data in zip(components, data_1):
-        a_component.data.append(a_data)
-    for a_component, a_data in zip(components, data_2):
-        a_component.data.append(a_data)
-    for a_component, a_data in zip(components, data_3):
-        a_component.data.append(a_data)
-    for a_component, a_data in zip(components, data_4):
-        a_component.data.append(a_data)
+    for a_component, a_value in zip(components, value_1):
+        a_component.value.append(a_value)
+    for a_component, a_value in zip(components, value_2):
+        a_component.value.append(a_value)
+    for a_component, a_value in zip(components, value_3):
+        a_component.value.append(a_value)
+    for a_component, a_value in zip(components, value_4):
+        a_component.value.append(a_value)
 
-    article_1.data = data_1
-    article_2.data = data_2
-    article_3.data = data_3
-    article_4.data = data_4
+    article_1.value = value_1
+    article_2.value = value_2
+    article_3.value = value_3
+    article_4.value = value_4
 
     session.add(people)
     session.add(cities)

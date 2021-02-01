@@ -10,9 +10,9 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
 
     quitDetailViewSignal = QtCore.pyqtSignal(bool)
 
-    def __init__(self, controler, catalog_id, article_id, title, *args, obj=None, **kwargs):
+    def __init__(self, controller, catalog_id, article_id, title, *args, obj=None, **kwargs):
         super(DetailFrameWidget, self).__init__(*args, **kwargs)
-        self.controler = controler
+        self.controller = controller
         self.article_id = article_id
         self.catalog_id = catalog_id
         self.title = title
@@ -34,7 +34,7 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
 
         self.layout = QFormLayout()
         self.layout_widget = QWidget()
-        self.detail = self.controler.get_article_detail(self.article_id, self.catalog_id)
+        self.detail = self.controller.get_article_detail(self.article_id, self.catalog_id)
         if self.article_id:
             self.display_read_view()
         else:
@@ -54,12 +54,12 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
             self.change_state()
         elif self.is_filled():
             self.create_update_article()
-            self.create_update_data()
+            self.create_update_value()
             self.change_state()
 
     def on_delete_release(self):
         """actions to do when delete button is released"""
-        self.controler.delete_article(self.article_id)
+        self.controller.delete_article(self.article_id)
         self.quitDetailViewSignal.emit(True)
 
     def on_cancel_release(self):
@@ -102,28 +102,28 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
             condition = condition and a_widget.text().replace(' ', '') != ''
         return condition and self.line_edit_label.text().replace(' ', '') != ''
 
-    def create_update_data(self):
-        """create or update the data of the different components of this article"""
+    def create_update_value(self):
+        """create or update the values of the different components of this article"""
         to_create = []
         to_update = []
         for component, widget in zip(self.detail, self.line_edit_widgets):
-            if component['value'] != widget.text() and component['data_id'] is None:
+            if component['value'] != widget.text() and component['value_id'] is None:
                 to_create.append({**component, 'value': widget.text(), 'article_id': self.article_id})
-            elif component['value'] != widget.text() and component['data_id'] is not None:
+            elif component['value'] != widget.text() and component['value_id'] is not None:
                 to_update.append({**component, 'value': widget.text()})
-        self.controler.create_data(to_create)
-        self.controler.update_data(to_update)
+        self.controller.create_value(to_create)
+        self.controller.update_value(to_update)
         if to_create or to_update:
             self.is_updated = True
-            self.detail = self.controler.get_article_detail(self.article_id, self.catalog_id)
+            self.detail = self.controller.get_article_detail(self.article_id, self.catalog_id)
 
     def create_update_article(self):
         """create or update the article"""
         if self.title != self.line_edit_label.text():
             if self.article_id:
-                self.controler.update_article(self.article_id, self.line_edit_label.text())
+                self.controller.update_article(self.article_id, self.line_edit_label.text())
             else:
-                self.article_id = self.controler.create_article(self.catalog_id, self.line_edit_label.text())
+                self.article_id = self.controller.create_article(self.catalog_id, self.line_edit_label.text())
                 self.delete_button.setVisible(True)
                 self.delete_button.setEnabled(True)
             self.title = self.line_edit_label.text()
