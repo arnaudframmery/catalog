@@ -79,7 +79,7 @@ class Filter(Base):
     __tablename__ = 'filter'
 
     id = Column(Integer, primary_key=True)
-    code = Column(String, nullable=False)
+    code = Column(String, nullable=False, unique=True)
 
     component = relationship(
         "Component", order_by=Component.id, back_populates="filter", cascade="all, delete, delete-orphan"

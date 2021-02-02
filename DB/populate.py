@@ -1,8 +1,18 @@
 from DB.tables import Catalog, Article, Component, Filter, Value
 
 
+def populate_init(session):
+    filter_base = Filter(code='no filter')
+    filter_cat = Filter(code='category')
+
+    session.add(filter_base)
+    session.add(filter_cat)
+
+    session.commit()
+
+
 def populate_light(session):
-    """inject some value into the valuebase"""
+    """inject some value into the database"""
 
     people = Catalog(name='people', theme='base')
     cities = Catalog(name='cities', theme='base')
@@ -20,8 +30,8 @@ def populate_light(session):
     component_5 = Component(label='House', default='Gryffindor')
     components = [component_1, component_2, component_3, component_4, component_5]
 
-    filter_1 = Filter(code='no filter')
-    filter_cat = Filter(code='category')
+    filter_base = session.query(Filter).filter(Filter.code == 'no filter').one()
+    filter_cat = session.query(Filter).filter(Filter.code == 'category').one()
 
     value_1_lname = Value(value='Potter')
     value_1_fname = Value(value='Harry')
@@ -54,8 +64,12 @@ def populate_light(session):
 
     people.article = [article_1, article_2, article_3, article_4]
     cities.article = [article_cities]
-    filter_1.component = [component_1, component_2, component_4]
-    filter_cat.component = [component_3, component_5]
+
+    for a_component in [component_1, component_2, component_4]:
+        a_component.filter_id = filter_base.id
+    for a_component in [component_3, component_5]:
+        a_component.filter_id = filter_cat.id
+
     people.component = components
 
     for a_component, a_value in zip(components, value_1):

@@ -4,7 +4,8 @@ from sqlalchemy.orm import Session
 import DB.tables
 import pytest
 
-from controller import controller
+from DB.populate import populate_init
+from controller import Controller
 
 
 @pytest.fixture(scope="session")
@@ -40,4 +41,13 @@ def dbsession(engine, tables):
 @pytest.fixture
 def controller(dbsession):
     """Returns a controller"""
-    return controller(dbsession)
+    populate_init(dbsession)
+    return Controller(dbsession)
+
+
+@pytest.fixture
+def controller_catalog(controller):
+    controller.create_catalog('test_1')
+    controller.create_catalog('test_2')
+    assert controller.get_catalogs() == [{'id': 1, 'name': 'test_1'}, {'id': 2, 'name': 'test_2'}], 'failed'
+    return controller

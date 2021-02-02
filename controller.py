@@ -9,7 +9,7 @@ from service.filter import get_filters_service, get_categories_service, apply_ca
 from service.sorting import get_sortable_components_service
 
 
-class controller:
+class Controller:
     """
     give access to the different services
     """
@@ -29,7 +29,7 @@ class controller:
 
     # Components
     def create_components(self, catalog_id, components_data):
-        return create_components_service(self.session, catalog_id, components_data)
+        create_components_service(self.session, catalog_id, components_data)
 
     def update_components(self, components_data):
         return update_components_service(self.session, components_data)
@@ -41,7 +41,7 @@ class controller:
         return get_sortable_components_service(self.session, catalog_id)
 
     def delete_components(self, components_id):
-        return delete_components_service(self.session, components_id)
+        delete_components_service(self.session, components_id)
 
     # Articles
     def create_article(self, catalog_id, title):
