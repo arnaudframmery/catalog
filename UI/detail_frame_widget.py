@@ -111,8 +111,8 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
                 to_create.append({**component, 'value': widget.text(), 'article_id': self.article_id})
             elif component['value'] != widget.text() and component['value_id'] is not None:
                 to_update.append({**component, 'value': widget.text()})
-        self.controller.create_value(to_create)
-        self.controller.update_value(to_update)
+        self.controller.create_values(to_create)
+        self.controller.update_values(to_update)
         if to_create or to_update:
             self.is_updated = True
             self.detail = self.controller.get_article_detail(self.article_id, self.catalog_id)

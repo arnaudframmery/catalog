@@ -1,7 +1,7 @@
 from DB.tables import Value
 
 
-def create_value_service(session, value_list):
+def create_values_service(session, value_list):
     """create a list of new value"""
     for value_element in value_list:
         new_value = Value(
@@ -13,7 +13,7 @@ def create_value_service(session, value_list):
     session.commit()
 
 
-def update_value_service(session, value_list):
+def update_values_service(session, value_list):
     """update a list of value"""
     for a_value in value_list:
         value_to_update = session\
