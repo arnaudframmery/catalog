@@ -13,6 +13,17 @@ def get_components_service(session, catalog_id):
     return object_as_dict(result)
 
 
+def get_sortable_components_service(session, catalog_id):
+    """recover all components that can be sorted about a specific catalog"""
+    result = session\
+        .query(Component.label, Component.id)\
+        .join(Catalog)\
+        .filter(Catalog.id == catalog_id)\
+        .filter(Component.is_sortable)\
+        .all()
+    return object_as_dict(result)
+
+
 def create_components_service(session, catalog_id, components_data):
     """create a list of new components about a specific catalog"""
     for a_component_data in components_data:
