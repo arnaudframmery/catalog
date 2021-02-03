@@ -11,6 +11,11 @@ class Filter:
         self.component_label = component_label
         self.parent_widget = None
 
+    def __eq__(self, obj):
+        return (isinstance(obj, Filter) and
+                obj.component_id == self.component_id and
+                obj.component_label == self.component_label)
+
     def get_label(self):
         """recover the label of the filter component label"""
         return self.component_label

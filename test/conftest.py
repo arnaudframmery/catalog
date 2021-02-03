@@ -54,7 +54,7 @@ def dbsession(engine, tables):
 
 @pytest.fixture
 def controller(dbsession):
-    """Only the empty db"""
+    """Only the init db"""
     populate_init(dbsession)
     return Controller(dbsession)
 
@@ -75,3 +75,16 @@ def ctrl_base_2(ctrl_base_1):
     ctrl_base_1.create_components(1, [component_input_1])
     ctrl_base_1.create_components(2, [component_input_1, component_input_2])
     return ctrl_base_1
+
+
+@pytest.fixture
+def ctrl_base_3(ctrl_base_2):
+    """Only ctrl_base_1 elements + ctrl_base_1 elements + 2 articles and 3 values in db"""
+    ctrl_base_2.create_article(2, 'title_3')
+    ctrl_base_2.create_article(2, 'title_4')
+    ctrl_base_2.create_values([
+        {'component_id': 1, 'value': 'value_1', 'article_id': 1},
+        {'component_id': 2, 'value': 'value_2', 'article_id': 2},
+        {'component_id': 3, 'value': 'value_3', 'article_id': 2},
+    ])
+    return ctrl_base_2

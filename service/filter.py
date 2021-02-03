@@ -19,7 +19,7 @@ def get_categories_service(session, component_id):
     return object_as_list(result)
 
 
-def apply_categories_service(session, catalog_id, component_id, categories):
+def apply_categories_service(session, catalog_id, component_id, categories, subquery):
     """recover articles about a specific catalog and a category filtering"""
     result = session\
         .query(Component.id.label('component_id'), Article.id.label('article_id'))\
@@ -29,7 +29,10 @@ def apply_categories_service(session, catalog_id, component_id, categories):
         .filter(Component.id == component_id)\
         .filter(Catalog.id == catalog_id)\
         .filter(coalesce(Value.value, Component.default).in_(categories)).subquery()
-    return result
+    if subquery:
+        return result
+    else:
+        return object_as_dict(session.query(result.c.component_id, result.c.article_id).all())
 
 
 def get_filters_service(session, catalog_id, controller):

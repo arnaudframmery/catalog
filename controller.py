@@ -75,5 +75,5 @@ class Controller:
     def get_categories(self, component_id):
         return get_categories_service(self.session, component_id)
 
-    def apply_categories(self, catalog_id, component_id, categories):
-        return apply_categories_service(self.session, catalog_id, component_id, categories)
+    def apply_categories(self, catalog_id, component_id, categories, subquery=True):
+        return apply_categories_service(self.session, catalog_id, component_id, categories, subquery)
