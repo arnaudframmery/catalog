@@ -1,12 +1,18 @@
-from DB.tables import Catalog, Article, Component, Filter, Value
+from DB.tables import Catalog, Article, Component, Filter, Value, ValueType
 
 
 def populate_init(session):
     filter_base = Filter(code='no filter')
     filter_cat = Filter(code='category')
 
+    value_type_text = ValueType(code='text')
+    value_type_int = ValueType(code='int')
+
     session.add(filter_base)
     session.add(filter_cat)
+
+    session.add(value_type_text)
+    session.add(value_type_int)
 
     session.commit()
 
@@ -32,6 +38,8 @@ def populate_light(session):
 
     filter_base = session.query(Filter).filter(Filter.code == 'no filter').one()
     filter_cat = session.query(Filter).filter(Filter.code == 'category').one()
+
+    value_type_text = session.query(ValueType).filter(ValueType.code == 'text').one()
 
     value_1_lname = Value(value='Potter')
     value_1_fname = Value(value='Harry')
@@ -69,6 +77,9 @@ def populate_light(session):
         a_component.filter_id = filter_base.id
     for a_component in [component_3, component_5]:
         a_component.filter_id = filter_cat.id
+
+    for a_component in components:
+        a_component.value_type_id = value_type_text.id
 
     people.component = components
 

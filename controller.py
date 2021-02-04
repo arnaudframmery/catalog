@@ -3,9 +3,10 @@ from service.article import get_articles_service, get_article_detail_service, de
 from service.catalog import get_catalogs_service, create_catalog_service, delete_catalog_service
 from service.component import get_components_service, create_components_service, update_components_service, \
     delete_components_service, get_sortable_components_service
-from service.value import create_values_service, update_values_service
+from service.value import create_values_service, update_values_service, get_values_service, delete_value_service
 from service.filter import get_filters_service, get_categories_service, apply_categories_service, \
     get_all_filters_service
+from service.value_type import get_all_value_types_service
 
 
 class Controller:
@@ -58,12 +59,18 @@ class Controller:
     def delete_article(self, article_id):
         delete_article_service(self.session, article_id)
 
-    # Value
+    # Values
     def create_values(self, value_list):
         create_values_service(self.session, value_list)
 
     def update_values(self, value_list):
         update_values_service(self.session, value_list)
+
+    def get_values(self, component_id):
+        return get_values_service(self.session, component_id)
+
+    def delete_value_service(self, value_id):
+        delete_value_service(self.session, value_id)
 
     # Filters
     def get_all_filters(self):
@@ -77,3 +84,7 @@ class Controller:
 
     def apply_categories(self, catalog_id, component_id, categories, subquery=True):
         return apply_categories_service(self.session, catalog_id, component_id, categories, subquery)
+
+    # Value types
+    def get_all_value_types(self):
+        return get_all_value_types_service(self.session)

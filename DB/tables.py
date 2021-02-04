@@ -59,9 +59,11 @@ class Component(Base):
     is_sortable = Column(Boolean, default=False)
     catalog_id = Column(Integer, ForeignKey('catalog.id'), nullable=False)
     filter_id = Column(Integer, ForeignKey('filter.id'), nullable=False)
+    value_type_id = Column(Integer, ForeignKey('value_type.id'))
 
     catalog = relationship("Catalog", back_populates="component")
     filter = relationship("Filter", back_populates="component")
+    value_type = relationship("ValueType", back_populates="component")
 
     value = relationship(
         "Value", order_by=Value.id, back_populates="component", cascade="all, delete, delete-orphan"
@@ -87,6 +89,24 @@ class Filter(Base):
 
     def __repr__(self):
         return "<Filter(code='%s')>" % self.code
+
+
+class ValueType(Base):
+    """
+    Store the possible types for the values of a component
+    """
+
+    __tablename__ = 'value_type'
+
+    id = Column(Integer, primary_key=True)
+    code = Column(String, nullable=False, unique=True)
+
+    component = relationship(
+        "Component", order_by=Component.id, back_populates="value_type", cascade="all, delete, delete-orphan"
+    )
+
+    def __repr__(self):
+        return "<ValueType(code='%s')>" % self.code
 
 
 class Catalog(Base):

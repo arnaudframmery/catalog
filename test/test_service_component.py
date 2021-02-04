@@ -5,9 +5,12 @@ component_input_1 = {
     'default_value': 'default_value_1',
     'is_sortable': False,
     'filter_code': 'no filter',
+    'type_code': 'text',
+    'previous_type_code': 'text',
 }
 component_output_1 = {
-    'code': 'no filter',
+    'filter_code': 'no filter',
+    'type_code': 'text',
     'default': 'default_value_1',
     'is_sortable': False,
     'label': 'component_1',
@@ -18,9 +21,12 @@ component_input_2 = {
     'default_value': 'default_value_2',
     'is_sortable': True,
     'filter_code': 'category',
+    'type_code': 'text',
+    'previous_type_code': 'text',
 }
 component_output_2 = {
-    'code': 'category',
+    'filter_code': 'category',
+    'type_code': 'text',
     'default': 'default_value_2',
     'is_sortable': True,
     'label': 'component_2',
@@ -63,6 +69,20 @@ def test_component_update(ctrl_base_1):
         {**component_output_1, 'id': 2, 'label': 'component_1_updated'},
         {**component_output_2, 'id': 3, 'label': 'component_2_updated'},
     ], 'failed'
+
+    # Test the update with a change in value type
+    ctrl_base_1.create_article(2, 'title_1')
+    ctrl_base_1.create_article(2, 'title_2')
+    ctrl_base_1.create_values([{'component_id': 3, 'value': '0100', 'article_id': 1}])
+    ctrl_base_1.create_values([{'component_id': 3, 'value': 'cent', 'article_id': 1}])
+    ctrl_base_1.update_components([
+        {**component_input_2, 'id': 3, 'label': 'component_2_updated', 'default_value': '007', 'type_code': 'int'},
+    ])
+    assert ctrl_base_1.get_components(2) == [
+        {**component_output_1, 'id': 2, 'label': 'component_1_updated'},
+        {**component_output_2, 'id': 3, 'label': 'component_2_updated', 'default': '7', 'type_code': 'int'},
+    ], 'failed'
+    assert ctrl_base_1.get_values(component_id=3) == [{'value': '100', 'id': 1}], 'failed'
 
 
 def test_component_delete(ctrl_base_1):
