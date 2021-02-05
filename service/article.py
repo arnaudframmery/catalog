@@ -1,7 +1,7 @@
 from sqlalchemy import desc, and_
 from sqlalchemy.sql.functions import coalesce
 
-from DB.tables import Catalog, Article, Value, Component
+from DB.tables import Catalog, Article, Value, Component, ValueType
 from service.helper import object_as_dict
 
 
@@ -44,8 +44,10 @@ def get_article_detail_service(session, article_id, catalog_id):
         .query(Component.label,
                coalesce(Value.value, Component.default).label('value'),
                Component.id.label('component_id'),
-               Value.id.label('value_id'))\
+               Value.id.label('value_id'),
+               ValueType.code.label('code'))\
         .join(Value, and_(Value.component_id == Component.id, Value.article_id == article_id), isouter=True)\
+        .join(ValueType, ValueType.id == Component.value_type_id)\
         .filter(Component.catalog_id == catalog_id)\
         .order_by(Component.id)\
         .all()

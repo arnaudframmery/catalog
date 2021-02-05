@@ -81,7 +81,7 @@ class ComponentSettingDialog(QtWidgets.QDialog, Ui_Dialog):
         to_create = []
         to_update = []
         for a_component in self.components_list:
-            if not(a_component.is_filled()) or not(a_component.is_type_matching_default()):
+            if not(a_component.is_filled()):
                 return None
             if a_component.is_new():
                 to_create.append(a_component.get_data())

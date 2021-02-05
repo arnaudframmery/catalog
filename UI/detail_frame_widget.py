@@ -1,6 +1,7 @@
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtWidgets import QFormLayout, QLabel, QWidget, QLineEdit
+from PyQt5.QtWidgets import QFormLayout, QLabel, QWidget
 from UI.qt_ui.detail_frame_UI import Ui_Form
+from constant import VALUE_TYPE_MAPPING
 
 
 class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
@@ -83,10 +84,9 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
         """display the article view where edition is possible"""
         self.clean_frame()
         self.line_edit_label.setText(self.title)
-        for component in self.detail:
-            widget = QLineEdit()
-            widget.setText(component['value'])
-            self.layout.addRow(component['label'] + ':', widget)
+        for a_component in self.detail:
+            widget = VALUE_TYPE_MAPPING[a_component['code']].create_edit_widget(a_component['value'])
+            self.layout.addRow(a_component['label'] + ':', widget)
             self.line_edit_widgets.append(widget)
 
     def clean_frame(self):
@@ -98,19 +98,20 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
     def is_filled(self):
         """check if all necessary fields are filled"""
         condition = True
-        for a_widget in self.line_edit_widgets:
-            condition = condition and a_widget.text().replace(' ', '') != ''
+        for a_widget, a_component in zip(self.line_edit_widgets, self.detail):
+            condition = condition and VALUE_TYPE_MAPPING[a_component['code']].is_filled(a_widget)
         return condition and self.line_edit_label.text().replace(' ', '') != ''
 
     def create_update_value(self):
         """create or update the values of the different components of this article"""
         to_create = []
         to_update = []
-        for component, widget in zip(self.detail, self.line_edit_widgets):
-            if component['value'] != widget.text() and component['value_id'] is None:
-                to_create.append({**component, 'value': widget.text(), 'article_id': self.article_id})
-            elif component['value'] != widget.text() and component['value_id'] is not None:
-                to_update.append({**component, 'value': widget.text()})
+        for a_component, a_widget in zip(self.detail, self.line_edit_widgets):
+            value = VALUE_TYPE_MAPPING[a_component['code']].get_edit_widget_data(a_widget)
+            if a_component['value'] != value and a_component['value_id'] is None:
+                to_create.append({**a_component, 'value': value, 'article_id': self.article_id})
+            elif a_component['value'] != value and a_component['value_id'] is not None:
+                to_update.append({**a_component, 'value': value})
         self.controller.create_values(to_create)
         self.controller.update_values(to_update)
         if to_create or to_update:
