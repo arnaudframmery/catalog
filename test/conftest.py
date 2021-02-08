@@ -13,12 +13,14 @@ component_input_1 = {
     'default_value': 'default_value_1',
     'is_sortable': False,
     'filter_code': 'no filter',
+    'type_code': 'text',
 }
 component_input_2 = {
     'label': 'component_2',
     'default_value': 'default_value_2',
     'is_sortable': True,
     'filter_code': 'category',
+    'type_code': 'text',
 }
 
 

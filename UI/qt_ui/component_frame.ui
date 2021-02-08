@@ -461,22 +461,15 @@
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="name_label">
-       <property name="text">
-        <string>Name:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="name_line_edit"/>
-     </item>
      <item row="0" column="2">
       <widget class="QCheckBox" name="sorting_check_box">
        <property name="text">
         <string>Sortable</string>
        </property>
       </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="default_line_edit"/>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="default_label">
@@ -485,20 +478,30 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="default_line_edit"/>
+     <item row="0" column="0">
+      <widget class="QLabel" name="name_label">
+       <property name="text">
+        <string>Name:</string>
+       </property>
+      </widget>
      </item>
      <item row="1" column="2">
       <widget class="QComboBox" name="filter_combo_box"/>
      </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="name_line_edit"/>
+     </item>
+     <item row="1" column="3">
+      <widget class="QComboBox" name="value_type_combo_box"/>
+     </item>
+     <item row="0" column="3">
+      <widget class="QPushButton" name="delete_button">
+       <property name="text">
+        <string>Delete</string>
+       </property>
+      </widget>
+     </item>
     </layout>
-   </item>
-   <item>
-    <widget class="QPushButton" name="delete_button">
-     <property name="text">
-      <string>Delete</string>
-     </property>
-    </widget>
    </item>
   </layout>
  </widget>

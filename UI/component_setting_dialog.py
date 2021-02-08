@@ -4,6 +4,8 @@ from UI.component_frame_widget import ComponentFrameWidget
 from UI.qt_ui.component_setting_UI import Ui_Dialog
 from PyQt5.QtWidgets import QVBoxLayout
 
+from constant import DEFAULT_FILTER_CODE, DEFAULT_VALUE_TYPE_CODE
+
 
 class ComponentSettingDialog(QtWidgets.QDialog, Ui_Dialog):
     """
@@ -16,6 +18,7 @@ class ComponentSettingDialog(QtWidgets.QDialog, Ui_Dialog):
         self.controller = controller
         self.catalog_id = catalog_id
         self.filters = self.controller.get_all_filters()
+        self.types = self.controller.get_all_value_types()
         self.component_layout = None
         self.components_list = []
         self.to_delete = []
@@ -38,8 +41,10 @@ class ComponentSettingDialog(QtWidgets.QDialog, Ui_Dialog):
                 a_component['label'],
                 a_component['is_sortable'],
                 a_component['default'],
-                a_component['code'],
+                a_component['filter_code'],
+                a_component['type_code'],
                 self.filters,
+                self.types,
             )
             widget.deleteReleased.connect(self.on_delete_button_release)
             self.component_layout.addWidget(widget)
@@ -54,7 +59,9 @@ class ComponentSettingDialog(QtWidgets.QDialog, Ui_Dialog):
 
     def on_add_button_release(self):
         """actions to do when add button is released"""
-        widget = ComponentFrameWidget(None, '', False, '', 'no filter', self.filters)
+        widget = ComponentFrameWidget(
+            None, '', False, '', DEFAULT_FILTER_CODE, DEFAULT_VALUE_TYPE_CODE, self.filters, self.types
+        )
         widget.deleteReleased.connect(self.on_delete_button_release)
         self.component_layout.insertWidget(len(self.components_list), widget)
         self.components_list.append(widget)
