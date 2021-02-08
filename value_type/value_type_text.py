@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QLineEdit
 
+from service.value_type import sort_value_type_text_asc, sort_value_type_text_desc
 from value_type.value_type import ValueType
 
 
@@ -29,3 +30,10 @@ class ValueTypeText(ValueType):
     @staticmethod
     def get_edit_widget_data(widget):
         return widget.text()
+
+    @staticmethod
+    def sort_subquery(query, subquery, direction):
+        if direction == 'ASC':
+            return sort_value_type_text_asc(query, subquery)
+        else:
+            return sort_value_type_text_desc(query, subquery)

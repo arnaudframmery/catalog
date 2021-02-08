@@ -29,3 +29,8 @@ class ValueType:
     def get_edit_widget_data(widget):
         """get the value of the edit widget"""
         raise NotImplementedError
+
+    @staticmethod
+    def sort_subquery(query, subquery, direction):
+        """sort the subquery in the correct order"""
+        raise NotImplementedError

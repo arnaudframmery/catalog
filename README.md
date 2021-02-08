@@ -48,9 +48,11 @@ python launch.py
 - [ ] Icons
 - [ ] Article detail view
 - [ ] Article select view
+- [ ] Custom widgets
 - Data types:
 - [x] text
-- [ ] Number
+- [x] Number (int)
+- [x] Number (float)
 - [ ] Dates
 - [ ] Pictures
 - [ ] Files

@@ -109,11 +109,11 @@ def test_component_get_sortable(ctrl_base_1):
 
     # Test the recovery of 1 sortable component
     ctrl_base_1.create_components(2, [component_input_1, component_input_2])
-    assert ctrl_base_1.get_sortable_components(2) == [{'label': 'component_2', 'id': 3}], 'failed'
+    assert ctrl_base_1.get_sortable_components(2) == [{'label': 'component_2', 'id': 3, 'code': 'text'}], 'failed'
 
     # Test the recovery of several sortable components
     ctrl_base_1.create_components(2, [{**component_input_2, 'label': 'component_3'}])
     assert ctrl_base_1.get_sortable_components(2) == [
-        {'label': 'component_2', 'id': 3},
-        {'label': 'component_3', 'id': 4},
+        {'label': 'component_2', 'id': 3, 'code': 'text'},
+        {'label': 'component_3', 'id': 4, 'code': 'text'},
     ], 'failed'

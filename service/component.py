@@ -24,8 +24,9 @@ def get_components_service(session, catalog_id):
 def get_sortable_components_service(session, catalog_id):
     """recover all components that can be sorted about a specific catalog"""
     result = session\
-        .query(Component.label, Component.id)\
+        .query(Component.label, Component.id, ValueType.code)\
         .join(Catalog)\
+        .join(ValueType)\
         .filter(Catalog.id == catalog_id)\
         .filter(Component.is_sortable)\
         .all()

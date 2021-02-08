@@ -50,8 +50,15 @@ class Controller:
     def update_article(self, article_id, title):
         update_article_service(self.session, article_id, title)
 
-    def get_articles(self, catalog_id, filters, sorting_component, sorting_direction):
-        return get_articles_service(self.session, catalog_id, filters, sorting_component, sorting_direction)
+    def get_articles(self, catalog_id, filters, sorting_component, sorting_direction, sorting_code):
+        return get_articles_service(
+            self.session,
+            catalog_id,
+            filters,
+            sorting_component,
+            sorting_direction,
+            sorting_code,
+        )
 
     def get_article_detail(self, article_id, catalog_id):
         return get_article_detail_service(self.session, article_id, catalog_id)

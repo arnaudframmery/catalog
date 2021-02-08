@@ -29,6 +29,7 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.reset_button = None
 
         self.sorting_component = None
+        self.sorting_code = None
         self.sortable_components = []
         self.sorting_direction = 'ASC'
         self.init_sort_frame()
@@ -94,7 +95,8 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
             self.catalog_id,
             self.filters,
             self.sorting_component,
-            self.sorting_direction
+            self.sorting_direction,
+            self.sorting_code,
         )
         articles_layout = QVBoxLayout()
         for an_article in articles:
@@ -118,9 +120,11 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
         """actions to do when sorting component is changed"""
         if component_index == 0 or component_index == -1:
             self.sorting_component = None
+            self.sorting_code = None
             self.sort_direction.setEnabled(False)
         else:
             self.sorting_component = self.sortable_components[component_index - 1]['id']
+            self.sorting_code = self.sortable_components[component_index - 1]['code']
             self.sort_direction.setEnabled(True)
         self.display_articles()
 

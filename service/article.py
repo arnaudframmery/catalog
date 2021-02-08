@@ -1,11 +1,12 @@
-from sqlalchemy import desc, and_
+from sqlalchemy import and_
 from sqlalchemy.sql.functions import coalesce
 
 from DB.tables import Catalog, Article, Value, Component, ValueType
+from constant import VALUE_TYPE_MAPPING
 from service.helper import object_as_dict
 
 
-def get_articles_service(session, catalog_id, filters, sorting_component, sorting_direction):
+def get_articles_service(session, catalog_id, filters, sorting_component, sorting_direction, sorting_code):
     """recover articles about a specific catalog, with filtering and sorting options"""
     result = session\
         .query(Article.id, Article.title)\
@@ -26,14 +27,7 @@ def get_articles_service(session, catalog_id, filters, sorting_component, sortin
             .join(Value, and_(Value.component_id == Component.id, Value.article_id == Article.id), isouter=True)\
             .filter(Component.id == sorting_component)\
             .subquery()
-        if sorting_direction == 'ASC':
-            result = result\
-                .join(stmt, stmt.c.article_id == Article.id)\
-                .order_by(stmt.c.value_value)
-        else:
-            result = result\
-                .join(stmt, stmt.c.article_id == Article.id)\
-                .order_by(desc(stmt.c.value_value))
+        result = VALUE_TYPE_MAPPING[sorting_code].sort_subquery(result, stmt, sorting_direction)
 
     return object_as_dict(result.all())
 

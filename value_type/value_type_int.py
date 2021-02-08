@@ -4,6 +4,7 @@ from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QRegExpValidator
 from PyQt5.QtWidgets import QLineEdit
 
+from service.value_type import sort_value_type_int_asc, sort_value_type_int_desc
 from value_type.value_type import ValueType
 
 
@@ -43,3 +44,10 @@ class ValueTypeInt(ValueType):
     @staticmethod
     def get_edit_widget_data(widget):
         return ValueTypeInt.recovery_process(widget.text())
+
+    @staticmethod
+    def sort_subquery(query, subquery, direction):
+        if direction == 'ASC':
+            return sort_value_type_int_asc(query, subquery)
+        else:
+            return sort_value_type_int_desc(query, subquery)
