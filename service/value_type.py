@@ -1,4 +1,4 @@
-from sqlalchemy import desc, Integer, func
+from sqlalchemy import desc, Integer, func, Float
 
 from DB.tables import ValueType, Article
 from service.helper import object_as_dict
@@ -43,4 +43,21 @@ def sort_value_type_int_desc(query, subquery):
     result = query\
         .join(subquery, subquery.c.article_id == Article.id)\
         .order_by(desc(subquery.c.value_value.cast(Integer)))
+    return result
+
+
+# Float
+def sort_value_type_float_asc(query, subquery):
+    """sort in ascending order the values from float value type"""
+    result = query\
+        .join(subquery, subquery.c.article_id == Article.id)\
+        .order_by(subquery.c.value_value.cast(Float))
+    return result
+
+
+def sort_value_type_float_desc(query, subquery):
+    """sort in descending order the values from float value type"""
+    result = query\
+        .join(subquery, subquery.c.article_id == Article.id)\
+        .order_by(desc(subquery.c.value_value.cast(Float)))
     return result

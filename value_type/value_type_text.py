@@ -15,7 +15,10 @@ class ValueTypeText(ValueType):
 
     @staticmethod
     def recovery_process(value):
-        return value
+        if ValueTypeText.check_consistency(value):
+            return value
+        else:
+            return None
 
     @staticmethod
     def create_edit_widget(value):
