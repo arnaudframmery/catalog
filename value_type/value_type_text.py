@@ -10,6 +10,10 @@ class ValueTypeText(ValueType):
     """
 
     @staticmethod
+    def get_code():
+        return 'text'
+
+    @staticmethod
     def check_consistency(value):
         return isinstance(value, str)
 
@@ -40,3 +44,10 @@ class ValueTypeText(ValueType):
             return sort_value_type_text_asc(query, subquery)
         else:
             return sort_value_type_text_desc(query, subquery)
+
+    @staticmethod
+    def is_recovery_accepted(code):
+        if code in ['image']:
+            return False
+        else:
+            return True

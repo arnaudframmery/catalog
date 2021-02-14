@@ -14,11 +14,17 @@ class ValueTypeFloat(ValueType):
     """
 
     @staticmethod
+    def get_code():
+        return 'float'
+
+    @staticmethod
     def check_consistency(value):
         try:
             float(value)
             return True
         except ValueError:
+            return False
+        except TypeError:
             return False
 
     @staticmethod
@@ -51,3 +57,10 @@ class ValueTypeFloat(ValueType):
             return sort_value_type_float_asc(query, subquery)
         else:
             return sort_value_type_float_desc(query, subquery)
+
+    @staticmethod
+    def is_recovery_accepted(code):
+        if code in ['image']:
+            return False
+        else:
+            return True

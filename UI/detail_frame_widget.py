@@ -1,5 +1,5 @@
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtWidgets import QFormLayout, QLabel, QWidget
+from PyQt5.QtWidgets import QFormLayout, QWidget
 from UI.qt_ui.detail_frame_UI import Ui_Form
 from constant import VALUE_TYPE_MAPPING
 
@@ -17,7 +17,7 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.article_id = article_id
         self.catalog_id = catalog_id
         self.title = title
-        self.line_edit_widgets = []
+        self.edit_widgets = []
         self.is_updated = False
         self.setupUi(self)
         self.state = 'READ'
@@ -78,7 +78,8 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
         """display the article view where no edition is possible"""
         self.clean_frame()
         for component in self.detail:
-            self.layout.addRow(component['label'] + ':', QLabel(component['value']))
+            widget = VALUE_TYPE_MAPPING[component['code']].create_view_widget(component['value'])
+            self.layout.addRow(component['label'] + ':', widget)
 
     def display_edit_view(self):
         """display the article view where edition is possible"""
@@ -87,18 +88,18 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
         for a_component in self.detail:
             widget = VALUE_TYPE_MAPPING[a_component['code']].create_edit_widget(a_component['value'])
             self.layout.addRow(a_component['label'] + ':', widget)
-            self.line_edit_widgets.append(widget)
+            self.edit_widgets.append(widget)
 
     def clean_frame(self):
         """clean the article detail view from all the components and values"""
         for _ in range(len(self.detail)):
             self.layout.removeRow(0)
-        self.line_edit_widgets = []
+        self.edit_widgets = []
 
     def is_filled(self):
         """check if all necessary fields are filled"""
         condition = True
-        for a_widget, a_component in zip(self.line_edit_widgets, self.detail):
+        for a_widget, a_component in zip(self.edit_widgets, self.detail):
             condition = condition and VALUE_TYPE_MAPPING[a_component['code']].is_filled(a_widget)
         return condition and self.line_edit_label.text().replace(' ', '') != ''
 
@@ -106,7 +107,7 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
         """create or update the values of the different components of this article"""
         to_create = []
         to_update = []
-        for a_component, a_widget in zip(self.detail, self.line_edit_widgets):
+        for a_component, a_widget in zip(self.detail, self.edit_widgets):
             value = VALUE_TYPE_MAPPING[a_component['code']].get_edit_widget_data(a_widget)
             if a_component['value'] != value and a_component['value_id'] is None:
                 to_create.append({**a_component, 'value': value, 'article_id': self.article_id})

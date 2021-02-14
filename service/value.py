@@ -1,12 +1,14 @@
 from DB.tables import Value, Component
+from constant import VALUE_TYPE_MAPPING
 from service.helper import object_as_dict
 
 
 def create_values_service(session, value_list):
     """create a list of new value"""
     for value_element in value_list:
+        value = VALUE_TYPE_MAPPING[value_element['code']].recovery_process(value_element['value'])
         new_value = Value(
-            value=value_element['value'],
+            value=value,
             component_id=value_element['component_id'],
             article_id=value_element['article_id'],
         )
@@ -17,11 +19,12 @@ def create_values_service(session, value_list):
 def update_values_service(session, value_list):
     """update a list of value"""
     for a_value in value_list:
+        value = VALUE_TYPE_MAPPING[a_value['code']].recovery_process(a_value['value'])
         value_to_update = session\
             .query(Value)\
             .filter(Value.id == a_value['value_id'])\
             .one()
-        value_to_update.value = a_value['value']
+        value_to_update.value = value
     session.commit()
 
 

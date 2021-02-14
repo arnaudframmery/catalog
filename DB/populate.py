@@ -8,6 +8,7 @@ def populate_init(session):
     value_type_text = ValueType(code='text')
     value_type_int = ValueType(code='int')
     value_type_float = ValueType(code='float')
+    value_type_image = ValueType(code='image')
 
     session.add(filter_base)
     session.add(filter_cat)
@@ -15,6 +16,7 @@ def populate_init(session):
     session.add(value_type_text)
     session.add(value_type_int)
     session.add(value_type_float)
+    session.add(value_type_image)
 
     session.commit()
 

@@ -1,5 +1,6 @@
 from filter.filter_category import FilterCategory
 from value_type.value_type_float import ValueTypeFloat
+from value_type.value_type_image import ValueTypeImage
 from value_type.value_type_int import ValueTypeInt
 from value_type.value_type_text import ValueTypeText
 
@@ -12,6 +13,7 @@ VALUE_TYPE_MAPPING = {
     'text': ValueTypeText,
     'int': ValueTypeInt,
     'float': ValueTypeFloat,
+    'image': ValueTypeImage,
 }
 
 CATALOG_NAME_MAX_LENGTH = 20

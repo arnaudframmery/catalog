@@ -14,11 +14,17 @@ class ValueTypeInt(ValueType):
     """
 
     @staticmethod
+    def get_code():
+        return 'int'
+
+    @staticmethod
     def check_consistency(value):
         try:
             int(value)
             return True
         except ValueError:
+            return False
+        except TypeError:
             return False
 
     @staticmethod
@@ -51,3 +57,10 @@ class ValueTypeInt(ValueType):
             return sort_value_type_int_asc(query, subquery)
         else:
             return sort_value_type_int_desc(query, subquery)
+
+    @staticmethod
+    def is_recovery_accepted(code):
+        if code in ['image']:
+            return False
+        else:
+            return True
