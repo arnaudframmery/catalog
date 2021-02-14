@@ -85,8 +85,8 @@ def ctrl_base_3(ctrl_base_2):
     ctrl_base_2.create_article(2, 'title_3')
     ctrl_base_2.create_article(2, 'title_4')
     ctrl_base_2.create_values([
-        {'component_id': 1, 'value': 'value_1', 'article_id': 1},
-        {'component_id': 2, 'value': 'value_2', 'article_id': 2},
-        {'component_id': 3, 'value': 'value_3', 'article_id': 2},
+        {'component_id': 1, 'value': 'value_1', 'article_id': 1, 'code': 'text'},
+        {'component_id': 2, 'value': 'value_2', 'article_id': 2, 'code': 'text'},
+        {'component_id': 3, 'value': 'value_3', 'article_id': 2, 'code': 'text'},
     ])
     return ctrl_base_2

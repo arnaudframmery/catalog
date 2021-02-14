@@ -53,8 +53,8 @@ python launch.py
 - [x] text
 - [x] Number (int)
 - [x] Number (float)
+- [x] Pictures
 - [ ] Dates
-- [ ] Pictures
 - [ ] Files
 - [ ] Links
 - Data injection:

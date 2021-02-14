@@ -30,7 +30,11 @@ class ValueTypeImage(ValueType):
     def recovery_process(value):
         if ValueTypeImage.check_consistency(value):
             resource_dir = os.path.join(os.getcwd(), 'resource')
-            assumed_path = os.path.join(resource_dir, value.split('/')[-1])
+            if '/' in value:
+                assumed_path = os.path.join(resource_dir, value.split('/')[-1])
+            else:
+                assumed_path = os.path.join(resource_dir, value.split('\\')[-1])
+
             # if the image is already in resource folder
             if os.path.isfile(assumed_path):
                 return assumed_path
@@ -62,7 +66,7 @@ class ValueTypeImage(ValueType):
 
     @staticmethod
     def is_filled(widget):
-        return widget.get_image_path() != ''  # TODO: more precise check
+        return os.path.isfile(widget.get_image_path())
 
     @staticmethod
     def get_edit_widget_data(widget):

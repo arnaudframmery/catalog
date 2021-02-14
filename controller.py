@@ -67,10 +67,10 @@ class Controller:
         delete_article_service(self.session, article_id)
 
     # Values
-    def create_values(self, value_list):  # TODO: update tests
+    def create_values(self, value_list):
         create_values_service(self.session, value_list)
 
-    def update_values(self, value_list):  # TODO: update tests
+    def update_values(self, value_list):
         update_values_service(self.session, value_list)
 
     def get_values(self, component_id):

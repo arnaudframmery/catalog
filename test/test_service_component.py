@@ -73,8 +73,8 @@ def test_component_update(ctrl_base_1):
     # Test the update with a change in value type
     ctrl_base_1.create_article(2, 'title_1')
     ctrl_base_1.create_article(2, 'title_2')
-    ctrl_base_1.create_values([{'component_id': 3, 'value': '0100', 'article_id': 1}])
-    ctrl_base_1.create_values([{'component_id': 3, 'value': 'cent', 'article_id': 1}])
+    ctrl_base_1.create_values([{'component_id': 3, 'value': '0100', 'article_id': 1, 'code': 'text'}])
+    ctrl_base_1.create_values([{'component_id': 3, 'value': 'cent', 'article_id': 1, 'code': 'text'}])
     ctrl_base_1.update_components([
         {**component_input_2, 'id': 3, 'label': 'component_2_updated', 'default_value': '007', 'type_code': 'int'},
     ])
