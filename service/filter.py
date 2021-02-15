@@ -2,7 +2,7 @@ from sqlalchemy import distinct, and_
 from sqlalchemy.sql.functions import coalesce
 
 from DB.tables import Filter, Component, Catalog, Value, Article
-from constant import FILTER_MAPPING
+from mapping import FILTER_MAPPING
 from service.helper import object_as_dict, object_as_list
 
 

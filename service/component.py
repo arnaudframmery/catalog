@@ -1,5 +1,5 @@
 from DB.tables import Component, Catalog, Filter, ValueType
-from constant import VALUE_TYPE_MAPPING
+from mapping import VALUE_TYPE_MAPPING
 from service.helper import object_as_dict
 from service.value import get_values_service, update_values_service, delete_value_service
 
@@ -59,13 +59,17 @@ def create_components_service(session, catalog_id, components_data):
     session.commit()
 
 
-def update_component_value_type_service(session, component_id, value_type_code):
+def update_component_value_type_service(session, component_id, value_type_code, previous_value_type_code):
     """update the values about a specific component to match a value type"""
     values = get_values_service(session, component_id)
     for a_value in values:
-        new_value = VALUE_TYPE_MAPPING[value_type_code].recovery_process(a_value['value'])
+        new_value = (
+            VALUE_TYPE_MAPPING[value_type_code].recovery_process(a_value['value'])
+            if VALUE_TYPE_MAPPING[value_type_code].is_recovery_accepted(previous_value_type_code)
+            else None
+        )
         if new_value:
-            update_values_service(session, [{'value_id': a_value['id'], 'value': new_value}])
+            update_values_service(session, [{'value_id': a_value['id'], 'value': new_value, 'code': value_type_code}])
         else:
             delete_value_service(session, a_value['id'])
 
@@ -94,7 +98,12 @@ def update_components_service(session, components_data):
         component.filter_id = filter_id
         component.value_type_id = value_type_id
         if a_component_data['type_code'] != a_component_data['previous_type_code']:
-            update_component_value_type_service(session, a_component_data['id'], a_component_data['type_code'])
+            update_component_value_type_service(
+                session,
+                a_component_data['id'],
+                a_component_data['type_code'],
+                a_component_data['previous_type_code'],
+            )
     session.commit()
 
 

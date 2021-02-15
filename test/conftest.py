@@ -5,6 +5,7 @@ import DB.tables
 import pytest
 
 from DB.populate import populate_init
+from constant import VALUE_TYPE_CODE, FILTER_CODE
 from controller import Controller
 
 
@@ -12,15 +13,15 @@ component_input_1 = {
     'label': 'component_1',
     'default_value': 'default_value_1',
     'is_sortable': False,
-    'filter_code': 'no filter',
-    'type_code': 'text',
+    'filter_code': FILTER_CODE.NO_FILTER,
+    'type_code': VALUE_TYPE_CODE.TEXT,
 }
 component_input_2 = {
     'label': 'component_2',
     'default_value': 'default_value_2',
     'is_sortable': True,
-    'filter_code': 'category',
-    'type_code': 'text',
+    'filter_code': FILTER_CODE.CATEGORY,
+    'type_code': VALUE_TYPE_CODE.TEXT,
 }
 
 
@@ -85,8 +86,8 @@ def ctrl_base_3(ctrl_base_2):
     ctrl_base_2.create_article(2, 'title_3')
     ctrl_base_2.create_article(2, 'title_4')
     ctrl_base_2.create_values([
-        {'component_id': 1, 'value': 'value_1', 'article_id': 1},
-        {'component_id': 2, 'value': 'value_2', 'article_id': 2},
-        {'component_id': 3, 'value': 'value_3', 'article_id': 2},
+        {'component_id': 1, 'value': 'value_1', 'article_id': 1, 'code': VALUE_TYPE_CODE.TEXT},
+        {'component_id': 2, 'value': 'value_2', 'article_id': 2, 'code': VALUE_TYPE_CODE.TEXT},
+        {'component_id': 3, 'value': 'value_3', 'article_id': 2, 'code': VALUE_TYPE_CODE.TEXT},
     ])
     return ctrl_base_2

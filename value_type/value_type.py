@@ -1,9 +1,15 @@
+from PyQt5.QtWidgets import QLabel
 
 
 class ValueType:
     """
     Manage the value type of a component
     """
+
+    @staticmethod
+    def get_code():
+        """return the code of this value type"""
+        raise NotImplementedError
 
     @staticmethod
     def check_consistency(value):
@@ -34,3 +40,23 @@ class ValueType:
     def sort_subquery(query, subquery, direction):
         """sort the subquery in the correct order"""
         raise NotImplementedError
+
+    @staticmethod
+    def is_recovery_accepted(code):
+        """do we recover value from this value type code ?"""
+        raise NotImplementedError
+
+    @staticmethod
+    def create_view_widget(value):
+        """return a widget to see value from the current value type"""
+        return QLabel(value)
+
+    @staticmethod
+    def is_sortable():
+        """is the value type sortable ?"""
+        return True
+
+    @staticmethod
+    def is_filterable():
+        """is the value type filterable ?"""
+        return True

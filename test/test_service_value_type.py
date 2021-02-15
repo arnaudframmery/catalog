@@ -1,4 +1,8 @@
+import os
+
+from constant import VALUE_TYPE_CODE
 from value_type.value_type_float import ValueTypeFloat
+from value_type.value_type_image import ValueTypeImage
 from value_type.value_type_int import ValueTypeInt
 from value_type.value_type_text import ValueTypeText
 
@@ -6,9 +10,10 @@ from value_type.value_type_text import ValueTypeText
 def test_value_type_get_all(controller):
     # Test the recovery of all the possible value types
     assert controller.get_all_value_types() == [
-        {'code': 'text', 'id': 1},
-        {'code': 'int', 'id': 2},
-        {'code': 'float', 'id': 3},
+        {'code': VALUE_TYPE_CODE.TEXT, 'id': 1},
+        {'code': VALUE_TYPE_CODE.INT, 'id': 2},
+        {'code': VALUE_TYPE_CODE.FLOAT, 'id': 3},
+        {'code': VALUE_TYPE_CODE.IMAGE, 'id': 4},
     ], 'failed'
 
 
@@ -61,3 +66,26 @@ def test_value_type_float_recovery_process():
     assert ValueTypeFloat.recovery_process('64.7') == '64.7'
     assert ValueTypeFloat.recovery_process('100,01') is None
     assert ValueTypeFloat.recovery_process('hell0') is None
+
+
+# Image
+def test_value_type_image_check_consistency():
+    resource_path = os.path.join(os.getcwd(), 'resource')
+
+    assert ValueTypeImage.check_consistency(os.path.join(resource_path, 'hagrid.jpg'))
+    assert not ValueTypeImage.check_consistency(None)
+    assert not ValueTypeImage.check_consistency(resource_path)
+    assert not ValueTypeImage.check_consistency('this/is/a/fake/path.jpg')
+
+
+def test_value_type_image_recovery_process():
+    resource_path = os.path.join(os.getcwd(), 'resource')
+    test_path = os.path.join(os.getcwd(), 'test')
+
+    image_path = os.path.join(resource_path, 'hagrid.jpg')
+    assert ValueTypeImage.recovery_process(image_path) == image_path
+    image_origin_path = os.path.join(test_path, 'test_hagrid.jpg')
+    output_path = ValueTypeImage.recovery_process(image_origin_path)
+    assert resource_path in output_path
+    os.remove(output_path)
+    assert ValueTypeImage.recovery_process('this/is/a/fake/path.jpg') is None

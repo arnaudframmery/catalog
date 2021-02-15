@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QLineEdit
 
+from constant import VALUE_TYPE_CODE
 from service.value_type import sort_value_type_text_asc, sort_value_type_text_desc
 from value_type.value_type import ValueType
 
@@ -8,6 +9,10 @@ class ValueTypeText(ValueType):
     """
     The default value type: just a string
     """
+
+    @staticmethod
+    def get_code():
+        return VALUE_TYPE_CODE.TEXT
 
     @staticmethod
     def check_consistency(value):
@@ -40,3 +45,10 @@ class ValueTypeText(ValueType):
             return sort_value_type_text_asc(query, subquery)
         else:
             return sort_value_type_text_desc(query, subquery)
+
+    @staticmethod
+    def is_recovery_accepted(code):
+        if code in [VALUE_TYPE_CODE.IMAGE]:
+            return False
+        else:
+            return True
