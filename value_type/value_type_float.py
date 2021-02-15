@@ -4,6 +4,7 @@ from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QRegExpValidator
 from PyQt5.QtWidgets import QLineEdit
 
+from constant import VALUE_TYPE_CODE
 from service.value_type import sort_value_type_float_asc, sort_value_type_float_desc
 from value_type.value_type import ValueType
 
@@ -15,7 +16,7 @@ class ValueTypeFloat(ValueType):
 
     @staticmethod
     def get_code():
-        return 'float'
+        return VALUE_TYPE_CODE.FLOAT
 
     @staticmethod
     def check_consistency(value):
@@ -60,7 +61,7 @@ class ValueTypeFloat(ValueType):
 
     @staticmethod
     def is_recovery_accepted(code):
-        if code in ['image']:
+        if code in [VALUE_TYPE_CODE.IMAGE]:
             return False
         else:
             return True

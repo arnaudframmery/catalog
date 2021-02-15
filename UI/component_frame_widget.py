@@ -2,7 +2,8 @@ from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtCore import Qt
 
 from UI.qt_ui.component_frame_UI import Ui_Form
-from constant import VALUE_TYPE_MAPPING, DEFAULT_FILTER_CODE
+from mapping import VALUE_TYPE_MAPPING
+from constant import DEFAULT_FILTER_CODE
 
 
 class ComponentFrameWidget(QtWidgets.QWidget, Ui_Form):

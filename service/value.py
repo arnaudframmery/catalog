@@ -1,5 +1,5 @@
 from DB.tables import Value, Component
-from constant import VALUE_TYPE_MAPPING
+from mapping import VALUE_TYPE_MAPPING
 from service.helper import object_as_dict
 
 

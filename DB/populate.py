@@ -1,16 +1,17 @@
 import os
 
 from DB.tables import Catalog, Article, Component, Filter, Value, ValueType
+from constant import VALUE_TYPE_CODE
 
 
 def populate_init(session):
     filter_base = Filter(code='no filter')
     filter_cat = Filter(code='category')
 
-    value_type_text = ValueType(code='text')
-    value_type_int = ValueType(code='int')
-    value_type_float = ValueType(code='float')
-    value_type_image = ValueType(code='image')
+    value_type_text = ValueType(code=VALUE_TYPE_CODE.TEXT)
+    value_type_int = ValueType(code=VALUE_TYPE_CODE.INT)
+    value_type_float = ValueType(code=VALUE_TYPE_CODE.FLOAT)
+    value_type_image = ValueType(code=VALUE_TYPE_CODE.IMAGE)
 
     session.add(filter_base)
     session.add(filter_cat)
@@ -49,10 +50,10 @@ def populate_light(session):
     filter_base = session.query(Filter).filter(Filter.code == 'no filter').one()
     filter_cat = session.query(Filter).filter(Filter.code == 'category').one()
 
-    value_type_text = session.query(ValueType).filter(ValueType.code == 'text').one()
-    value_type_int = session.query(ValueType).filter(ValueType.code == 'int').one()
-    value_type_float = session.query(ValueType).filter(ValueType.code == 'float').one()
-    value_type_image = session.query(ValueType).filter(ValueType.code == 'image').one()
+    value_type_text = session.query(ValueType).filter(ValueType.code == VALUE_TYPE_CODE.TEXT).one()
+    value_type_int = session.query(ValueType).filter(ValueType.code == VALUE_TYPE_CODE.INT).one()
+    value_type_float = session.query(ValueType).filter(ValueType.code == VALUE_TYPE_CODE.FLOAT).one()
+    value_type_image = session.query(ValueType).filter(ValueType.code == VALUE_TYPE_CODE.IMAGE).one()
 
     value_1_lname = Value(value='Potter')
     value_1_fname = Value(value='Harry')

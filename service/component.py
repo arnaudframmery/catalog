@@ -1,5 +1,5 @@
 from DB.tables import Component, Catalog, Filter, ValueType
-from constant import VALUE_TYPE_MAPPING
+from mapping import VALUE_TYPE_MAPPING
 from service.helper import object_as_dict
 from service.value import get_values_service, update_values_service, delete_value_service
 

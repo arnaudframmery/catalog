@@ -2,7 +2,7 @@ from sqlalchemy import and_
 from sqlalchemy.sql.functions import coalesce
 
 from DB.tables import Catalog, Article, Value, Component, ValueType
-from constant import VALUE_TYPE_MAPPING
+from mapping import VALUE_TYPE_MAPPING
 from service.helper import object_as_dict
 
 

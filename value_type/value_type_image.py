@@ -7,6 +7,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QFileDialog, QPushButton, QLabel, QVBoxLayout
 
+from constant import VALUE_TYPE_CODE
 from value_type.value_type import ValueType
 
 
@@ -17,7 +18,7 @@ class ValueTypeImage(ValueType):
 
     @staticmethod
     def get_code():
-        return 'image'
+        return VALUE_TYPE_CODE.IMAGE
 
     @staticmethod
     def check_consistency(value):
@@ -83,7 +84,7 @@ class ValueTypeImage(ValueType):
 
     @staticmethod
     def is_recovery_accepted(code):
-        if code in ['int', 'float']:
+        if code in [VALUE_TYPE_CODE.INT, VALUE_TYPE_CODE.FLOAT]:
             return False
         else:
             return True

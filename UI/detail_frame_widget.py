@@ -1,7 +1,7 @@
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QFormLayout, QWidget
 from UI.qt_ui.detail_frame_UI import Ui_Form
-from constant import VALUE_TYPE_MAPPING
+from mapping import VALUE_TYPE_MAPPING
 
 
 class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
