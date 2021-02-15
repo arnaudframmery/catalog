@@ -1,8 +1,8 @@
 from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QVBoxLayout
 
 from UI.component_frame_widget import ComponentFrameWidget
 from UI.qt_ui.component_setting_UI import Ui_Dialog
-from PyQt5.QtWidgets import QVBoxLayout
 
 from constant import DEFAULT_FILTER_CODE, DEFAULT_VALUE_TYPE_CODE
 

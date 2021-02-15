@@ -1,12 +1,12 @@
 import os
 
 from DB.tables import Catalog, Article, Component, Filter, Value, ValueType
-from constant import VALUE_TYPE_CODE
+from constant import VALUE_TYPE_CODE, FILTER_CODE
 
 
 def populate_init(session):
-    filter_base = Filter(code='no filter')
-    filter_cat = Filter(code='category')
+    filter_base = Filter(code=FILTER_CODE.NO_FILTER)
+    filter_cat = Filter(code=FILTER_CODE.CATEGORY)
 
     value_type_text = ValueType(code=VALUE_TYPE_CODE.TEXT)
     value_type_int = ValueType(code=VALUE_TYPE_CODE.INT)
@@ -47,8 +47,8 @@ def populate_light(session):
     component_7 = Component(label='Photo', default=os.path.join(resource_path, 'hagrid.jpg'))
     components = [component_1, component_2, component_3, component_4, component_5, component_6, component_7]
 
-    filter_base = session.query(Filter).filter(Filter.code == 'no filter').one()
-    filter_cat = session.query(Filter).filter(Filter.code == 'category').one()
+    filter_base = session.query(Filter).filter(Filter.code == FILTER_CODE.NO_FILTER).one()
+    filter_cat = session.query(Filter).filter(Filter.code == FILTER_CODE.CATEGORY).one()
 
     value_type_text = session.query(ValueType).filter(ValueType.code == VALUE_TYPE_CODE.TEXT).one()
     value_type_int = session.query(ValueType).filter(ValueType.code == VALUE_TYPE_CODE.INT).one()

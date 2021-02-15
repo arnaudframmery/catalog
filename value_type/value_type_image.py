@@ -31,10 +31,7 @@ class ValueTypeImage(ValueType):
     def recovery_process(value):
         if ValueTypeImage.check_consistency(value):
             resource_dir = os.path.join(os.getcwd(), 'resource')
-            if '/' in value:
-                assumed_path = os.path.join(resource_dir, value.split('/')[-1])
-            else:
-                assumed_path = os.path.join(resource_dir, value.split('\\')[-1])
+            assumed_path = os.path.join(resource_dir, os.path.basename(value))
 
             # if the image is already in resource folder
             if os.path.isfile(assumed_path):

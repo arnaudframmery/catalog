@@ -20,7 +20,7 @@ def get_articles_service(session, catalog_id, filters, sorting_component, sortin
     if sorting_component:
         stmt = session\
             .query(Component.id,
-                   coalesce(Value.value, Component.default).label('value_value'),
+                   coalesce(Value.value, Component.default).label('value'),
                    Article.id.label('article_id'))\
             .join(Catalog, Catalog.id == Component.catalog_id)\
             .join(Article, Article.catalog_id == Catalog.id)\

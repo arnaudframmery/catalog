@@ -85,5 +85,7 @@ def test_value_type_image_recovery_process():
     image_path = os.path.join(resource_path, 'hagrid.jpg')
     assert ValueTypeImage.recovery_process(image_path) == image_path
     image_origin_path = os.path.join(test_path, 'test_hagrid.jpg')
-    assert resource_path in ValueTypeImage.recovery_process(image_origin_path)
+    output_path = ValueTypeImage.recovery_process(image_origin_path)
+    assert resource_path in output_path
+    os.remove(output_path)
     assert ValueTypeImage.recovery_process('this/is/a/fake/path.jpg') is None

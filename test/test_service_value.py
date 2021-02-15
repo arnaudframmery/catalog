@@ -107,19 +107,31 @@ def test_value_update(ctrl_base_2):
 
 def test_value_delete(ctrl_base_2):
     ctrl_base_2.create_values([
-        {'component_id': 1, 'value': 'value_1', 'article_id': 1, 'code': 'text'},
-        {'component_id': 2, 'value': 'value_2', 'article_id': 2, 'code': 'text'},
-        {'component_id': 3, 'value': 'value_3', 'article_id': 2, 'code': 'text'},
+        {'component_id': 1, 'value': 'value_1', 'article_id': 1, 'code': VALUE_TYPE_CODE.TEXT},
+        {'component_id': 2, 'value': 'value_2', 'article_id': 2, 'code': VALUE_TYPE_CODE.TEXT},
+        {'component_id': 3, 'value': 'value_3', 'article_id': 2, 'code': VALUE_TYPE_CODE.TEXT},
     ])
 
     # Test the delete of 1 value
     ctrl_base_2.delete_value_service(2)
     assert ctrl_base_2.get_article_detail(article_id=1, catalog_id=1) == [
-        {'component_id': 1, 'label': 'component_1', 'value': 'value_1', 'value_id': 1, 'code': 'text'}
+        {'component_id': 1, 'label': 'component_1', 'value': 'value_1', 'value_id': 1, 'code': VALUE_TYPE_CODE.TEXT}
     ], 'failed'
     assert ctrl_base_2.get_article_detail(article_id=2, catalog_id=2) == [
-        {'component_id': 2, 'label': 'component_1', 'value': 'default_value_1', 'value_id': None, 'code': 'text'},
-        {'component_id': 3, 'label': 'component_2', 'value': 'value_3', 'value_id': 3, 'code': 'text'},
+        {
+            'component_id': 2,
+            'label': 'component_1',
+            'value': 'default_value_1',
+            'value_id': None,
+            'code': VALUE_TYPE_CODE.TEXT
+        },
+        {
+            'component_id': 3,
+            'label': 'component_2',
+            'value': 'value_3',
+            'value_id': 3,
+            'code': VALUE_TYPE_CODE.TEXT
+        },
     ], 'failed'
     assert ctrl_base_2.get_values(component_id=1) == [{'value': 'value_1', 'id': 1}], 'failed'
     assert ctrl_base_2.get_values(component_id=2) == [], 'failed'

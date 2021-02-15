@@ -1,11 +1,12 @@
+from constant import FILTER_CODE
 from filter.filter_category import FilterCategory
 
 
 def test_filter_get_all(ctrl_base_3):
     # Test the recovery of all the possible filters
     assert ctrl_base_3.get_all_filters() == [
-        {'code': 'no filter', 'id': 1},
-        {'code': 'category', 'id': 2},
+        {'code': FILTER_CODE.NO_FILTER, 'id': 1},
+        {'code': FILTER_CODE.CATEGORY, 'id': 2},
     ], 'failed'
 
 

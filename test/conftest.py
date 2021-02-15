@@ -5,7 +5,7 @@ import DB.tables
 import pytest
 
 from DB.populate import populate_init
-from constant import VALUE_TYPE_CODE
+from constant import VALUE_TYPE_CODE, FILTER_CODE
 from controller import Controller
 
 
@@ -13,14 +13,14 @@ component_input_1 = {
     'label': 'component_1',
     'default_value': 'default_value_1',
     'is_sortable': False,
-    'filter_code': 'no filter',
+    'filter_code': FILTER_CODE.NO_FILTER,
     'type_code': VALUE_TYPE_CODE.TEXT,
 }
 component_input_2 = {
     'label': 'component_2',
     'default_value': 'default_value_2',
     'is_sortable': True,
-    'filter_code': 'category',
+    'filter_code': FILTER_CODE.CATEGORY,
     'type_code': VALUE_TYPE_CODE.TEXT,
 }
 

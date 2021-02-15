@@ -1,4 +1,4 @@
-from constant import VALUE_TYPE_CODE
+from constant import VALUE_TYPE_CODE, FILTER_CODE
 from filter.filter_category import FilterCategory
 from value_type.value_type_float import ValueTypeFloat
 from value_type.value_type_image import ValueTypeImage
@@ -7,7 +7,7 @@ from value_type.value_type_text import ValueTypeText
 
 
 FILTER_MAPPING = {
-    'category': FilterCategory
+    FILTER_CODE.CATEGORY: FilterCategory
 }
 
 VALUE_TYPE_MAPPING = {

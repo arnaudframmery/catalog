@@ -1,15 +1,15 @@
-from constant import VALUE_TYPE_CODE
+from constant import VALUE_TYPE_CODE, FILTER_CODE
 
 component_input_1 = {
     'label': 'component_1',
     'default_value': 'default_value_1',
     'is_sortable': False,
-    'filter_code': 'no filter',
+    'filter_code': FILTER_CODE.NO_FILTER,
     'type_code': VALUE_TYPE_CODE.TEXT,
     'previous_type_code': VALUE_TYPE_CODE.TEXT,
 }
 component_output_1 = {
-    'filter_code': 'no filter',
+    'filter_code': FILTER_CODE.NO_FILTER,
     'type_code': VALUE_TYPE_CODE.TEXT,
     'default': 'default_value_1',
     'is_sortable': False,
@@ -20,12 +20,12 @@ component_input_2 = {
     'label': 'component_2',
     'default_value': 'default_value_2',
     'is_sortable': True,
-    'filter_code': 'category',
+    'filter_code': FILTER_CODE.CATEGORY,
     'type_code': VALUE_TYPE_CODE.TEXT,
     'previous_type_code': VALUE_TYPE_CODE.TEXT,
 }
 component_output_2 = {
-    'filter_code': 'category',
+    'filter_code': FILTER_CODE.CATEGORY,
     'type_code': VALUE_TYPE_CODE.TEXT,
     'default': 'default_value_2',
     'is_sortable': True,
