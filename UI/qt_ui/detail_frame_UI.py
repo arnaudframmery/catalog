@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from UI.widget.button import Button
 
 
 class Ui_Form(object):
@@ -21,7 +22,7 @@ class Ui_Form(object):
         self.verticalLayout.setObjectName("verticalLayout")
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.return_button = QtWidgets.QPushButton(Form)
+        self.return_button = Button(Form)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -62,7 +63,7 @@ class Ui_Form(object):
         self.horizontalLayout.addWidget(self.line_edit_label)
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
-        self.cancel_button = QtWidgets.QPushButton(Form)
+        self.cancel_button = Button(Form)
         self.cancel_button.setEnabled(False)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -76,7 +77,10 @@ class Ui_Form(object):
         self.cancel_button.setFlat(False)
         self.cancel_button.setObjectName("cancel_button")
         self.horizontalLayout.addWidget(self.cancel_button)
-        self.modify_button = QtWidgets.QPushButton(Form)
+        self.modify_layout_button = Button(Form)
+        self.modify_layout_button.setObjectName("modify_layout_button")
+        self.horizontalLayout.addWidget(self.modify_layout_button)
+        self.modify_button = Button(Form)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -84,7 +88,7 @@ class Ui_Form(object):
         self.modify_button.setSizePolicy(sizePolicy)
         self.modify_button.setObjectName("modify_button")
         self.horizontalLayout.addWidget(self.modify_button)
-        self.delete_button = QtWidgets.QPushButton(Form)
+        self.delete_button = Button(Form)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -93,12 +97,6 @@ class Ui_Form(object):
         self.delete_button.setObjectName("delete_button")
         self.horizontalLayout.addWidget(self.delete_button)
         self.verticalLayout.addLayout(self.horizontalLayout)
-        self.line = QtWidgets.QFrame(Form)
-        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line.setLineWidth(3)
-        self.line.setFrameShape(QtWidgets.QFrame.HLine)
-        self.line.setObjectName("line")
-        self.verticalLayout.addWidget(self.line)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -109,5 +107,6 @@ class Ui_Form(object):
         self.return_button.setText(_translate("Form", "Return"))
         self.label.setText(_translate("Form", "TextLabel"))
         self.cancel_button.setText(_translate("Form", "Cancel"))
+        self.modify_layout_button.setText(_translate("Form", "Tile Management"))
         self.modify_button.setText(_translate("Form", "Modify"))
         self.delete_button.setText(_translate("Form", "Delete"))

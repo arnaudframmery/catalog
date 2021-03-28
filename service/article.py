@@ -32,14 +32,18 @@ def get_articles_service(session, catalog_id, filters, sorting_component, sortin
     return object_as_dict(result.all())
 
 
-def get_article_detail_service(session, article_id, catalog_id):
+def get_article_detail_service(session, article_id, catalog_id):  # TODO: update tests
     """recover all the values about a specific article"""
     result = session\
         .query(Component.label,
                coalesce(Value.value, Component.default).label('value'),
                Component.id.label('component_id'),
                Value.id.label('value_id'),
-               ValueType.code.label('code'))\
+               ValueType.code.label('code'),
+               Component.from_row,
+               Component.from_column,
+               Component.row_span,
+               Component.column_span)\
         .join(Value, and_(Value.component_id == Component.id, Value.article_id == article_id), isouter=True)\
         .join(ValueType, ValueType.id == Component.value_type_id)\
         .filter(Component.catalog_id == catalog_id)\

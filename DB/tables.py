@@ -60,6 +60,11 @@ class Component(Base):
     catalog_id = Column(Integer, ForeignKey('catalog.id'), nullable=False)
     filter_id = Column(Integer, ForeignKey('filter.id'), nullable=False)
     value_type_id = Column(Integer, ForeignKey('value_type.id'))
+    # display settings
+    from_row = Column(Integer)
+    from_column = Column(Integer)
+    row_span = Column(Integer, default=1)
+    column_span = Column(Integer, default=1)
 
     catalog = relationship("Catalog", back_populates="component")
     filter = relationship("Filter", back_populates="component")

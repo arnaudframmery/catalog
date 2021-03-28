@@ -1,3 +1,4 @@
+from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QLineEdit
 
 from constant import VALUE_TYPE_CODE
@@ -26,9 +27,18 @@ class ValueTypeText(ValueType):
             return None
 
     @staticmethod
-    def create_edit_widget(value):
+    def create_edit_widget(value, style=None):
         widget = QLineEdit()
         widget.setText(value)
+
+        if value:
+            widget.setText(value)
+
+        if style is not None:
+            font = QFont('Arial', 15)
+            font.setBold(True)
+            widget.setFont(font)
+
         return widget
 
     @staticmethod
