@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
+from constant import DEFAULT_ROW_NUMBER, DEFAULT_COLUMN_NUMBER
 
 Base = declarative_base()
 
@@ -60,6 +61,11 @@ class Component(Base):
     catalog_id = Column(Integer, ForeignKey('catalog.id'), nullable=False)
     filter_id = Column(Integer, ForeignKey('filter.id'), nullable=False)
     value_type_id = Column(Integer, ForeignKey('value_type.id'))
+    # display settings
+    from_row = Column(Integer)
+    from_column = Column(Integer)
+    row_span = Column(Integer, default=1)
+    column_span = Column(Integer, default=1)
 
     catalog = relationship("Catalog", back_populates="component")
     filter = relationship("Filter", back_populates="component")
@@ -119,6 +125,8 @@ class Catalog(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     theme = Column(String)
+    row_number = Column(Integer, default=DEFAULT_ROW_NUMBER)
+    column_number = Column(Integer, default=DEFAULT_COLUMN_NUMBER)
 
     article = relationship(
         "Article", order_by=Article.id, back_populates="catalog", cascade="all, delete, delete-orphan"

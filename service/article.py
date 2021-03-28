@@ -39,7 +39,11 @@ def get_article_detail_service(session, article_id, catalog_id):
                coalesce(Value.value, Component.default).label('value'),
                Component.id.label('component_id'),
                Value.id.label('value_id'),
-               ValueType.code.label('code'))\
+               ValueType.code.label('code'),
+               Component.from_row,
+               Component.from_column,
+               Component.row_span,
+               Component.column_span)\
         .join(Value, and_(Value.component_id == Component.id, Value.article_id == article_id), isouter=True)\
         .join(ValueType, ValueType.id == Component.value_type_id)\
         .filter(Component.catalog_id == catalog_id)\

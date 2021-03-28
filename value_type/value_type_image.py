@@ -2,7 +2,7 @@ import shutil
 import os
 import uuid
 
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QFileDialog, QPushButton, QLabel, QVBoxLayout
@@ -47,19 +47,17 @@ class ValueTypeImage(ValueType):
             return None
 
     @staticmethod
-    def create_edit_widget(value):
-        widget = ImageWidget()
+    def create_edit_widget(value, style=None):
+        widget = ImageEditWidget(style)
         if ValueTypeImage.check_consistency(value):
             widget.set_image_path(value)
         return widget
 
     @staticmethod
     def create_view_widget(value):
-        widget = QLabel('')
+        widget = ImageViewWidget()
         if ValueTypeImage.check_consistency(value):
-            image = QPixmap(value)
-            image = image.scaled(240, 240, Qt.KeepAspectRatio, Qt.FastTransformation)
-            widget.setPixmap(image)
+            widget.set_image_path(value)
         return widget
 
     @staticmethod
@@ -87,15 +85,17 @@ class ValueTypeImage(ValueType):
             return True
 
 
-class ImageWidget(QtWidgets.QWidget):
+class ImageEditWidget(QtWidgets.QWidget):
     """
     manage the selection and the display of an image
     """
 
-    def __init__(self, *args, **kwargs):
-        super(ImageWidget, self).__init__(*args, **kwargs)
+    def __init__(self, style, *args, **kwargs):
+        super(ImageEditWidget, self).__init__(*args, **kwargs)
 
         self.image_path = ''
+        self.image = None
+        self.style = style
 
         self.select_button = QPushButton(self)
         self.select_button.setText('Select an image')
@@ -107,6 +107,7 @@ class ImageWidget(QtWidgets.QWidget):
         self.layout = QVBoxLayout(self)
         self.layout.addWidget(self.select_button)
         self.layout.addWidget(self.image_label)
+        self.layout.setContentsMargins(0, 0, 0, 0)
 
     def choose_default_image(self):
         """manage the dialog window for selecting an image"""
@@ -120,12 +121,13 @@ class ImageWidget(QtWidgets.QWidget):
         if image_path != '':
             self.image_path = image_path
             self.display_image()
+            self.resizeEvent(None)
 
     def display_image(self):
         """manage the display of the selected image"""
-        image = QPixmap(self.image_path)
-        image = image.scaled(240, 240, Qt.KeepAspectRatio, Qt.FastTransformation)
-        self.image_label.setPixmap(image)
+        self.image = QPixmap(self.image_path)
+        self.image = self.image.scaled(240, 240, Qt.KeepAspectRatio, Qt.FastTransformation)
+        self.image_label.setPixmap(self.image)
 
     def set_image_path(self, path):
         """set the image path"""
@@ -135,3 +137,35 @@ class ImageWidget(QtWidgets.QWidget):
     def get_image_path(self):
         """get the image path"""
         return self.image_path
+
+    def setAlignment(self, alignment):
+        """set the alignment of the image and the button"""
+        self.image_label.setAlignment(alignment)
+
+    def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
+        """Adjust the size of the image"""
+        if self.style is not None and self.image is not None:
+            self.image_label.setPixmap(self.image.scaled(self.image_label.rect().width(),
+                                                         self.image_label.rect().height(),
+                                                         Qt.KeepAspectRatio,
+                                                         Qt.FastTransformation))
+
+
+class ImageViewWidget(QtWidgets.QLabel):
+    """
+    manage the display of an image
+    """
+
+    def __init__(self, *args, **kwargs):
+        super(ImageViewWidget, self).__init__(*args, **kwargs)
+        self.image = None
+        self.setText('')
+
+    def set_image_path(self, path):
+        """set the image path"""
+        self.image = QPixmap(path)
+        self.setPixmap(self.image)
+
+    def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
+        """Adjust the size of the image"""
+        self.setPixmap(self.image.scaled(a0.size(), Qt.KeepAspectRatio, Qt.FastTransformation))

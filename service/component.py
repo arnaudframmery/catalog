@@ -107,6 +107,19 @@ def update_components_service(session, components_data):
     session.commit()
 
 
+def update_component_display_setting_service(session, id, from_row, from_column, row_span, column_span):  # TODO: add tests
+    """update the display settings of one component"""
+    component = session\
+        .query(Component)\
+        .filter(Component.id == id)\
+        .one()
+    component.from_row = int(from_row)
+    component.from_column = int(from_column)
+    component.row_span = int(row_span)
+    component.column_span = int(column_span)
+    session.commit()
+
+
 def delete_components_service(session, components_id):
     """delete a list of components"""
     for a_component_id in components_id:

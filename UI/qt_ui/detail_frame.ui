@@ -23,7 +23,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="return_button">
+      <widget class="Button" name="return_button">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -116,7 +116,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="cancel_button">
+      <widget class="Button" name="cancel_button">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -147,7 +147,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="modify_button">
+      <widget class="Button" name="modify_layout_button">
+       <property name="text">
+        <string>Tile Management</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="Button" name="modify_button">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -160,7 +167,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="delete_button">
+      <widget class="Button" name="delete_button">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -174,21 +181,15 @@
      </item>
     </layout>
    </item>
-   <item>
-    <widget class="Line" name="line">
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Button</class>
+   <extends>QPushButton</extends>
+   <header>button.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

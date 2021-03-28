@@ -3,7 +3,7 @@ from PyQt5.QtCore import Qt
 
 from UI.qt_ui.component_frame_UI import Ui_Form
 from mapping import VALUE_TYPE_MAPPING
-from constant import DEFAULT_FILTER_CODE
+from constant import DEFAULT_CODE_FILTER
 
 
 class ComponentFrameWidget(QtWidgets.QWidget, Ui_Form):
@@ -59,7 +59,7 @@ class ComponentFrameWidget(QtWidgets.QWidget, Ui_Form):
         filter_code = (
             self.filter_combo_box.currentText()
             if self.value_type_class.is_filterable()
-            else DEFAULT_FILTER_CODE
+            else DEFAULT_CODE_FILTER
         )
         return {
             'id': self.id,

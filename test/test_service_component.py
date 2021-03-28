@@ -135,3 +135,9 @@ def test_component_get_sortable(ctrl_base_1):
         {'label': 'component_2', 'id': 3, 'code': VALUE_TYPE_CODE.TEXT},
         {'label': 'component_3', 'id': 4, 'code': VALUE_TYPE_CODE.TEXT},
     ], 'failed'
+
+
+def test_component_update_display_setting(ctrl_base_1):
+    # Test to update component display setting
+    ctrl_base_1.create_components(1, [component_input_1])
+    ctrl_base_1.update_component_display_setting(1, from_row=1, from_column=3, row_span=1, column_span=2)

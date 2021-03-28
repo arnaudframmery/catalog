@@ -1,3 +1,4 @@
+from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QLabel
 
 
@@ -22,7 +23,7 @@ class ValueType:
         raise NotImplementedError
 
     @staticmethod
-    def create_edit_widget(value):
+    def create_edit_widget(value, style=None):
         """return a widget to edit value from the current value type"""
         raise NotImplementedError
 
@@ -49,7 +50,11 @@ class ValueType:
     @staticmethod
     def create_view_widget(value):
         """return a widget to see value from the current value type"""
-        return QLabel(value)
+        widget = QLabel(value)
+        font = QFont('Arial', 15)
+        font.setBold(True)
+        widget.setFont(font)
+        return widget
 
     @staticmethod
     def is_sortable():
