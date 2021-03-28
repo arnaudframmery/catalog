@@ -1,7 +1,8 @@
 from PyQt5 import QtWidgets, QtCore
 
-from UI.detail_frame_component_widget import QDisplayWidget
+from UI.widget.display_widget import QDisplayWidget
 from UI.qt_ui.detail_frame_UI import Ui_Form
+from constant import DETAIL_VIEW_SPAN_VERTICAL, DETAIL_VIEW_SPACING, DETAIL_VIEW_SPAN_HORIZONTAL
 from mapping import VALUE_TYPE_MAPPING
 from QTileLayout import QTileLayout
 
@@ -28,11 +29,12 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.modify_layout_button.setCheckable(True)
         self.state = 'READ'
 
-        self.row_number = 4
-        self.column_number = 5
-        self.vertical_span = 100
-        self.horizontal_span = 150
-        self.spacing = 5
+        catalog_display_setting = self.controller.get_catalog_display_setting(self.catalog_id)
+        self.row_number = catalog_display_setting['row_number']
+        self.column_number = catalog_display_setting['column_number']
+        self.vertical_span = DETAIL_VIEW_SPAN_VERTICAL
+        self.horizontal_span = DETAIL_VIEW_SPAN_HORIZONTAL
+        self.spacing = DETAIL_VIEW_SPACING
 
         self.label.setText(self.title)
         self.cancel_button.setEnabled(False)
@@ -155,11 +157,29 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
     def add_widget(self, widget, component, index):
         """add a widget in the tile layout"""
         if component['from_row'] is None:
+            # search for an empty space
+            while not self.layout.isAreaEmpty(index // self.column_number, index % self.column_number, 1, 1):
+                # if no space available -> add a row
+                if ((index // self.column_number >= self.row_number - 1) and
+                        (index % self.column_number >= self.column_number - 1)):
+                    self.layout.addRows(1)
+                    self.row_number += 1
+                    self.controller.update_catalog_display_setting(self.catalog_id, self.row_number, self.column_number)
+                index += 1
+
             self.layout.addWidget(
                 widget=widget,
                 fromRow=index // self.column_number,
                 fromColumn=index % self.column_number,
             )
+            self.controller.update_component_display_setting(
+                component['component_id'],
+                index // self.column_number,
+                index % self.column_number,
+                component['row_span'],
+                component['column_span']
+            )
+
         else:
             self.layout.addWidget(
                 widget=widget,
@@ -169,24 +189,28 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
                 columnSpan=component['column_span'],
             )
 
+        return index
+
     def display_read_view(self):
         """display the article view where no edition is possible"""
         self.clean_frame(self.edit_widgets)
-        for index, component in enumerate(self.detail):
+        index = 0
+        for component in self.detail:
             widget = VALUE_TYPE_MAPPING[component['code']].create_view_widget(component['value'])
             display_widget = QDisplayWidget(component['label'], widget)
             self.widgets.append(display_widget)
-            self.add_widget(display_widget, component, index)
+            index = self.add_widget(display_widget, component, index)
 
     def display_edit_view(self):
         """display the article view where edition is possible"""
         self.clean_frame(self.widgets)
         self.line_edit_label.setText(self.title)
-        for index, component in enumerate(self.detail):
+        index = 0
+        for component in self.detail:
             widget = VALUE_TYPE_MAPPING[component['code']].create_edit_widget(component['value'], style=True)
             display_widget = QDisplayWidget(component['label'], widget)
             self.edit_widgets.append(display_widget)
-            self.add_widget(display_widget, component, index)
+            index = self.add_widget(display_widget, component, index)
 
     def clean_frame(self, widgets):
         """clean the article detail view from all the components and values"""

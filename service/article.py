@@ -32,7 +32,7 @@ def get_articles_service(session, catalog_id, filters, sorting_component, sortin
     return object_as_dict(result.all())
 
 
-def get_article_detail_service(session, article_id, catalog_id):  # TODO: update tests
+def get_article_detail_service(session, article_id, catalog_id):
     """recover all the values about a specific article"""
     result = session\
         .query(Component.label,

@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QVBoxLayout
 from UI.component_frame_widget import ComponentFrameWidget
 from UI.qt_ui.component_setting_UI import Ui_Dialog
 
-from constant import DEFAULT_FILTER_CODE, DEFAULT_VALUE_TYPE_CODE
+from constant import DEFAULT_CODE_FILTER, DEFAULT_CODE_VALUE_TYPE
 
 
 class ComponentSettingDialog(QtWidgets.QDialog, Ui_Dialog):
@@ -60,7 +60,7 @@ class ComponentSettingDialog(QtWidgets.QDialog, Ui_Dialog):
     def on_add_button_release(self):
         """actions to do when add button is released"""
         widget = ComponentFrameWidget(
-            None, '', False, '', DEFAULT_FILTER_CODE, DEFAULT_VALUE_TYPE_CODE, self.filters, self.types
+            None, '', False, '', DEFAULT_CODE_FILTER, DEFAULT_CODE_VALUE_TYPE, self.filters, self.types
         )
         widget.deleteReleased.connect(self.on_delete_button_release)
         self.component_layout.insertWidget(len(self.components_list), widget)

@@ -3,6 +3,9 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter, QPen, QPalette, QFont
 from PyQt5.QtWidgets import QVBoxLayout, QLabel, QSizePolicy
 
+from constant import DW_PAINT_WIDTH, DW_SPACING, DW_MARGIN, DW_RADIUS, DW_PAINT_LINE_GAP, DW_COLOR_DARK, DW_COLOR_LIGHT, \
+    DW_TITLE_FONT_SIZE
+
 
 class QDisplayWidget(QtWidgets.QWidget):
     """
@@ -11,15 +14,16 @@ class QDisplayWidget(QtWidgets.QWidget):
 
     def __init__(self, title, widget, dev=False, *args, **kwargs):
         super(QDisplayWidget, self).__init__(*args, **kwargs)
-        self.width = 4
-        self.spacing = 16
-        self.margin = 10
-        self.color_dark_rgb = (40, 55, 71)
-        self.color_light_rgb = (93, 109, 126)
+        self.width = DW_PAINT_WIDTH
+        self.spacing = DW_SPACING
+        self.margin = DW_MARGIN
+        self.color_dark_rgb = DW_COLOR_DARK
+        self.color_light_rgb = DW_COLOR_LIGHT
         self.color_dark = QtGui.QColor(*self.color_dark_rgb)
         self.color_light = QtGui.QColor(*self.color_light_rgb)
-        self.radius = 10.0
-        self.line_gap = 5
+        self.radius = DW_RADIUS
+        self.line_gap = DW_PAINT_LINE_GAP
+        self.title_font_size = DW_TITLE_FONT_SIZE
 
         self.layout = QVBoxLayout()
         self.layout.setSpacing(self.spacing)
@@ -31,7 +35,7 @@ class QDisplayWidget(QtWidgets.QWidget):
         self.widget.setSizePolicy(QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred))
         self.widget.setMouseTracking(True)
 
-        font_title = QFont('Arial', 11)
+        font_title = QFont('Arial', self.title_font_size)
         font_title.setBold(True)
 
         self.title_widget = QLabel(title)

@@ -1,6 +1,7 @@
 from service.article import get_articles_service, get_article_detail_service, delete_article_service, \
     update_article_service, create_article_service
-from service.catalog import get_catalogs_service, create_catalog_service, delete_catalog_service
+from service.catalog import get_catalogs_service, create_catalog_service, delete_catalog_service, \
+    get_catalog_display_setting_service, update_catalog_display_setting_service
 from service.component import get_components_service, create_components_service, update_components_service, \
     delete_components_service, get_sortable_components_service, update_component_display_setting_service
 from service.value import create_values_service, update_values_service, get_values_service, delete_value_service
@@ -21,8 +22,14 @@ class Controller:
     def create_catalog(self, catalog_name):
         return create_catalog_service(self.session, catalog_name)
 
+    def update_catalog_display_setting(self, catalog_id, row_number, column_number):
+        return update_catalog_display_setting_service(self.session, catalog_id, row_number, column_number)
+
     def get_catalogs(self):
         return get_catalogs_service(self.session)
+
+    def get_catalog_display_setting(self, catalog_id):
+        return get_catalog_display_setting_service(self.session, catalog_id)
 
     def delete_catalog(self, catalog_id):
         delete_catalog_service(self.session, catalog_id)
