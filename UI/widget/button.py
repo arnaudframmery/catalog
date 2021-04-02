@@ -13,6 +13,7 @@ class Button(QtWidgets.QPushButton):
     """
 
     def __init__(self, *args, **kwargs):
+        style = kwargs.pop('style') if 'style' in kwargs else 1
         super(Button, self).__init__(*args, **kwargs)
 
         self.background_color = BUTTON_COLOR_BACKGROUND
@@ -22,7 +23,7 @@ class Button(QtWidgets.QPushButton):
         self.text_color_hover = BUTTON_COLOR_TEXT_HOVER
         self.text_color_pressed = BUTTON_COLOR_TEXT_PRESSED
 
-        self.radius = BUTTON_RADIUS
+        self.radius = BUTTON_RADIUS[style - 1]
         self.border_width = BUTTON_BORDER_WIDTH
         self.margin = BUTTON_MARGIN
         self.padding = BUTTON_PADDING

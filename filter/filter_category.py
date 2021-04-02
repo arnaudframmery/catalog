@@ -1,7 +1,8 @@
-from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QVBoxLayout
+from PyQt5.QtWidgets import QVBoxLayout, QWidget
 
+from UI.widget.check_box import CheckBox
+from UI.widget.extend_widget import QExtendWidget
 from filter.filter import Filter
 
 
@@ -17,14 +18,15 @@ class FilterCategory(Filter):
         self.widgets = []
 
     def create_widget(self):
-        self.parent_widget = QtWidgets.QGroupBox(self.component_label)
         layout = QVBoxLayout()
+        layout_widget = QWidget()
         for a_category in self.categories:
-            check_box = QtWidgets.QCheckBox(a_category)
+            check_box = CheckBox(a_category)
             check_box.setCheckState(Qt.Checked)
             self.widgets.append(check_box)
             layout.addWidget(check_box)
-        self.parent_widget.setLayout(layout)
+        layout_widget.setLayout(layout)
+        self.parent_widget = QExtendWidget(self.component_label, layout_widget)
 
     def apply_filter(self, catalog_id):
         query_categories = []

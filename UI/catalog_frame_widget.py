@@ -5,6 +5,7 @@ from UI.article_frame_widget import ArticleFrameWidget
 from UI.component_setting_dialog import ComponentSettingDialog
 from UI.detail_frame_widget import DetailFrameWidget
 from UI.qt_ui.catalog_frame_UI import Ui_Form
+from UI.widget.button import Button
 
 
 class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
@@ -75,10 +76,10 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
         if self.filters:
             filters_button_layout = QHBoxLayout()
             filters_button_layout_widget = QtWidgets.QWidget()
-            self.apply_button = QtWidgets.QPushButton('Apply')
+            self.apply_button = Button('Apply')
             self.apply_button.released.connect(self.on_apply_release)
             filters_button_layout.addWidget(self.apply_button)
-            self.reset_button = QtWidgets.QPushButton('Reset')
+            self.reset_button = Button('Reset')
             self.reset_button.released.connect(self.on_reset_release)
             filters_button_layout.addWidget(self.reset_button)
             filters_button_layout_widget.setLayout(filters_button_layout)
