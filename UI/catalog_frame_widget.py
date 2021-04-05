@@ -1,4 +1,5 @@
 from PyQt5 import QtWidgets
+from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout
 
 from UI.article_frame_widget import ArticleFrameWidget
@@ -16,6 +17,7 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
     def __init__(self, controller, catalog_id, catalog_name, *args, **kwargs):
         super(CatalogFrameWidget, self).__init__(*args, **kwargs)
         self.setupUi(self)
+        self.font_size = 9
 
         self.stack_widget.setCurrentIndex(0)
         self.detail_layout = QVBoxLayout()
@@ -34,6 +36,12 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.sortable_components = []
         self.sorting_direction = 'ASC'
         self.init_sort_frame()
+
+        font = QFont('Arial', self.font_size)
+        font.setBold(True)
+        self.edit_label.setFont(font)
+        self.add_label.setFont(font)
+        self.sort_label.setFont(font)
 
         self.setting_button.released.connect(self.on_component_setting_release)
         self.add_button.released.connect(self.on_article_add_release)

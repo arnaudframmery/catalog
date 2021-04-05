@@ -10,6 +10,9 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+from UI.widget.button import Button
+from UI.widget.combo_box import ComboBox
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -29,14 +32,14 @@ class Ui_Form(object):
         self.edit_label = QtWidgets.QLabel(self.explore_stack)
         self.edit_label.setObjectName("edit_label")
         self.horizontalLayout.addWidget(self.edit_label)
-        self.setting_button = QtWidgets.QPushButton(self.explore_stack)
+        self.setting_button = Button(self.explore_stack)
         self.setting_button.setLayoutDirection(QtCore.Qt.RightToLeft)
         self.setting_button.setObjectName("setting_button")
         self.horizontalLayout.addWidget(self.setting_button)
         self.add_label = QtWidgets.QLabel(self.explore_stack)
         self.add_label.setObjectName("add_label")
         self.horizontalLayout.addWidget(self.add_label)
-        self.add_button = QtWidgets.QPushButton(self.explore_stack)
+        self.add_button = Button(self.explore_stack)
         self.add_button.setObjectName("add_button")
         self.horizontalLayout.addWidget(self.add_button)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -46,10 +49,10 @@ class Ui_Form(object):
         self.sort_label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.sort_label.setObjectName("sort_label")
         self.horizontalLayout.addWidget(self.sort_label)
-        self.sort_combo_box = QtWidgets.QComboBox(self.explore_stack)
+        self.sort_combo_box = ComboBox(self.explore_stack)
         self.sort_combo_box.setObjectName("sort_combo_box")
         self.horizontalLayout.addWidget(self.sort_combo_box)
-        self.sort_direction = QtWidgets.QPushButton(self.explore_stack)
+        self.sort_direction = Button(self.explore_stack)
         self.sort_direction.setEnabled(False)
         self.sort_direction.setCheckable(False)
         self.sort_direction.setChecked(False)
@@ -63,14 +66,14 @@ class Ui_Form(object):
         self.filter_area.setWidgetResizable(True)
         self.filter_area.setObjectName("filter_area")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 409, 189))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 413, 194))
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.filter_area.setWidget(self.scrollAreaWidgetContents_2)
         self.article_area = QtWidgets.QScrollArea(self.splitter)
         self.article_area.setWidgetResizable(True)
         self.article_area.setObjectName("article_area")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 408, 189))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 413, 194))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.article_area.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout_2.addWidget(self.splitter)
@@ -83,7 +86,7 @@ class Ui_Form(object):
         self.detail_area.setWidgetResizable(True)
         self.detail_area.setObjectName("detail_area")
         self.scrollAreaWidgetContents_3 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_3.setGeometry(QtCore.QRect(0, 0, 98, 28))
+        self.scrollAreaWidgetContents_3.setGeometry(QtCore.QRect(0, 0, 833, 396))
         self.scrollAreaWidgetContents_3.setObjectName("scrollAreaWidgetContents_3")
         self.detail_area.setWidget(self.scrollAreaWidgetContents_3)
         self.verticalLayout_3.addWidget(self.detail_area)

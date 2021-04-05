@@ -5,21 +5,34 @@ from PyQt5.QtGui import QPainter, QPen, QFont, QIcon
 from PyQt5.QtWidgets import QVBoxLayout, QLabel, QSizePolicy, QHBoxLayout, QWidget
 
 from UI.widget.button import Button
+from constant import EW_COLOR_DARK, EW_COLOR_LIGHT, EW_PAINT_WIDTH, EW_SPACING, EW_MARGIN, EW_RADIUS, EW_PAINT_LINE_GAP, \
+    EW_TITLE_FONT_SIZE, EW_ICON_SIZE, EW_BUTTON_STYLE
 
 
 class QExtendWidget(QtWidgets.QWidget):
+    """
+    Manage the display of a widget that can be hidden or shown
+    """
 
     def __init__(self, title, widget, *args, **kwargs):
         super(QExtendWidget, self).__init__(*args, **kwargs)
-        self.width = 4
-        self.spacing = 16
-        self.margin = 10
-        self.color_dark_rgb = (40, 55, 71)
-        self.color_light_rgb = (93, 109, 126)
+
+        self.color_dark_rgb = EW_COLOR_DARK
+        self.color_light_rgb = EW_COLOR_LIGHT
         self.color_dark = QtGui.QColor(*self.color_dark_rgb)
         self.color_light = QtGui.QColor(*self.color_light_rgb)
-        self.radius = 10.0
-        self.line_gap = 5
+
+        self.width = EW_PAINT_WIDTH
+        self.spacing = EW_SPACING
+        self.margin = EW_MARGIN
+        self.radius = EW_RADIUS
+        self.line_gap = EW_PAINT_LINE_GAP
+        self.font_size = EW_TITLE_FONT_SIZE
+        self.icon_size = EW_ICON_SIZE
+        self.button_style = EW_BUTTON_STYLE
+
+        self.icon_arrow_down_black = QIcon('UI/icons/arrow_down_black.png')
+        self.icon_arrow_down_white = QIcon('UI/icons/arrow_down_white.png')
 
         self.layout = QVBoxLayout()
         self.layout.setSpacing(self.spacing)
@@ -30,16 +43,14 @@ class QExtendWidget(QtWidgets.QWidget):
         self.widget.setVisible(False)
 
         self.title_widget = QLabel(title)
-        font = QFont('Arial', 11)
+        font = QFont('Arial', self.font_size)
         font.setBold(True)
         self.title_widget.setFont(font)
         self.title_widget.setStyleSheet(f"color: rgb{self.color_light_rgb};")
 
-        self.button_extend = Button(style=2)
-        self.icon_arrow_down_black = QIcon('UI/icons/arrow_down_black.png')
-        self.icon_arrow_down_white = QIcon('UI/icons/arrow_down_white.png')
+        self.button_extend = Button(style=self.button_style)
         self.button_extend.setIcon(self.icon_arrow_down_black)
-        self.button_extend.setIconSize(QSize(10, 10))
+        self.button_extend.setIconSize(QSize(self.icon_size, self.icon_size))
         self.button_extend.setCheckable(True)
         self.button_extend.toggled.connect(self.extend)
 
@@ -57,6 +68,7 @@ class QExtendWidget(QtWidgets.QWidget):
         self.layout.addWidget(widget)
 
     def extend(self, state):
+        """Hide or show the widget"""
         if not state:
             self.widget.setVisible(False)
             self.button_extend.setIcon(self.icon_arrow_down_black)

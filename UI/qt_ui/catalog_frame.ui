@@ -34,7 +34,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="setting_button">
+          <widget class="Button" name="setting_button">
            <property name="layoutDirection">
             <enum>Qt::RightToLeft</enum>
            </property>
@@ -51,7 +51,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="add_button">
+          <widget class="Button" name="add_button">
            <property name="text">
             <string>Add</string>
            </property>
@@ -87,7 +87,7 @@
           <widget class="QComboBox" name="sort_combo_box"/>
          </item>
          <item>
-          <widget class="QPushButton" name="sort_direction">
+          <widget class="Button" name="sort_direction">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -118,8 +118,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>409</width>
-             <height>189</height>
+             <width>413</width>
+             <height>194</height>
             </rect>
            </property>
           </widget>
@@ -133,8 +133,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>408</width>
-             <height>189</height>
+             <width>413</width>
+             <height>194</height>
             </rect>
            </property>
           </widget>
@@ -155,8 +155,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>98</width>
-            <height>28</height>
+            <width>833</width>
+            <height>396</height>
            </rect>
           </property>
          </widget>
@@ -168,6 +168,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Button</class>
+   <extends>QPushButton</extends>
+   <header>button.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

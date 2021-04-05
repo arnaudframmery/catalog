@@ -46,7 +46,8 @@ python launch.py
 - [ ] Range filter
 - Style:
 - [ ] Icons
-- [ ] Article detail view (will come next, see https://github.com/arnaudframmery/qt-tile-layout)
+- [x] Article detail view
+- [x] Catalog view
 - [ ] Article select view
 - [ ] Custom widgets
 - Data types:

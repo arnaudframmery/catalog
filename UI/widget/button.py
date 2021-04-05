@@ -4,7 +4,8 @@ from PyQt5.QtWidgets import QSizePolicy
 
 from constant import BUTTON_RADIUS, BUTTON_BORDER_WIDTH, BUTTON_MARGIN, BUTTON_PADDING, BUTTON_FONT_SIZE, \
     BUTTON_COLOR_BACKGROUND, BUTTON_COLOR_BACKGROUND_HOVER, BUTTON_COLOR_BACKGROUND_PRESSED, BUTTON_COLOR_TEXT, \
-    BUTTON_COLOR_TEXT_HOVER, BUTTON_COLOR_TEXT_PRESSED
+    BUTTON_COLOR_TEXT_HOVER, BUTTON_COLOR_TEXT_PRESSED, BUTTON_COLOR_BACKGROUND_DISABLED, BUTTON_COLOR_TEXT_DISABLED, \
+    BUTTON_COLOR_BORDER_ENABLED, BUTTON_COLOR_BORDER_DISABLED
 
 
 class Button(QtWidgets.QPushButton):
@@ -19,9 +20,13 @@ class Button(QtWidgets.QPushButton):
         self.background_color = BUTTON_COLOR_BACKGROUND
         self.background_color_hover = BUTTON_COLOR_BACKGROUND_HOVER
         self.background_color_pressed = BUTTON_COLOR_BACKGROUND_PRESSED
+        self.background_color_disabled = BUTTON_COLOR_BACKGROUND_DISABLED
         self.text_color = BUTTON_COLOR_TEXT
         self.text_color_hover = BUTTON_COLOR_TEXT_HOVER
         self.text_color_pressed = BUTTON_COLOR_TEXT_PRESSED
+        self.text_color_disabled = BUTTON_COLOR_TEXT_DISABLED
+        self.border_color_enabled = BUTTON_COLOR_BORDER_ENABLED
+        self.border_color_disabled = BUTTON_COLOR_BORDER_DISABLED
 
         self.radius = BUTTON_RADIUS[style - 1]
         self.border_width = BUTTON_BORDER_WIDTH
@@ -39,7 +44,7 @@ class Button(QtWidgets.QPushButton):
             f"  background-color: rgb{self.background_color};"
             f"  color: rgb{self.text_color};"
             f"  border-radius: {self.radius}px;"
-            f"  border: {self.border_width}px solid black;"
+            f"  border: {self.border_width}px solid rgb{self.border_color_enabled};"
             f"  margin: {self.margin}px;"
             f"  padding: {self.padding}px;"
             "}"
@@ -54,5 +59,10 @@ class Button(QtWidgets.QPushButton):
             "QPushButton:checked {"
             f"  background-color: rgb{self.background_color_pressed};"
             f"  color: rgb{self.text_color_pressed};"
+            "}"
+            "QPushButton:disabled {"
+            f"  background-color: rgb{self.background_color_disabled};"
+            f"  color: rgb{self.text_color_disabled};"
+            f"  border: {self.border_width}px solid rgb{self.border_color_disabled};"
             "}"
         )
