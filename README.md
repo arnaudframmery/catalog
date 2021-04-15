@@ -48,8 +48,9 @@ python launch.py
 - [ ] Icons
 - [x] Article detail view
 - [x] Catalog view
+- [x] Component settings dialog
 - [ ] Article select view
-- [ ] Custom widgets
+- [x] Custom widgets
 - Data types:
 - [x] text
 - [x] Number (int)
