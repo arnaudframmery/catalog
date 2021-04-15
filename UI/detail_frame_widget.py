@@ -1,8 +1,10 @@
 from PyQt5 import QtWidgets, QtCore
+from PyQt5.QtGui import QFont
 
 from UI.widget.display_widget import QDisplayWidget
 from UI.qt_ui.detail_frame_UI import Ui_Form
-from constant import DETAIL_VIEW_SPAN_VERTICAL, DETAIL_VIEW_SPACING, DETAIL_VIEW_SPAN_HORIZONTAL
+from constant import DETAIL_VIEW_SPAN_VERTICAL, DETAIL_VIEW_SPACING, DETAIL_VIEW_SPAN_HORIZONTAL, \
+    DETAIL_VIEW_TITLE_FONT_SIZE
 from mapping import VALUE_TYPE_MAPPING
 from QTileLayout import QTileLayout
 
@@ -41,6 +43,10 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.cancel_button.setVisible(False)
         self.line_edit_label.setEnabled(False)
         self.line_edit_label.setVisible(False)
+        font = QFont('Arial', DETAIL_VIEW_TITLE_FONT_SIZE)
+        font.setBold(True)
+        self.label.setFont(font)
+        self.line_edit_label.setFont(font)
 
         if not self.article_id:
             self.delete_button.setEnabled(False)

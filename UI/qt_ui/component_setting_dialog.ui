@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QPushButton" name="add_button">
+    <widget class="Button" name="add_button">
      <property name="text">
       <string>Add component</string>
      </property>
@@ -32,14 +32,14 @@
         <x>0</x>
         <y>0</y>
         <width>486</width>
-        <height>414</height>
+        <height>412</height>
        </rect>
       </property>
      </widget>
     </widget>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
+    <widget class="DialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -50,6 +50,18 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Button</class>
+   <extends>QPushButton</extends>
+   <header>button.h</header>
+  </customwidget>
+  <customwidget>
+   <class>DialogButtonBox</class>
+   <extends>QDialogButtonBox</extends>
+   <header>dialogbuttonbox.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>
@@ -59,8 +71,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>257</x>
+     <y>482</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -75,8 +87,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>325</x>
+     <y>482</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>

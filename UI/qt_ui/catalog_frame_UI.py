@@ -86,7 +86,7 @@ class Ui_Form(object):
         self.detail_area.setWidgetResizable(True)
         self.detail_area.setObjectName("detail_area")
         self.scrollAreaWidgetContents_3 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_3.setGeometry(QtCore.QRect(0, 0, 833, 396))
+        self.scrollAreaWidgetContents_3.setGeometry(QtCore.QRect(0, 0, 98, 28))
         self.scrollAreaWidgetContents_3.setObjectName("scrollAreaWidgetContents_3")
         self.detail_area.setWidget(self.scrollAreaWidgetContents_3)
         self.verticalLayout_3.addWidget(self.detail_area)

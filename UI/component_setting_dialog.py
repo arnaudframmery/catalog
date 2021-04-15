@@ -1,8 +1,11 @@
+from typing import List
+
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QVBoxLayout
 
-from UI.component_frame_widget import ComponentFrameWidget
 from UI.qt_ui.component_setting_UI import Ui_Dialog
+from UI.widget.extend_component_widget import QExtendComponentWidget
+from UI.widget.extend_widget import QExtendWidget
 
 from constant import DEFAULT_CODE_FILTER, DEFAULT_CODE_VALUE_TYPE
 
@@ -15,12 +18,15 @@ class ComponentSettingDialog(QtWidgets.QDialog, Ui_Dialog):
     def __init__(self, parent, controller, catalog_id, *args, obj=None, **kwargs):
         super(ComponentSettingDialog, self).__init__(parent, **kwargs)
         self.setupUi(self)
+        self.resize(self.rect().width(), parent.height())
+
         self.controller = controller
         self.catalog_id = catalog_id
         self.filters = self.controller.get_all_filters()
         self.types = self.controller.get_all_value_types()
         self.component_layout = None
-        self.components_list = []
+        self.components_list: List[QExtendComponentWidget] = []
+        self.extend_widget_list: List[QExtendWidget] = []
         self.to_delete = []
 
         self.init_UI()
@@ -32,13 +38,14 @@ class ComponentSettingDialog(QtWidgets.QDialog, Ui_Dialog):
     def init_UI(self):
         """create the components display"""
         self.components_list = []
+        self.to_delete = []
         components = self.controller.get_components(self.catalog_id)
         self.component_layout = QVBoxLayout()
         component_layout_widget = QtWidgets.QWidget()
         for a_component in components:
-            widget = ComponentFrameWidget(
-                a_component['id'],
+            widget = QExtendComponentWidget(
                 a_component['label'],
+                a_component['id'],
                 a_component['is_sortable'],
                 a_component['default'],
                 a_component['filter_code'],
@@ -59,8 +66,8 @@ class ComponentSettingDialog(QtWidgets.QDialog, Ui_Dialog):
 
     def on_add_button_release(self):
         """actions to do when add button is released"""
-        widget = ComponentFrameWidget(
-            None, '', False, '', DEFAULT_CODE_FILTER, DEFAULT_CODE_VALUE_TYPE, self.filters, self.types
+        widget = QExtendComponentWidget(
+            '', None, False, '', DEFAULT_CODE_FILTER, DEFAULT_CODE_VALUE_TYPE, self.filters, self.types
         )
         widget.deleteReleased.connect(self.on_delete_button_release)
         self.component_layout.insertWidget(len(self.components_list), widget)

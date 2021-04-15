@@ -4,7 +4,7 @@ from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QRegExpValidator, QFont
 from PyQt5.QtWidgets import QLineEdit
 
-from constant import VALUE_TYPE_CODE
+from constant import VALUE_TYPE_CODE, VW_FONT_SIZE
 from service.value_type import sort_value_type_float_asc, sort_value_type_float_desc
 from value_type.value_type import ValueType
 
@@ -45,7 +45,7 @@ class ValueTypeFloat(ValueType):
             widget.setText(value)
 
         if style is not None:
-            font = QFont('Arial', 15)
+            font = QFont('Arial', VW_FONT_SIZE)
             font.setBold(True)
             widget.setFont(font)
 

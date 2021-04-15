@@ -1,6 +1,8 @@
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QLabel
 
+from constant import VW_FONT_SIZE
+
 
 class ValueType:
     """
@@ -51,7 +53,7 @@ class ValueType:
     def create_view_widget(value):
         """return a widget to see value from the current value type"""
         widget = QLabel(value)
-        font = QFont('Arial', 15)
+        font = QFont('Arial', VW_FONT_SIZE)
         font.setBold(True)
         widget.setFont(font)
         return widget

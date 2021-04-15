@@ -3,7 +3,8 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QSizePolicy
 
 from constant import CHECK_BOX_COLOR_BACKGROUND, CHECK_BOX_COLOR_BACKGROUND_HOVER, CHECK_BOX_COLOR_BACKGROUND_PRESSED, \
-    CHECK_BOX_COLOR_TEXT, CHECK_BOX_RADIUS, CHECK_BOX_BORDER_WIDTH, CHECK_BOX_FONT_SIZE, CHECK_BOX_SIZE
+    CHECK_BOX_COLOR_TEXT, CHECK_BOX_RADIUS, CHECK_BOX_BORDER_WIDTH, CHECK_BOX_FONT_SIZE, CHECK_BOX_SIZE, \
+    CHECK_BOX_COLOR_BORDER, CHECK_BOX_COLOR_BORDER_DISABLED, CHECK_BOX_COLOR_TEXT_DISABLED
 
 
 class CheckBox(QtWidgets.QCheckBox):
@@ -17,7 +18,10 @@ class CheckBox(QtWidgets.QCheckBox):
         self.background_color = CHECK_BOX_COLOR_BACKGROUND
         self.background_color_hover = CHECK_BOX_COLOR_BACKGROUND_HOVER
         self.background_color_pressed = CHECK_BOX_COLOR_BACKGROUND_PRESSED
+        self.border_color = CHECK_BOX_COLOR_BORDER
+        self.border_color_disabled = CHECK_BOX_COLOR_BORDER_DISABLED
         self.text_color = CHECK_BOX_COLOR_TEXT
+        self.text_color_disabled = CHECK_BOX_COLOR_TEXT_DISABLED
 
         self.radius = CHECK_BOX_RADIUS
         self.border_width = CHECK_BOX_BORDER_WIDTH
@@ -30,12 +34,17 @@ class CheckBox(QtWidgets.QCheckBox):
         self.setSizePolicy(QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed))
 
         self.setStyleSheet(
+            "QCheckBox {"
+            f"  color: rgb{self.text_color};"
+            "}"
+            "QCheckBox:disabled {"
+            f"  color: rgb{self.text_color_disabled};"
+            "}"
             "QCheckBox::indicator {"
-            f"  border: {self.border_width}px solid rgb{self.background_color_pressed};"
+            f"  border: {self.border_width}px solid rgb{self.border_color};"
             f"  border-radius: {self.radius}px;"
             f"  width: {self.size + 2}px;"
             f"  height: {self.size + 2}px;"
-            f"  color: rgb{self.text_color};"
             "}"
             "QCheckBox::indicator:unchecked:hover {"
             f"  background-color: rgb{self.background_color};"
@@ -57,5 +66,8 @@ class CheckBox(QtWidgets.QCheckBox):
             "QCheckBox::indicator:checked:pressed {"
             f"  background-color: rgb{self.background_color_pressed};"
             f"  image: url(UI/icons/cross_white.png);"
+            "}"
+            "QCheckBox::indicator:disabled {"
+            f"  border: {self.border_width}px solid rgb{self.border_color_disabled};"
             "}"
         )

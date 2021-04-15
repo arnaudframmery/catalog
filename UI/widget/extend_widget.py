@@ -32,7 +32,7 @@ class QExtendWidget(QtWidgets.QWidget):
         self.button_style = EW_BUTTON_STYLE
 
         self.icon_arrow_down_black = QIcon('UI/icons/arrow_down_black.png')
-        self.icon_arrow_down_white = QIcon('UI/icons/arrow_down_white.png')
+        self.icon_arrow_down_white = QIcon('UI/icons/arrow_up_white.png')
 
         self.layout = QVBoxLayout()
         self.layout.setSpacing(self.spacing)
@@ -42,11 +42,9 @@ class QExtendWidget(QtWidgets.QWidget):
         self.widget = widget
         self.widget.setVisible(False)
 
-        self.title_widget = QLabel(title)
-        font = QFont('Arial', self.font_size)
-        font.setBold(True)
-        self.title_widget.setFont(font)
-        self.title_widget.setStyleSheet(f"color: rgb{self.color_light_rgb};")
+        self.title_widget = None
+        self.layout_head = None
+        self.title = title
 
         self.button_extend = Button(style=self.button_style)
         self.button_extend.setIcon(self.icon_arrow_down_black)
@@ -54,11 +52,7 @@ class QExtendWidget(QtWidgets.QWidget):
         self.button_extend.setCheckable(True)
         self.button_extend.toggled.connect(self.extend)
 
-        self.layout_head = QHBoxLayout()
-        self.layout_head.addWidget(self.title_widget)
-        self.layout_head.addStretch()
-        self.layout_head.addWidget(self.button_extend)
-        self.layout_head.setContentsMargins(0, 0, 0, 0)
+        self.init_head()
 
         self.widget_head = QWidget()
         self.widget_head.setSizePolicy(QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed))
@@ -66,6 +60,20 @@ class QExtendWidget(QtWidgets.QWidget):
 
         self.layout.addWidget(self.widget_head)
         self.layout.addWidget(widget)
+
+    def init_head(self):
+        """Create the widget head part"""
+        self.title_widget = QLabel(self.title)
+        font = QFont('Arial', self.font_size)
+        font.setBold(True)
+        self.title_widget.setFont(font)
+        self.title_widget.setStyleSheet(f"color: rgb{self.color_light_rgb};")
+
+        self.layout_head = QHBoxLayout()
+        self.layout_head.addWidget(self.title_widget)
+        self.layout_head.addStretch()
+        self.layout_head.addWidget(self.button_extend)
+        self.layout_head.setContentsMargins(0, 0, 0, 0)
 
     def extend(self, state):
         """Hide or show the widget"""

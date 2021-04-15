@@ -1,6 +1,4 @@
 from PyQt5 import QtWidgets
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QSizePolicy
 
 from constant import BUTTON_RADIUS, BUTTON_BORDER_WIDTH, BUTTON_MARGIN, BUTTON_PADDING, BUTTON_FONT_SIZE, \
     BUTTON_COLOR_BACKGROUND, BUTTON_COLOR_BACKGROUND_HOVER, BUTTON_COLOR_BACKGROUND_PRESSED, BUTTON_COLOR_TEXT, \
@@ -8,16 +6,14 @@ from constant import BUTTON_RADIUS, BUTTON_BORDER_WIDTH, BUTTON_MARGIN, BUTTON_P
     BUTTON_COLOR_BORDER_ENABLED, BUTTON_COLOR_BORDER_DISABLED
 
 
-class Button(QtWidgets.QPushButton):
+class DialogButtonBox(QtWidgets.QDialogButtonBox):
     """
-    A QPushButton where the style can be easily changed
+    A QDialogButtonBox where the style can be easily changed
     """
 
     def __init__(self, *args, **kwargs):
         style = kwargs.pop('style') if 'style' in kwargs else 1
-        icon_idle = kwargs.pop('icon_idle') if 'icon_idle' in kwargs else ''
-        icon_pressed = kwargs.pop('icon_pressed') if 'icon_pressed' in kwargs else ''
-        super(Button, self).__init__(*args, **kwargs)
+        super(DialogButtonBox, self).__init__(*args, **kwargs)
 
         self.background_color = BUTTON_COLOR_BACKGROUND
         self.background_color_hover = BUTTON_COLOR_BACKGROUND_HOVER
@@ -35,15 +31,6 @@ class Button(QtWidgets.QPushButton):
         self.margin = BUTTON_MARGIN
         self.padding = BUTTON_PADDING
         self.font_size = BUTTON_FONT_SIZE
-
-        self.setSizePolicy(QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed))
-
-        if icon_idle and icon_pressed:
-            self.icon_pressed = QIcon(icon_pressed)
-            self.icon_idle = QIcon(icon_idle)
-            self.setIcon(self.icon_idle)
-            self.pressed.connect(self.set_icon_pressed)
-            self.released.connect(self.set_icon_idle)
 
         self.setStyleSheet(
             "QPushButton {"
@@ -74,9 +61,3 @@ class Button(QtWidgets.QPushButton):
             f"  border: {self.border_width}px solid rgb{self.border_color_disabled};"
             "}"
         )
-
-    def set_icon_pressed(self):
-        self.setIcon(self.icon_pressed)
-
-    def set_icon_idle(self):
-        self.setIcon(self.icon_idle)

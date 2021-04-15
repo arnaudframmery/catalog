@@ -22,6 +22,18 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.stack_widget.setCurrentIndex(0)
         self.detail_layout = QVBoxLayout()
         self.detail_stack.setLayout(self.detail_layout)
+        self.splitter.setStretchFactor(0, 3)
+        self.splitter.setStretchFactor(1, 7)
+        self.filter_area.setStyleSheet(
+            "QScrollArea {"
+            f"   border: 1px solid grey;"
+            "}"
+        )
+        self.article_area.setStyleSheet(
+            "QScrollArea {"
+            f"   border: 1px solid grey;"
+            "}"
+        )
 
         self.controller = controller
         self.catalog_id = catalog_id

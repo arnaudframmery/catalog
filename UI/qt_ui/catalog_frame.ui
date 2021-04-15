@@ -84,7 +84,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="sort_combo_box"/>
+          <widget class="ComboBox" name="sort_combo_box"/>
          </item>
          <item>
           <widget class="Button" name="sort_direction">
@@ -155,8 +155,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>833</width>
-            <height>396</height>
+            <width>98</width>
+            <height>28</height>
            </rect>
           </property>
          </widget>
@@ -173,6 +173,11 @@
    <class>Button</class>
    <extends>QPushButton</extends>
    <header>button.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ComboBox</class>
+   <extends>QComboBox</extends>
+   <header>combobox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
