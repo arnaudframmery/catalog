@@ -1,4 +1,6 @@
+# Icons from srip, Freepik
 from PyQt5 import QtWidgets
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout
 
@@ -51,9 +53,14 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
 
         font = QFont('Arial', self.font_size)
         font.setBold(True)
-        self.edit_label.setFont(font)
-        self.add_label.setFont(font)
         self.sort_label.setFont(font)
+        self.add_button.setLayoutDirection(Qt.LeftToRight)
+        self.add_button.set_icons('UI/icons/add_black.png', 'UI/icons/add_white.png')
+        self.add_button.setText(' Article')
+        self.setting_button.setLayoutDirection(Qt.LeftToRight)
+        self.setting_button.set_icons('UI/icons/gear_black.png', 'UI/icons/gear_white.png')
+        self.setting_button.setText(' Component')
+        self.sort_direction.set_icons('UI/icons/arrow_up_right_black.png', 'UI/icons/arrow_up_right_white.png')
 
         self.setting_button.released.connect(self.on_component_setting_release)
         self.add_button.released.connect(self.on_article_add_release)
@@ -153,10 +160,10 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
         """actions to do when sorting direction is changed"""
         if self.sorting_direction == 'ASC':
             self.sorting_direction = 'DESC'
-            self.sort_direction.setText('DESC')
+            self.sort_direction.set_icons('UI/icons/arrow_down_right_black.png', 'UI/icons/arrow_down_right_white.png')
         elif self.sorting_direction == 'DESC':
             self.sorting_direction = 'ASC'
-            self.sort_direction.setText('ASC')
+            self.sort_direction.set_icons('UI/icons/arrow_up_right_black.png', 'UI/icons/arrow_up_right_white.png')
         self.display_articles()
 
     def on_component_setting_release(self):

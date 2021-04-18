@@ -27,7 +27,7 @@ class Ui_Dialog(object):
         self.component_area.setWidgetResizable(True)
         self.component_area.setObjectName("component_area")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 486, 412))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 486, 414))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.component_area.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout.addWidget(self.component_area)
@@ -45,4 +45,4 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.add_button.setText(_translate("Dialog", "Add component"))
+        self.add_button.setText(_translate("Dialog", "Component"))

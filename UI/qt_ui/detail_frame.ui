@@ -34,7 +34,7 @@
         <enum>Qt::LeftToRight</enum>
        </property>
        <property name="text">
-        <string>Return</string>
+        <string/>
        </property>
        <property name="autoDefault">
         <bool>false</bool>
@@ -149,7 +149,7 @@
      <item>
       <widget class="Button" name="modify_layout_button">
        <property name="text">
-        <string>Tile Management</string>
+        <string>Layout</string>
        </property>
       </widget>
      </item>
@@ -175,7 +175,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Delete</string>
+        <string/>
        </property>
       </widget>
      </item>

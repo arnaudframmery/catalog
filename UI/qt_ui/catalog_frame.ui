@@ -27,33 +27,19 @@
           <enum>QLayout::SetDefaultConstraint</enum>
          </property>
          <item>
-          <widget class="QLabel" name="edit_label">
-           <property name="text">
-            <string>Component:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="Button" name="setting_button">
            <property name="layoutDirection">
             <enum>Qt::RightToLeft</enum>
            </property>
            <property name="text">
-            <string>Edit</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="add_label">
-           <property name="text">
-            <string>Article:</string>
+            <string/>
            </property>
           </widget>
          </item>
          <item>
           <widget class="Button" name="add_button">
            <property name="text">
-            <string>Add</string>
+            <string/>
            </property>
           </widget>
          </item>
@@ -92,7 +78,7 @@
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>ASC</string>
+            <string/>
            </property>
            <property name="checkable">
             <bool>false</bool>

@@ -29,6 +29,9 @@ class ComponentSettingDialog(QtWidgets.QDialog, Ui_Dialog):
         self.extend_widget_list: List[QExtendWidget] = []
         self.to_delete = []
 
+        self.add_button.setText(' Component')
+        self.add_button.set_icons('UI/icons/add_black.png', 'UI/icons/add_white.png')
+
         self.init_UI()
 
         self.buttonBox.button(QtWidgets.QDialogButtonBox.Reset).clicked.connect(self.on_reset_click)

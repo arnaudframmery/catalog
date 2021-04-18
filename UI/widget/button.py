@@ -39,12 +39,11 @@ class Button(QtWidgets.QPushButton):
         self.setSizePolicy(QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed))
 
         if icon_idle and icon_pressed:
-            self.icon_pressed = QIcon(icon_pressed)
-            self.icon_idle = QIcon(icon_idle)
-            self.setIcon(self.icon_idle)
-            self.pressed.connect(self.set_icon_pressed)
-            self.released.connect(self.set_icon_idle)
+            self.set_icons(icon_idle, icon_pressed)
 
+        self.init_style_sheet()
+
+    def init_style_sheet(self):
         self.setStyleSheet(
             "QPushButton {"
             f"  font: {self.font_size}pt 'Arial';"
@@ -75,8 +74,24 @@ class Button(QtWidgets.QPushButton):
             "}"
         )
 
+    def set_icons(self, icon_idle, icon_pressed):
+        self.icon_pressed = QIcon(icon_pressed)
+        self.icon_idle = QIcon(icon_idle)
+        self.setIcon(self.icon_idle)
+        if self.isCheckable():
+            self.released.connect(self.set_icon_toggle)
+        else:
+            self.pressed.connect(self.set_icon_pressed)
+            self.released.connect(self.set_icon_idle)
+
     def set_icon_pressed(self):
         self.setIcon(self.icon_pressed)
 
     def set_icon_idle(self):
         self.setIcon(self.icon_idle)
+
+    def set_icon_toggle(self):
+        if self.isChecked():
+            self.setIcon(self.icon_pressed)
+        else:
+            self.setIcon(self.icon_idle)

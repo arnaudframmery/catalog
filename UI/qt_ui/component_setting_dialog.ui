@@ -17,7 +17,7 @@
    <item>
     <widget class="Button" name="add_button">
      <property name="text">
-      <string>Add component</string>
+      <string>Component</string>
      </property>
     </widget>
    </item>
@@ -32,7 +32,7 @@
         <x>0</x>
         <y>0</y>
         <width>486</width>
-        <height>412</height>
+        <height>414</height>
        </rect>
       </property>
      </widget>

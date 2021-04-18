@@ -30,6 +30,7 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.return_button.sizePolicy().hasHeightForWidth())
         self.return_button.setSizePolicy(sizePolicy)
         self.return_button.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.return_button.setText("")
         self.return_button.setAutoDefault(False)
         self.return_button.setDefault(False)
         self.return_button.setFlat(False)
@@ -95,6 +96,7 @@ class Ui_Form(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.delete_button.sizePolicy().hasHeightForWidth())
         self.delete_button.setSizePolicy(sizePolicy)
+        self.delete_button.setText("")
         self.delete_button.setObjectName("delete_button")
         self.horizontalLayout.addWidget(self.delete_button)
         self.verticalLayout.addLayout(self.horizontalLayout)
@@ -105,9 +107,7 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.return_button.setText(_translate("Form", "Return"))
         self.label.setText(_translate("Form", "TextLabel"))
         self.cancel_button.setText(_translate("Form", "Cancel"))
-        self.modify_layout_button.setText(_translate("Form", "Tile Management"))
+        self.modify_layout_button.setText(_translate("Form", "Layout"))
         self.modify_button.setText(_translate("Form", "Modify"))
-        self.delete_button.setText(_translate("Form", "Delete"))

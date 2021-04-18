@@ -45,12 +45,12 @@ python launch.py
 - [x] Category filter
 - [ ] Range filter
 - Style:
-- [ ] Icons
+- [x] Icons
 - [x] Article detail view
 - [x] Catalog view
 - [x] Component settings dialog
-- [ ] Article select view
 - [x] Custom widgets
+- [ ] Article select view
 - Data types:
 - [x] text
 - [x] Number (int)

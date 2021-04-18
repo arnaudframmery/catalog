@@ -1,3 +1,4 @@
+# Icons from Kirill Kazachek, Pixel perfect, Freepik
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtGui import QFont
 
@@ -43,6 +44,18 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.cancel_button.setVisible(False)
         self.line_edit_label.setEnabled(False)
         self.line_edit_label.setVisible(False)
+        
+        self.return_button.setText('')
+        self.return_button.set_icons('UI/icons/arrow_left_black.png', 'UI/icons/arrow_left_white.png')
+        self.cancel_button.setText(' Cancel')
+        self.cancel_button.set_icons('UI/icons/cross_black.png', 'UI/icons/cross_white.png')
+        self.delete_button.setText('')
+        self.delete_button.set_icons('UI/icons/trash_black.png', 'UI/icons/trash_white.png')
+        self.modify_button.setText(' Modify')
+        self.modify_button.set_icons('UI/icons/modify_black.png', 'UI/icons/modify_white.png')
+        self.modify_layout_button.setText(' Layout')
+        self.modify_layout_button.set_icons('UI/icons/move_black.png', 'UI/icons/move_white.png')
+        
         font = QFont('Arial', DETAIL_VIEW_TITLE_FONT_SIZE)
         font.setBold(True)
         self.label.setFont(font)
@@ -265,7 +278,8 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
         """switch from the read mode to the edit one, and inversely"""
         if self.state == 'READ':
             self.state = 'EDIT'
-            self.modify_button.setText('Apply')
+            self.modify_button.setText(' Apply')
+            self.modify_button.set_icons('UI/icons/check_black.png', 'UI/icons/check_white.png')
             self.label.setVisible(False)
             self.cancel_button.setVisible(True)
             self.cancel_button.setEnabled(True)
@@ -277,7 +291,8 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
             self.display_edit_view()
         else:
             self.state = 'READ'
-            self.modify_button.setText('Modify')
+            self.modify_button.setText(' Modify')
+            self.modify_button.set_icons('UI/icons/modify_black.png', 'UI/icons/modify_white.png')
             self.cancel_button.setEnabled(False)
             self.cancel_button.setVisible(False)
             self.line_edit_label.setEnabled(False)
