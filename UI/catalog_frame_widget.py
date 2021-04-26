@@ -141,7 +141,12 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
         """actions to do when an article is selected"""
         detail_widget = DetailFrameWidget(self.controller, self.catalog_id, id, text)
         detail_widget.quitDetailViewSignal.connect(self.on_quit_detail_view_trigger)
-        self.detail_area.setWidget(detail_widget)
+        if not self.verticalLayout_3.isEmpty():
+            widget = self.verticalLayout_3.itemAt(0).widget()
+            self.verticalLayout_3.removeWidget(widget)
+            widget.setVisible(False)
+            widget.destroy()
+        self.verticalLayout_3.addWidget(detail_widget)
         self.stack_widget.setCurrentIndex(1)
 
     def on_sorting_change(self, component_index):

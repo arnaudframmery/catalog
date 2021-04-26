@@ -13,11 +13,11 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
     <widget class="QStackedWidget" name="stack_widget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="explore_stack">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -130,25 +130,7 @@
       </layout>
      </widget>
      <widget class="QWidget" name="detail_stack">
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item>
-        <widget class="QScrollArea" name="detail_area">
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents_3">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>98</width>
-            <height>28</height>
-           </rect>
-          </property>
-         </widget>
-        </widget>
-       </item>
-      </layout>
+      <layout class="QVBoxLayout" name="verticalLayout_3"/>
      </widget>
     </widget>
    </item>

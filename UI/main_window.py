@@ -6,6 +6,7 @@ from UI.catalog_creation_dialog import CatalogCreationDialog
 from UI.catalog_deletion_dialog import CatalogDeletionDialog
 from UI.catalog_frame_widget import CatalogFrameWidget
 from UI.qt_ui.main_window_UI import Ui_CatalogUI
+from UI.widget.tab_widget import TabWidget
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_CatalogUI):
@@ -19,7 +20,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_CatalogUI):
         self.controller = controller
         self.showMaximized()
 
-        self.catalog_tab_widget = QtWidgets.QTabWidget()
+        self.catalog_tab_widget = TabWidget()
         self.catalog_tabs = []
 
         self.init_UI()

@@ -18,8 +18,8 @@ class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(871, 434)
-        self.verticalLayout = QtWidgets.QVBoxLayout(Form)
-        self.verticalLayout.setObjectName("verticalLayout")
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(Form)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.stack_widget = QtWidgets.QStackedWidget(Form)
         self.stack_widget.setObjectName("stack_widget")
         self.explore_stack = QtWidgets.QWidget()
@@ -79,19 +79,11 @@ class Ui_Form(object):
         self.detail_stack.setObjectName("detail_stack")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.detail_stack)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.detail_area = QtWidgets.QScrollArea(self.detail_stack)
-        self.detail_area.setWidgetResizable(True)
-        self.detail_area.setObjectName("detail_area")
-        self.scrollAreaWidgetContents_3 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_3.setGeometry(QtCore.QRect(0, 0, 98, 28))
-        self.scrollAreaWidgetContents_3.setObjectName("scrollAreaWidgetContents_3")
-        self.detail_area.setWidget(self.scrollAreaWidgetContents_3)
-        self.verticalLayout_3.addWidget(self.detail_area)
         self.stack_widget.addWidget(self.detail_stack)
-        self.verticalLayout.addWidget(self.stack_widget)
+        self.horizontalLayout_2.addWidget(self.stack_widget)
 
         self.retranslateUi(Form)
-        self.stack_widget.setCurrentIndex(0)
+        self.stack_widget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):

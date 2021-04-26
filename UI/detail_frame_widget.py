@@ -1,5 +1,6 @@
 # Icons from Kirill Kazachek, Pixel perfect, Freepik
-from PyQt5 import QtWidgets, QtCore
+from PyQt5 import QtWidgets, QtCore, QtGui
+from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QFont
 
 from UI.widget.display_widget import QDisplayWidget
@@ -87,6 +88,16 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.cancel_button.released.connect(self.on_cancel_release)
         self.delete_button.released.connect(self.on_delete_release)
         self.return_button.released.connect(self.on_return_release)
+
+    def showEvent(self, a0: QtGui.QShowEvent) -> None:
+        """actions to do when the widget is about to be shown"""
+        super().showEvent(a0)
+        self.layout.updateGlobalSize(
+            QtGui.QResizeEvent(
+                QSize(self.scroll.rect().width(), self.scroll.rect().height()),
+                QSize(self.scroll.rect().width(), self.scroll.rect().height()),
+            )
+        )
 
     def on_resize_trigger(self, size):
         """actions to do when the frame is resized"""
