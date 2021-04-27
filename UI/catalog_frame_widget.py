@@ -137,9 +137,7 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
         articles_layout_widget.setLayout(articles_layout)
         self.article_area.setWidget(articles_layout_widget)
 
-    def display_article_details(self, id, text):
-        """actions to do when an article is selected"""
-        detail_widget = DetailFrameWidget(self.controller, self.catalog_id, id, text)
+    def apply_detail_widget(self, detail_widget):
         detail_widget.quitDetailViewSignal.connect(self.on_quit_detail_view_trigger)
         if not self.verticalLayout_3.isEmpty():
             widget = self.verticalLayout_3.itemAt(0).widget()
@@ -148,6 +146,16 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
             widget.destroy()
         self.verticalLayout_3.addWidget(detail_widget)
         self.stack_widget.setCurrentIndex(1)
+
+    def display_article_details(self, id, text):
+        """actions to do when an article is selected"""
+        detail_widget = DetailFrameWidget(self.controller, self.catalog_id, id, text)
+        self.apply_detail_widget(detail_widget)
+
+    def on_article_add_release(self):
+        """actions to do when add button is released"""
+        detail_widget = DetailFrameWidget(self.controller, self.catalog_id, None, '')
+        self.apply_detail_widget(detail_widget)
 
     def on_sorting_change(self, component_index):
         """actions to do when sorting component is changed"""
@@ -184,13 +192,6 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.stack_widget.setCurrentIndex(0)
         if update:
             self.display_articles()
-
-    def on_article_add_release(self):
-        """actions to do when add button is released"""
-        detail_widget = DetailFrameWidget(self.controller, self.catalog_id, None, '')
-        detail_widget.quitDetailViewSignal.connect(self.on_quit_detail_view_trigger)
-        self.detail_area.setWidget(detail_widget)
-        self.stack_widget.setCurrentIndex(1)
 
     def get_id(self):
         """return catalog id"""
