@@ -11,6 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from UI.widget.dialog_button_box import DialogButtonBox
+from UI.widget.line_edit import LineEdit
 
 
 class Ui_Dialog(object):
@@ -31,7 +32,7 @@ class Ui_Dialog(object):
         self.label.setOpenExternalLinks(False)
         self.label.setObjectName("label")
         self.verticalLayout.addWidget(self.label)
-        self.line_edit = QtWidgets.QLineEdit(Dialog)
+        self.line_edit = LineEdit(Dialog)
         self.line_edit.setObjectName("line_edit")
         self.verticalLayout.addWidget(self.line_edit)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)

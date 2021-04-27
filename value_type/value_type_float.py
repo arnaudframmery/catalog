@@ -2,8 +2,8 @@ import re
 
 from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QRegExpValidator, QFont
-from PyQt5.QtWidgets import QLineEdit
 
+from UI.widget.line_edit import LineEdit
 from constant import VALUE_TYPE_CODE, VW_FONT_SIZE
 from service.value_type import sort_value_type_float_asc, sort_value_type_float_desc
 from value_type.value_type import ValueType
@@ -37,7 +37,7 @@ class ValueTypeFloat(ValueType):
 
     @staticmethod
     def create_edit_widget(value, style=None):
-        widget = QLineEdit()
+        widget = LineEdit()
         widget.setValidator(QRegExpValidator(QRegExp(r'[+\-\d]*[\d]+[.]?[\d]*')))
         value = ValueTypeFloat.recovery_process(value)
 

@@ -1,12 +1,13 @@
 # Icons from bqlqn
 from PyQt5 import QtCore
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QLabel, QLineEdit, QHBoxLayout, QWidget
+from PyQt5.QtWidgets import QLabel, QHBoxLayout, QWidget
 from PyQt5.QtCore import Qt
 
 from UI.qt_ui.component_frame_UI import Ui_Form
 from UI.widget.button import Button
 from UI.widget.extend_widget import QExtendWidget
+from UI.widget.line_edit import LineEdit
 from constant import DEFAULT_CODE_FILTER, ECW_FONT_SIZE
 from mapping import VALUE_TYPE_MAPPING
 
@@ -54,7 +55,7 @@ class QExtendComponentWidget(QExtendWidget, Ui_Form):
         self.title_widget.setFont(font)
         self.title_widget.setStyleSheet(f"color: rgb{self.color_light_rgb};")
 
-        self.title_edit_widget = QLineEdit(self.title)
+        self.title_edit_widget = LineEdit(self.title)
         self.title_edit_widget.setFont(font)
         self.title_edit_widget.setVisible(False)
         self.delete_button = Button('', icon_idle='UI/icons/trash_black.png', icon_pressed='UI/icons/trash_white.png')

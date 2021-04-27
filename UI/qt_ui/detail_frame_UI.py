@@ -11,6 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from UI.widget.button import Button
+from UI.widget.line_edit import LineEdit
 
 
 class Ui_Form(object):
@@ -53,7 +54,7 @@ class Ui_Form(object):
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.horizontalLayout.addWidget(self.label)
-        self.line_edit_label = QtWidgets.QLineEdit(Form)
+        self.line_edit_label = LineEdit(Form)
         self.line_edit_label.setEnabled(False)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)

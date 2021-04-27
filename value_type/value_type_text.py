@@ -1,6 +1,6 @@
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QLineEdit
 
+from UI.widget.line_edit import LineEdit
 from constant import VALUE_TYPE_CODE, VW_FONT_SIZE
 from service.value_type import sort_value_type_text_asc, sort_value_type_text_desc
 from value_type.value_type import ValueType
@@ -28,7 +28,7 @@ class ValueTypeText(ValueType):
 
     @staticmethod
     def create_edit_widget(value, style=None):
-        widget = QLineEdit()
+        widget = LineEdit()
         widget.setText(value)
 
         if value:

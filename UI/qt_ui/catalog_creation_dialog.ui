@@ -36,7 +36,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="line_edit"/>
+      <widget class="LineEdit" name="line_edit"/>
      </item>
      <item>
       <spacer name="verticalSpacer">
@@ -73,6 +73,11 @@
    <class>DialogButtonBox</class>
    <extends>QDialogButtonBox</extends>
    <header>dialogbuttonbox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>LineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>lineedit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
