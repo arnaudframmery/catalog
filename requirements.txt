@@ -1,8 +1,8 @@
-PyQt5==5.15.2
+PyQt5==5.15.4
 PyQt5-sip==12.8.1
 PyQt5-stubs==5.14.2.2
 PySide2==5.15.2
 shiboken2==5.15.2
 SQLAlchemy==1.3.22
 pytest~=6.2.2
-pyqt5-tile-layout==0.1.1
+pyqt5-tile-layout==0.1.2

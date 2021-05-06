@@ -9,6 +9,8 @@ from UI.component_setting_dialog import ComponentSettingDialog
 from UI.detail_frame_widget import DetailFrameWidget
 from UI.qt_ui.catalog_frame_UI import Ui_Form
 from UI.widget.button import Button
+from constant import SPLITTER_HANDLE_WIDTH, FA_RADIUS, AA_RADIUS, FA_COLOR_BACKGROUND, AA_COLOR_BACKGROUND, \
+    SPLITTER_COLOR_HANDLE, SPLITTER_COLOR_BACKGROUND
 
 
 class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
@@ -26,16 +28,9 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.detail_stack.setLayout(self.detail_layout)
         self.splitter.setStretchFactor(0, 3)
         self.splitter.setStretchFactor(1, 7)
-        self.filter_area.setStyleSheet(
-            "QScrollArea {"
-            f"   border: 1px solid grey;"
-            "}"
-        )
-        self.article_area.setStyleSheet(
-            "QScrollArea {"
-            f"   border: 1px solid grey;"
-            "}"
-        )
+
+        self.splitter.setHandleWidth(SPLITTER_HANDLE_WIDTH)
+        self.apply_splitter_style_sheet()
 
         self.controller = controller
         self.catalog_id = catalog_id
@@ -66,6 +61,24 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
         self.add_button.released.connect(self.on_article_add_release)
         self.sort_direction.released.connect(self.on_sorting_direction_release)
         self.sort_combo_box.currentIndexChanged.connect(self.on_sorting_change)
+
+    def apply_splitter_style_sheet(self):
+        self.splitter.setStyleSheet(
+            "QSplitter::handle{"
+            f"   background-color: rgb{SPLITTER_COLOR_HANDLE};"
+            "}"
+            "QSplitter > QWidget{"
+            f"   background-color: rgb{SPLITTER_COLOR_BACKGROUND};"
+            "}"
+            "#filters_layout_widget {"
+            f"   background-color: rgb{FA_COLOR_BACKGROUND};"
+            f"   border-radius: {FA_RADIUS};"
+            "}"
+            "#articles_layout_widget {"
+            f"   background-color: rgb{AA_COLOR_BACKGROUND};"
+            f"   border-radius: {AA_RADIUS};"
+            "}"
+        )
 
     def init_sort_frame(self):
         """create the sorting display"""
@@ -113,8 +126,10 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
             filters_layout.addWidget(filters_button_layout_widget)
         filters_layout.addStretch()
         filters_layout_widget = QtWidgets.QWidget()
+        filters_layout_widget.setObjectName(f'filters_layout_widget')
         filters_layout_widget.setLayout(filters_layout)
         self.filter_area.setWidget(filters_layout_widget)
+        self.apply_splitter_style_sheet()
 
     def display_articles(self):
         """manage the article area"""
@@ -134,8 +149,10 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
             articles_layout.addWidget(article_widget)
         articles_layout.addStretch()
         articles_layout_widget = QtWidgets.QWidget()
+        articles_layout_widget.setObjectName('articles_layout_widget')
         articles_layout_widget.setLayout(articles_layout)
         self.article_area.setWidget(articles_layout_widget)
+        self.apply_splitter_style_sheet()
 
     def apply_detail_widget(self, detail_widget):
         detail_widget.quitDetailViewSignal.connect(self.on_quit_detail_view_trigger)

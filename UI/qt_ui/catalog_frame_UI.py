@@ -12,6 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 from UI.widget.button import Button
 from UI.widget.combo_box import ComboBox
+from UI.widget.scroll_area import ScrollArea
 
 
 class Ui_Form(object):
@@ -59,14 +60,14 @@ class Ui_Form(object):
         self.splitter = QtWidgets.QSplitter(self.explore_stack)
         self.splitter.setOrientation(QtCore.Qt.Horizontal)
         self.splitter.setObjectName("splitter")
-        self.filter_area = QtWidgets.QScrollArea(self.splitter)
+        self.filter_area = ScrollArea(self.splitter)
         self.filter_area.setWidgetResizable(True)
         self.filter_area.setObjectName("filter_area")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
         self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 413, 194))
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.filter_area.setWidget(self.scrollAreaWidgetContents_2)
-        self.article_area = QtWidgets.QScrollArea(self.splitter)
+        self.article_area = ScrollArea(self.splitter)
         self.article_area.setWidgetResizable(True)
         self.article_area.setObjectName("article_area")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
@@ -83,7 +84,7 @@ class Ui_Form(object):
         self.horizontalLayout_2.addWidget(self.stack_widget)
 
         self.retranslateUi(Form)
-        self.stack_widget.setCurrentIndex(1)
+        self.stack_widget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):

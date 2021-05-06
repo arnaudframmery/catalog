@@ -5,6 +5,7 @@ from PyQt5.QtGui import QFont
 
 from UI.widget.display_widget import QDisplayWidget
 from UI.qt_ui.detail_frame_UI import Ui_Form
+from UI.widget.scroll_area import ScrollArea
 from constant import DETAIL_VIEW_SPAN_VERTICAL, DETAIL_VIEW_SPACING, DETAIL_VIEW_SPAN_HORIZONTAL, \
     DETAIL_VIEW_TITLE_FONT_SIZE
 from mapping import VALUE_TYPE_MAPPING
@@ -73,7 +74,13 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
                                   verticalSpacing=self.spacing,
                                   horizontalSpacing=self.spacing)
         self.layout_container = QtWidgets.QWidget()
-        self.scroll = QtWidgets.QScrollArea()
+        self.layout_container.setObjectName('layout_container')
+        self.layout_container.setStyleSheet(
+            "QWidget#layout_container {"
+            f"   background-color: rgb{(255, 255, 255)};"
+            "}"
+        )
+        self.scroll = ScrollArea()
 
         self.detail = self.controller.get_article_detail(self.article_id, self.catalog_id)
         if self.article_id:
@@ -110,6 +117,7 @@ class DetailFrameWidget(QtWidgets.QWidget, Ui_Form):
 
         self.layout.acceptDragAndDrop(False)
         self.layout.acceptResizing(False)
+        self.layout.setColorIdle((255, 255, 255))
 
         self.scroll.setWidgetResizable(True)
         self.scroll.setContentsMargins(0, 0, 0, 0)

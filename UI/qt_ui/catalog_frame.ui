@@ -17,7 +17,7 @@
    <item>
     <widget class="QStackedWidget" name="stack_widget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="explore_stack">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -95,7 +95,7 @@
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
-         <widget class="QScrollArea" name="filter_area">
+         <widget class="ScrollArea" name="filter_area">
           <property name="widgetResizable">
            <bool>true</bool>
           </property>
@@ -110,7 +110,7 @@
            </property>
           </widget>
          </widget>
-         <widget class="QScrollArea" name="article_area">
+         <widget class="ScrollArea" name="article_area">
           <property name="widgetResizable">
            <bool>true</bool>
           </property>
@@ -146,6 +146,12 @@
    <class>ComboBox</class>
    <extends>QComboBox</extends>
    <header>combobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ScrollArea</class>
+   <extends>QScrollArea</extends>
+   <header>scrollarea.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
