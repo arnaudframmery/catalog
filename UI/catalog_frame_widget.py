@@ -126,7 +126,7 @@ class CatalogFrameWidget(QtWidgets.QWidget, Ui_Form):
             filters_layout.addWidget(filters_button_layout_widget)
         filters_layout.addStretch()
         filters_layout_widget = QtWidgets.QWidget()
-        filters_layout_widget.setObjectName(f'filters_layout_widget')
+        filters_layout_widget.setObjectName('filters_layout_widget')
         filters_layout_widget.setLayout(filters_layout)
         self.filter_area.setWidget(filters_layout_widget)
         self.apply_splitter_style_sheet()

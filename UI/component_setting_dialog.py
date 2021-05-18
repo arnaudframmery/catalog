@@ -1,13 +1,14 @@
 from typing import List
 
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtWidgets import QVBoxLayout
 
 from UI.qt_ui.component_setting_UI import Ui_Dialog
 from UI.widget.extend_component_widget import QExtendComponentWidget
 from UI.widget.extend_widget import QExtendWidget
 
-from constant import DEFAULT_CODE_FILTER, DEFAULT_CODE_VALUE_TYPE
+from constant import DEFAULT_CODE_FILTER, DEFAULT_CODE_VALUE_TYPE, COLOR_GREY_ULTRA_LIGHT, COLOR_WHITE, CS_RADIUS, \
+    CS_COLOR_BACKGROUND
 
 
 class ComponentSettingDialog(QtWidgets.QDialog, Ui_Dialog):
@@ -25,14 +26,33 @@ class ComponentSettingDialog(QtWidgets.QDialog, Ui_Dialog):
         self.filters = self.controller.get_all_filters()
         self.types = self.controller.get_all_value_types()
         self.component_layout = None
+        self.component_layout_widget = None
         self.components_list: List[QExtendComponentWidget] = []
         self.extend_widget_list: List[QExtendWidget] = []
         self.to_delete = []
 
+        self.init_UI()
+
         self.add_button.setText(' Component')
         self.add_button.set_icons('UI/icons/add_black.png', 'UI/icons/add_white.png')
-
-        self.init_UI()
+        self.component_area.set_background_color(COLOR_GREY_ULTRA_LIGHT)
+        pal = QtGui.QPalette()
+        pal.setColor(QtGui.QPalette.Background, QtGui.QColor(255, 255, 255))
+        self.setPalette(pal)
+        self.component_layout_widget.setStyleSheet(
+            "QWidget {"
+            f"   background-color: rgb{CS_COLOR_BACKGROUND};"
+            f"   border-radius: {0};"
+            "}"
+            "#component_layout_widget {"
+            f"   border-radius: {CS_RADIUS};"
+            "}"
+        )
+        self.setStyleSheet(
+            "QWidget {"
+            f"   background-color: rgb{COLOR_WHITE};"
+            "}"
+        )
 
         self.buttonBox.button(QtWidgets.QDialogButtonBox.Reset).clicked.connect(self.on_reset_click)
         self.buttonBox.button(QtWidgets.QDialogButtonBox.Apply).clicked.connect(self.on_apply_click)
@@ -44,7 +64,8 @@ class ComponentSettingDialog(QtWidgets.QDialog, Ui_Dialog):
         self.to_delete = []
         components = self.controller.get_components(self.catalog_id)
         self.component_layout = QVBoxLayout()
-        component_layout_widget = QtWidgets.QWidget()
+        self.component_layout_widget = QtWidgets.QWidget()
+        self.component_layout_widget.setObjectName('component_layout_widget')
         for a_component in components:
             widget = QExtendComponentWidget(
                 a_component['label'],
@@ -60,8 +81,8 @@ class ComponentSettingDialog(QtWidgets.QDialog, Ui_Dialog):
             self.component_layout.addWidget(widget)
             self.components_list.append(widget)
         self.component_layout.addStretch()
-        component_layout_widget.setLayout(self.component_layout)
-        self.component_area.setWidget(component_layout_widget)
+        self.component_layout_widget.setLayout(self.component_layout)
+        self.component_area.setWidget(self.component_layout_widget)
 
     def on_reset_click(self, button):
         """actions to do when reset button is released"""
